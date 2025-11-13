@@ -1,0 +1,1120 @@
+%File: formatting-instructions-latex-2024.tex
+%release 2024.0
+\pdfoutput=1
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage{aaai24}  % DO NOT CHANGE THIS
+\usepackage{times}  % DO NOT CHANGE THIS
+\usepackage{helvet}  % DO NOT CHANGE THIS
+\usepackage{courier}  % DO NOT CHANGE THIS
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
+\setlength{\pdfpagewidth}{8.5in}  % DO NOT CHANGE THIS
+\setlength{\pdfpageheight}{11in}  % DO NOT CHANGE THIS
+%
+% These are recommended to typeset algorithms but not required. See the subsubsection on algorithms. Remove them if you don't have algorithms in your paper.
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\usepackage{dsfont}
+\newcommand{\ve}[1]{\mathbf{#1}}
+\newcommand{\vv}[1]{\mbox{\boldmath $#1$}}
+
+%
+% These are are recommended to typeset listings but not required. See the subsubsection on listing. Remove this block if you don't have listings in your paper.
+\usepackage{newfloat}
+\usepackage{listings}
+\DeclareCaptionStyle{ruled}{labelfont=normalfont,labelsep=colon,strut=off} % DO NOT CHANGE THIS
+\lstset{%
+	basicstyle={\footnotesize\ttfamily},% footnotesize acceptable for monospace
+	numbers=left,numberstyle=\footnotesize,xleftmargin=2em,% show line numbers, remove this entire line if you don't want the numbers.
+	aboveskip=0pt,belowskip=0pt,%
+	showstringspaces=false,tabsize=2,breaklines=true}
+\floatstyle{ruled}
+\newfloat{listing}{tb}{lst}{}
+\floatname{listing}{Listing}
+%
+% Keep the \pdfinfo as shown here. There's no need
+% for you to add the /Title and /Author tags.
+\pdfinfo{
+/TemplateVersion (2024.1)
+}
+
+% DISALLOWED PACKAGES
+% \usepackage{authblk} -- This package is specifically forbidden
+% \usepackage{balance} -- This package is specifically forbidden
+% \usepackage{color (if used in text)
+% \usepackage{CJK} -- This package is specifically forbidden
+% \usepackage{float} -- This package is specifically forbidden
+% \usepackage{flushend} -- This package is specifically forbidden
+% \usepackage{fontenc} -- This package is specifically forbidden
+% \usepackage{fullpage} -- This package is specifically forbidden
+% \usepackage{geometry} -- This package is specifically forbidden
+% \usepackage{grffile} -- This package is specifically forbidden
+% \usepackage{hyperref} -- This package is specifically forbidden
+% \usepackage{navigator} -- This package is specifically forbidden
+% (or any other package that embeds links such as navigator or hyperref)
+% \indentfirst} -- This package is specifically forbidden
+% \layout} -- This package is specifically forbidden
+% \multicol} -- This package is specifically forbidden
+% \nameref} -- This package is specifically forbidden
+% \usepackage{savetrees} -- This package is specifically forbidden
+% \usepackage{setspace} -- This package is specifically forbidden
+% \usepackage{stfloats} -- This package is specifically forbidden
+% \usepackage{tabu} -- This package is specifically forbidden
+% \usepackage{titlesec} -- This package is specifically forbidden
+% \usepackage{tocbibind} -- This package is specifically forbidden
+% \usepackage{ulem} -- This package is specifically forbidden
+% \usepackage{wrapfig} -- This package is specifically forbidden
+% DISALLOWED COMMANDS
+% \nocopyright -- Your paper will not be published if you use this command
+% \addtolength -- This command may not be used
+% \balance -- This command may not be used
+% \baselinestretch -- Your paper will not be published if you use this command
+% \clearpage -- No page breaks of any kind may be used for the final version of your paper
+% \columnsep -- This command may not be used
+% \newpage -- No page breaks of any kind may be used for the final version of your paper
+% \pagebreak -- No page breaks of any kind may be used for the final version of your paperr
+% \pagestyle -- This command may not be used
+% \tiny -- This is not an acceptable font size.
+% \vspace{- -- No negative value may be used in proximity of a caption, figure, table, section, subsection, subsubsection, or reference
+% \vskip{- -- No negative value may be used to alter spacing above or below a caption, figure, table, section, subsection, subsubsection, or reference
+
+\setcounter{secnumdepth}{0} %May be changed to 1 or 2 if section numbers are desired.
+
+% The file aaai24.sty is the style file for AAAI Press
+% proceedings, working notes, and technical reports.
+%
+
+% Title
+
+% Your title must be in mixed case, not sentence case.
+% That means all verbs (including short verbs like be, is, using,and go),
+% nouns, adverbs, adjectives should be capitalized, including both words in hyphenated terms, while
+% articles, conjunctions, and prepositions are lower case unless they
+% % directly follow a colon or long dash
+% \title{TagFog: \texttt{T}extual \texttt{A}nchor \texttt{G}uidance and \texttt{F}ake \texttt{O}utlier \texttt{G}eneration for Visual Out-of-Distribution Detection}
+\title{TagFog: Textual Anchor Guidance and Fake Outlier Generation for Visual Out-of-Distribution Detection}
+\author{
+    Jiankang Chen\textsuperscript{\rm 1,3}, 
+    Tong Zhang\textsuperscript{\rm 2}, 
+    Wei-Shi Zheng\textsuperscript{\rm 1,3}, 
+    Ruixuan Wang\textsuperscript{\rm 1,2,3}\thanks{Corresponding author}
+}
+
+\affiliations{
+    %Afiliations
+    \textsuperscript{\rm 1}School of Computer Science and Engineering, Sun Yat-sen University, Guangzhou, China\\
+    \textsuperscript{\rm 2}Peng Cheng Laboratory, Shenzhen, China\\
+    \textsuperscript{\rm 3}Key Laboratory of Machine Intelligence and Advanced Computing, MOE, Guangzhou, China\\
+    chenjk36@mail2.sysu.edu.cn, zhangt02@pcl.ac.cn, wszheng@ieee.org, wangruix5@mail.sysu.edu.cn
+%
+% See more examples next
+}
+
+%Example, Single Author, ->> remove \iffalse,\fi and place them surrounding AAAI title to use it
+\iffalse
+\title{My Publication Title --- Single Author}
+\author {
+    Author Name
+}
+\affiliations{
+    Affiliation\\
+    Affiliation Line 2\\
+    name@example.com
+}
+\fi
+
+\iffalse
+%Example, Multiple Authors, ->> remove \iffalse,\fi and place them surrounding AAAI title to use it
+\title{My Publication Title --- Multiple Authors}
+\author {
+    % Authors
+    First Author Name\textsuperscript{\rm 1,\rm 2},
+    Second Author Name\textsuperscript{\rm 2},
+    Third Author Name\textsuperscript{\rm 1}
+}
+\affiliations {
+    \textsuperscript{\rm 1}Affiliation 1\\
+    \textsuperscript{\rm 2}Affiliation 2\\
+    firstAuthor@affiliation1.com, secondAuthor@affilation2.com, thirdAuthor@affiliation1.com
+}
+\fi
+% REMOVE THIS: bibentry
+% This is only needed to show inline citations in the guidelines document. You should not need it and can safely delete it.
+\usepackage{bibentry}
+% END REMOVE bibentry
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Out-of-distribution (OOD) detection is crucial in many real-world applications. However, intelligent models are often trained solely on in-distribution (ID) data, leading to overconfidence when misclassifying OOD data as ID classes.  In this study, we propose a new learning framework which leverage simple Jigsaw-based fake OOD data and rich semantic embeddings (`anchors') from the ChatGPT description of ID knowledge to help guide the training of the image encoder. The learning framework can be flexibly combined with existing post-hoc approaches to OOD detection, and extensive empirical evaluations on multiple OOD detection benchmarks demonstrate that rich textual representation of ID knowledge and fake OOD knowledge can well help train a visual encoder for OOD detection. With the learning framework, new state-of-the-art performance was achieved on all the benchmarks. The code is available at \url{https://github.com/Cverchen/TagFog}.
+\end{abstract}
+
+\section{Introduction}
+
+When deploying well-trained AI models in real-world applications, AI models often encounter samples which are different from the distributions of training data~\cite{baseline,baseline2,baseline3}. Such out-of-distribution (OOD) samples are often from unknown classes which did not appear during model training. Mis-classifying OOD samples into previously learned in-distribution (ID) classes could lead to serious consequences such as in the autonomous driving and the intelligent healthcare applications. Therefore, it is a desired ability for the AI model to accurately detect whether a new data is an OOD sample or from one of previously learned classes.
+
+Various approaches have been developed for solving the OOD detection problem. Most approaches train a decent classifier on ID data, then use the feature output of the penultimate layer, logits output of the classifier, or the softmax probability vector output to design a score function \cite{MSP,Maha,Energy,Vim}. The defined score is typically lower for OOD data compared to ID data. However, training only on ID data can cause overconfidence, with models assigning high confidence to unseen OOD data~\cite{LogitNorm}.
+
+\begin{figure}[t]
+\centering
+\includegraphics[height=0.6\columnwidth, width=0.9\columnwidth, keepaspectratio]{Pictures/performance.pdf}
+\caption{OOD detection performance of different methods
+on the CIFAR100 and ImageNet100-I benchmarks.}
+\label{fig1}
+\end{figure}
+
+If certain OOD samples are available during training, the model will gain knowledge of data that are characterized differently from the ID data. This would help the model better identify OOD data later. 
+However, obtaining OOD data in certain real-world applications is often time-consuming or costly. Based on above considerations, researchers have proposed various strategies to generate fake OOD data from available ID training data.  
+One way is to use generative adversarial networks (GANs)~\cite{gan} for generating fake OOD samples based on available ID data~\cite{gan1,gan4,gan6,gan3}. However, 
+%classes, helping distinguish between known and unknown samples , 
+it is often challenging for GANs to generate expected OOD samples due to the unstable training and difficulty in generating realistic OOD samples based on only ID samples~\cite{gan5,gan2}. 
+Instead of generating fake OOD data in the input space as by GANs, OOD knowledge may also be gained from the feature space. For example, VOS~\cite{VOS} synthesizes virtual OOD features from the low likelihood regions of ID data in the high-level feature space to help improve OOD detection. This method assumes a strict Gaussian distribution for ID data, which is often unrealistic.
+Different from directly generating OOD data to gain OOD knowledge, the pre-trained large vision-language model CLIP~\cite{CLIP} has recently been used to help OOD detection considering that much knowledge, including OOD knowledge, has been learned by the CLIP model~\cite{CLIP_morelabel,CLIP_lablegenerate,MCM}. However, this approach requires unrealistic OOD data labels and the pre-trained visual encoder during OOD detection. 
+
+In this study, we propose a simple yet effective learning framework \textbf{TagFog} (\textbf{T}extual \textbf{a}nchor \textbf{g}uidance and \textbf{F}ake \textbf{o}utlier \textbf{g}eneration) to train a visual model for OOD detection based on a simple fake OOD generation strategy and a CLIP-based textual guidance with the description of ID knowledge from {the ChatGPT~\cite{gpt}}. The fake OOD data are generated offline by the simple Jigsaw transformations~\cite{jigsaw} on training ID images such that fake OOD data are similar to corresponding ID data at patch level, but differently at the image level. In this way, fake OOD data would contain knowledge which is semantically shifted from that of ID data, and therefore can be considered as challenging OOD samples to help the model better discriminate between ID and real OOD data. On the other hand, the textual description of each ID class from the ChatGPT contains richer information compared to the solely ID class name, and therefore CLIP's embedding of the ChatGPT description would contain semantically more information about ID knowledge. In this study,  the CLIP's textual embeddings of ID knowledge as anchors are used to guide the training of the image encoder with contrastive learning, such that the image encoder can learn to extract richer and more compact representations from images.
+Our approach demonstrates the power of using textual guidance and fake OOD data for OOD detection, as supported by extensive empirical evaluations on multiple OOD detection benchmarks.
+The main contributions are summarized below.
+\begin{itemize}
+    \item A simple yet effective learning framework which uses fake OOD data and rich textual embeddings of ID classes to help train a better image encoder. Notably, the framework can be flexibly fused with many existing methods.
+    \item The first usage of ChatGPT for more informative and semantic embeddings of ID knowledge which are used to guide training of the image encoder for OOD detection.
+    \item Extensive experimental evaluations on multiple OOD detection benchmarks, with state-of-the-art performance obtained from our approach. 
+\end{itemize}
+
+\section{Preliminaries}
+\textbf{Out-of-Distribution Detection.} Suppose $K$ classes of training data are available to train a classifier. In the OOD detection task, the classifier is expected to decide whether a new data belongs to one of the $K$ classes or from any unseen class. Data from the $K$ classes are in-distribution (ID), while data from any unseen class are out-of-distribution. 
+OOD detection can be viewed as a binary classification task. 
+Usually, a scoring function $\mathcal{S}_{\lambda}$ based on the classifier's output at certain layer is designed for OOD detection, where $\lambda$ is the threshold.  
+%$\mathcal{D}_{\lambda}(\ve{x}) = \mathbf{1}\{\mathcal{S}_{\lambda}(\ve{x}) \geq \lambda\}$. 
+For any new data as input to the classifier, when the score is above the threshold $\lambda$, the input data is determined as ID. Otherwise, the input is considered as OOD.
+
+\noindent\textbf{Pre-trained Vision-Language Model CLIP.}
+Knowledge learned only from images  is limited. In contrast, visual-language contrastive representation learning achieves much better performance on downstream tasks. A representative vision-language model is CLIP which includes a text encoder and an image encoder~\cite{CLIP}. 400 million image-text pairs on websites are crawled for training of the CLIP model, based on the contrastive InfoNCE loss by maximizing the similarity between matched image-text pairs and minimizing the similarity for mismatched pairs. Both the text encoder and the image encoder of the well-trained CLIP are expected to encode semantically rich information from the corresponding text and image input. 
+
+\begin{figure*}[th]
+    \centering
+    \includegraphics[width=0.95\textwidth, height=0.45\textwidth]{Pictures/overview.pdf} % Reduce the figure size so that it is slightly narrower than the column.
+    \caption{Overview of the proposed learning framework TagFog for OOD detection. Upper part: fake OOD data are generated based on the Jigsaw strategy and, together with the ID data, used to train the image encoder $f$ and the classifier head $h$. 
+   Lower part: the description of each ID class from ChatGPT is fed to the pretrained and fixed CLIP's Text Encoder to obtain the semantic embedding as anchor for the ID class. The anchors are used to guide the training of the image encoder based on the contrastive loss $\mathcal{L}_{CI}$ and $\mathcal{L}_{SC}$. 
+    }
+    \label{fig:framework}
+\end{figure*}
+
+\section{Method}
+
+\textbf{Overview.} \ \  Our framework TagFog is illustrated in Figure~\ref{fig:framework}. The framework mainly contains two parts. The first part (i.e., upper part of Figure~\ref{fig:framework}) makes use of fake OOD data to help train a $(K+1)$-class classifier, where the fake OOD data are generated based on the training data of $K$ ID classes and expected to help the classifier better discriminate between ID data and real OOD data during inference.  The second part (i.e., lower part of Figure~\ref{fig:framework}) novelly applies ChatGPT to generate descriptive text for each ID class, and such text is then fed into the pretrained and fixed CLIP's Text Encoder to create semantic embedding for the corresponding ID class. %with semantic information. 
+The embedding serves as the anchor for all training data of the corresponding ID class, and the anchors of all $K$ ID classes are used to help guide the training of the Image Encoder based on the alignment between the associated anchor and the projection of the Image Encoder output for each ID data. {In addition, the idea of SupCon~\cite{SupCon} is utilized to perform supervised contrast learning on all projected ID and fake OOD embedding vectors.} With the help of the ChatGPT-generated semantic guiding and the fake OOD-involved contrastive learning and classifier training, the Image Encoder is expected to learn to generate compact ID feature representations while leaving much spare regions for OOD data in the feature space.
+
+\noindent\textbf{Fake Outlier Generation (FOG).} Usage of OOD data during classifier training has been shown helpful to improve OOD detection performance~\cite{gan2,gan3,oe_1,oe_2}. However, most OOD detection methods~\cite{MSP,ODIN,CIDER} train a classifier based only on ID data and therefore the classifier would not contain any knowledge of OOD data.
+On the other hand, 
+%to get the knowledge of ID data without any information about semantic offsets other than ID data. 
+approaches using fake OOD data during classifier training  are either based on unstable GAN models~\cite{gan1} or make overly constrained  feature space assumptions~\cite{VOS}, which often includes a complicated fake OOD generation process and may not work effectively in various real applications. 
+
+In this study, we propose a simple yet effective fake OOD data generation strategy based on the Jigsaw technique. Specifically, for each ID training image, the image is  divided into multiple image patches which are then randomly shuffled and rearranged to form a new image. The synthesized new image is considered as a fake OOD data for model training. Because the Jigsaw process disrupts the overall structure and contextual information in the original image, the original semantic information is altered, resulting in semantic offset from the original image. In other words, the semantics of object(s) of interest in the original image is largely distorted due to the shuffling of image patches. Since some image patches in the fake OOD data contain parts of ID objects, the fake OOD data would contain information which is partially similar to  but semantically shifted from the ID image, thus can be served as challenging OOD data during model training. 
+%The disrupted image chunks contain semantically shifted information that can serve as OOD data, distinct from the ID categories. 
+In addition, the image patches containing only background information appear both in the fake OOD data and the corresponding ID data. In order to differentiate the fake OOD data from the ID data, the classifier would need to focus on learning from the (foreground) object regions, thus alleviating the overconfidence issue of mis-classifying OOD data as an ID class due to unique background in the ID data~\cite{background}. Note that the Jigsaw technique has been used recently in the FeatureNorm method~\cite{FeatureNorm}, not for model training, but for layer selection after the model is trained as usual. In contrast, here the Jigsaw-based fake OOD data are used for model training.
+
+% \noindent \textbf{CLIP-based Textual Guidance (CTG).} 
+\noindent \textbf{Textual Anchor Guidance (TAG).} More compact and semantically informative representations are beneficial for OOD detection~\cite{MCM, CIDER}. 
+%Having introduced semantic outliers, we next align the ID visual features with textual semantics. 
+In order to help the classifier learn to extract more relevant semantic information from input images, here we utilize the large-scale language model ChatGPT and the large-scale vision-language model CLIP to help guide the training of the image classifier. Specifically, ChatGPT is used to generate semantically rich description for each ID class (Table~\ref{tab:chatgpt}),\begin{table}[tbh]
+\centering  
+\begin{tabular}{l|l}
+\hline
+ID class &\ \ \ \ \ \multirow{2}{*}{Textual description from ChatGPT} \\ 
+\ \ \ name & \\
+\hline
+\ \ bee & \ \ \ insect, black and yellow stripes, ...\\  
+\ \ cloud & \ \ \ visible mass of condensed water vapor,... \\   
+\ \ cup & \ \ \ small container for drinking, made of... \\
+\ \ sea & \ \ \ large body of saltwater covering most of...\\
+\hline
+\end{tabular}
+\caption{Demonstrative textual descriptions of ID classes. The textual description of each ID class is obtained by asking ChatGPT ``Please describe the  \{ID class name\}''.} 
+\label{tab:chatgpt}
+\end{table} and the textual description is then fed to the CLIP's Text Encoder to obtain the semantic embedding (namely `anchor') of the ID class. The anchors are expected to contain more semantic information than the textual embedding of solely ID class names. To align with the associated anchor, the visual encoder's outputs for each input image is projected into the semantic embedding space, and both the image encoder and the projection module will be trained such that the projected visual embedding for each input image is as close to the associated textual anchor as possible. 
+
+\noindent \textbf{Model Training.} The image encoder $f$, the classifier head $h$, and the projection module $g$ need to be trained. Note that the output of the classifier head is $(K+1)$-dimensional, with $K$ outputs for ID classes and one  output for OOD class. As usual, the cross-entropy loss function $\mathcal{L}_{CE}$ is used to train the encoder and the classifier head, 
+\begin{equation}
+\mathcal{L}_{CE} = - \frac{1}{N+M}\sum_{i=1}^{N+M} \sum_{k=1}^{K+1} y_{i,k} \log(\hat{y}_{i,k})
+\end{equation}
+where $N$ and $M$ are respectively the number of all ID training images and fake OOD images, $\hat{y}_{i,k}$ is the output probability for the $i$-th training image belonging to the $k$-th class, and $y_{i,k}$ is the corresponding ground-truth output ($0$ or $1$). 
+
+For the CLIP-based textual guidance, denote by $\ve{t}_k$ the textual description from the ChatGPT for the $k$-th ID class, and $\vv{\mu}_k = \mathcal{T}(\ve{t}_k)$ the corresponding anchor vector from the output of the CLIP's text encoder for the $k$-th ID class. In order to attract the projected visual embedding for each input image close to the associate anchor, the contrastive loss $\mathcal{L}_{CI}$ is designed as below
+\begin{small}
+\begin{equation}
+    \mathcal{L}_{CI}=-\frac{1}{N}\sum_{n=1}^{N}\sum_{k=1}^{K} {\mathds{1}({{y}_{n,k} \neq 0}) \cdot \log \frac{\exp (s(\ve{z}_{n}, \vv{\mu}_{k}) / \tau)}{\sum_{j=1}^{ K} \exp (s(\ve{z}_{n}, \vv{\mu}_{j}) / \tau)}} \,,
+\end{equation}
+\end{small}where $\ve{z}_{n} = g(f(\ve{x}_n))$ is the projected visual embedding for the input ID image $\ve{x}_n$, and $s(\ve{z}_{n}, \vv{\mu}_{k})$ represents the cosine similarity between the two embeddings $\ve{z}_{n}$ and $\vv{\mu}_{k}$. $\mathds{1}(\cdot)$ is the indicator function and $\tau$ is the temperature scaling factor. By minimizing $\mathcal{L}_{CI}$, the image encoder $f$ and the projection module $g$ (here with structure Linear-BN-ReLU-Linear) will be trained such that the projected visual embeddings of the same ID class will be close to the associated anchor, therefore helping the image encoder extract more compact and semantically informative features.
+
+To further differentiate fake OOD images from anchor-guided ID images, the supervised contrastive loss $\mathcal{L}_{SC}$ is utilized following the idea of SupCon~\cite{SupCon},
+\begin{small}
+\begin{equation}
+    % \mathcal{L}_{i}^{\text {sup }}\!=\!{N_{{\boldsymbol{i}}}}\sum_{j=1}^{2 N}\sum_{k=1}^{K+1}\mathbf{1}_{{y}_{i,k}={y}_{j,k}}\!\cdot \!\log \frac{\exp \left(\boldsymbol{z}_{i} \cdot \boldsymbol{z}_{j} / \tau\right)}{\sum_{m=1}^{2N}\exp \left(\boldsymbol{z}_{i} \cdot \boldsymbol{z}_{m} / \tau\right)}
+    \mathcal{L}_{{SC}}=-\frac{1}{S}\sum_{i=1}^{S} \frac{1}{|P(i)|}\sum_{p \in P(i)} \log \frac{\exp \left(s(\ve{z}_{i}, \ve{z}_{p} )/ \tau' \right)}{\sum_{a \in A(i)} \exp \left(s(\ve{z}_{i}, \ve{z}_{a}) / \tau' \right)} \,,
+\end{equation}
+\end{small}{where %\mathcal{\textit{I}} denotes the set of training data, 
+$S = N+M$,} $\mathcal{\textit{A(i)}}$ represents all the sample indices in the mini-batch that includes the sample with index $\mathcal{\textit{i}}$, and $\mathcal{\textit{P(i)}}$ is the subset %composed of all sample indices \mathcal{\textit{p}}'s in 
+of $\mathcal{\textit{A(i)}}$ in which all the corresponding samples share the same class label as the that of the sample with index $i$. % such that $y_{p}$=$y_{i}$.} 
+$\tau'$ is the temperature scaling factor. 
+
+Overall, the image encoder $f$, the classifier head $h$, and the projection module $g$ can be trained by minimizing the combined loss function $\mathcal{L}$, 
+%We optimize the training of the above three loss combinations as follows:
+\begin{equation}
+    \mathcal{L} = \mathcal{L}_{CE} + \lambda_1 \mathcal{L}_{CI} + \lambda_2 \mathcal{L}_{SC} \,,
+\end{equation}
+with coefficients $\lambda_1$ and $\lambda_2$ balancing the three loss terms. 
+
+\noindent\textbf{Model Inference.} Once the model is well trained, the image encoder together with the classifier head is used to detect whether a new image is OOD or not. Since our method focuses on model training, any post-hoc OOD detection strategy can be utilized during model inference. By default here the recently proposed post-hoc method ReAct~\cite{React} is used for OOD detection. Note that only the logit values of the $K$ ID classes are used to calculate the ReAct score, although the output of the fake OOD class in the classifier head may also be investigated to further improve the OOD detection performance.
+
+\begin{table*}[ht]
+\centering
+\setlength{\tabcolsep}{4pt}
+% \resizebox{\textwidth}{!}{%
+\small
+% \normalsize
+\begin{tabular}{ccccccccccccccccc}
+\hline
+\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}{ID Dataset}\end{tabular}} 
+&\multirow{3}{*}{Method} & \multicolumn{12}{c}{OOD Datasets} & \multicolumn{2}{c}{\multirow{2}{*}{Average}} \\ \cline{3-14} 
+&  & \multicolumn{2}{c}{SVHN} & \multicolumn{2}{c}{LSUN-R} & \multicolumn{2}{c}{LSUN-C} & \multicolumn{2}{c}{iSUN} & \multicolumn{2}{c}{Textures} & \multicolumn{2}{c}{Places365} \\
+& & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ \\ \hline
+\multirow{14}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\end{tabular}} 
+& MSP & 61.22 & 86.99 & 41.62 & 93.84 & 34.30 & 95.40 & 43.14 & 93.21 & 53.40 & 90.19 & 54.51 & 88.74 & 48.03 & 91.40 \\
+& Mahalanobis & 67.25 & 89.51 & 48.37 & 92.38 & 91.65 & 74.55 & 44.24 & 92.68 & 45.92 & 91.96 & 66.11 & 85.79 & 60.59 & 87.81 \\
+& ODIN & 53.56 & 77.48 & 17.31 & 94.63 & 13.64 & 96.09 & 19.87 & 93.55 & 46.65 & 80.85 & 49.72 & 79.92 & 33.46 & 87.09 \\
+& Energy & 41.25 & 87.69 & 24.19 & 95.01 & 11.37 & 97.63 & 26.40 & 94.16 & 42.52 & 89.10 & 40.04 & 88.71 & 30.96 & 92.05 \\
+& ViM & 53.75 & 88.67 & 34.17 & 94.34 & 82.31 & 87.18 & 31.41 & 94.25 & 36.15 & 92.83 & 49.64 & 88.86 & 47.90 & 91.02 \\
+& DICE & 36.42 & 91.46 & 31.57 & 93.77 & 7.10 & 98.67 & 36.94 & 92.05 & 47.02 & 88.41 & 46.74 & 86.05 & 34.30 & 91.73 \\ 
+& BATS & 41.42 & 87.84 & 24.17 & 95.02 & 11.35 & 97.63 & 26.36 & 94.16 & 42.13 & 89.29 & 40.04 & 88.71 & 30.91 & 92.11 \\
+& ReAct & 43.19 & 87.56 & 24.82 & 95.12 & 12.23 & 97.53 & 26.90 & 94.31 & 41.95 & 90.02 & 40.78 & 89.00 & 31.65 & 92.26 \\ 
+& DICE+ReAct & 36.90 & 91.31 & 31.59 & 93.71 & 7.29 & 98.64 & 37.15 & 92.10 & 46.76 & 88.61 & 46.76 & 86.12 & 34.41 & 91.75 \\
+& FeatureNorm & \textbf{2.37} & 99.45 & 33.42 & 94.71 & \textbf{0.10} & \textbf{99.93} & 27.01 & 95.65 & 23.03 & 95.65 & 58.96 & 87.95 & 24.14 & 95.55\\
+& LINe & 45.38 & 87.96 & 39.25 & 92.61 & 9.75 & 98.19 & 41.52 & 91.74 & 58.37 & 84.14 & 53.02 & 85.70 & 41.22 & 90.06 \\
+& VOS & 35.73 & 93.74 & 25.54 & 95.29 & 18.47 & 96.55 & 30.17 & 94.16 &44.16 & 90.07 & 44.18 & 88.13 & 33.04 & 92.99\\
+& LogitNorm & 12.68 & 97.75 & 15.29 & 97.45 & 0.53 & 99.82 & 15.36 & 97.43 & 31.56 & 94.09 & 32.31 & 93.92 & 17.96 & 96.75 \\
+& CIDER & 2.89 & \textbf{99.72} & 23.13 & 96.28 & 5.45 & 99.01 & 20.21 & 96.64 & \textbf{12.33} & 96.85 & \textbf{23.88} & 94.09 & 14.64 & 97.10 \\
+& \textbf{TagFog (Ours)}& 6.19 & 98.75 & \textbf{6.50} & \textbf{98.74} & 2.12 & 99.43 & \textbf{6.36} & \textbf{98.75} & 16.13 & \textbf{97.12} & 25.14 & \textbf{95.14} & \textbf{10.41} & \textbf{97.99} \\ 
+ \hline
+ \multirow{14}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\end{tabular}} 
+ & MSP & 69.74 & 84.73 & 66.89 & 85.65 & 77.08 & 81.83 & 69.40 & 84.77 & 80.08 & 77.65 & 78.38 & 78.81 & 73.60 & 82.24 \\
+ & Mahalanobis & 92.62 & 66.80 & 89.00 & 68.46 & 98.83 & 49.58 & 88.45 & 68.44 & 72.68 & 74.57 & 92.87 & 63.26 & 89.07 & 65.18 \\
+ & ODIN & 79.74 & 81.40 & 37.63 & 93.21 & 72.66 & 85.93 & 39.59 & 92.58 & 73.07 & 80.42 & 80.39 & 77.22 & 63.85 & 85.13 \\
+ & Energy & 68.90 & 87.66 & 59.71 & 88.58 & 73.21 & 84.46 & 64.03 & 87.50 & 79.61 & 78.22 & 77.74 & 79.64 & 70.53 & 84.34 \\
+ & ViM & 73.70 & 84.45 & 61.30 & 88.05 & 92.76 & 69.87 & 61.92 & 87.34 & 57.93 & 86.31 & 81.01 & 76.54 & 71.43 & 82.09 \\
+ & DICE & 53.60 & 90.22 & 79.84 & 81.17 & 40.03 & 92.52 & 79.79 & 80.96 & 78.65 & 77.46 & 82.31 & 76.76 & 69.04 & 83.18 \\ 
+ & BATS & 62.05 & 89.31 & 50.38 & 91.21 & 73.70 & 84.55 & 55.97 & 90.30 & 72.93 & 84.50 & 72.61 & 82.03 & 64.61 & 86.98 \\ 
+ & ReAct & 58.24 & 90.02 & 50.82 & 90.98 & 70.70 & 85.75 & 55.91 & 90.18 & 70.85 & 85.39 & \textbf{71.85} & \textbf{82.25} & 63.06 & 87.43 \\ 
+ & DICE+ReAct & 48.20 & 91.19 & 84.18 & 78.79 & 32.05 & 93.71 & 82.23 & 79.65 & 66.74 & 83.96 & 80.28 & 77.96 & 65.61 & 84.21\\
+ & FeatureNorm & \textbf{15.98} & \textbf{96.59} & 96.57 & 61.80 & \textbf{4.56} & \textbf{98.95} & 93.56 & 65.15 & 51.67 & 83.54 & 93.61 & 56.83 & 59.33 & 77.07 \\
+ & LINe & 52.02 & 91.01 & 65.66 & 86.87 & 47.76 & 91.23 & 69.27 & 85.90 & 71.22 & 83.37 & 80.90 & 77.21 & 64.47 & 85.93\\
+ % \cline{2-16}
+ & VOS & 78.36 & 80.58 & 69.77 & 84.77 & 77.38 & 83.61 & 69.65 & 85.48 & 76.60 & 80.58 & 80.47 & 77.57 & 75.37 & 81.96\\
+ & LogitNorm & 51.34 & 91.79 & 88.80 & 78.67 & 6.82 & 98.70 & 90.16 & 75.55 & 77.02 & 77.52 & 77.79 &79.56 & 65.32 & 83.63\\
+ & CIDER & 31.36 & 93.47 & 80.39 & 81.54 & 43.68 & 89.45 & 78.23 & 81.33 & \textbf{35.51} & \textbf{91.70} & 82.80 & 72.71 & 58.66 & 85.03\\
+ & \textbf{TagFog (Ours)} & 37.88 & 92.77 & \textbf{35.45} & \textbf{93.46} & 13.94 & 97.46 & \textbf{35.99} & \textbf{93.10} & 66.74 & 86.88 & 76.00 & 79.13 & \textbf{44.33} & \textbf{90.47} \\ 
+ \hline
+\end{tabular}%
+% }
+\caption{OOD detection performance on the CIFAR10 and the CIFAR100(ID) benchmarks with model backbone ResNet18. $\uparrow$ indicates that larger values are better and $\downarrow$ indicates that smaller values are better. All values are percentages.}
+\label{tab:cifar10}\end{table*}
+\begin{table*}[bht]
+\centering
+\setlength{\tabcolsep}{6pt}
+\normalsize
+% \resizebox{\textwidth}{!}{%
+\begin{tabular}{cccccccccccccccc}
+\hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\end{tabular}} & \multirow{2}{*}{Metrics} & \multicolumn{8}{c}{Method} \\ \cline{3-10}
+& & MSP & Mahalanobis & ODIN & DICE & VIM & Energy & BATS & ReAct\\ \hline
+\multicolumn{1}{c|}{\multirow{6}{*}{CIFAR10}} & \multicolumn{1}{c|}{F$\downarrow$}& 40.95 & 55.69 & 33.06 & 36.63 & 38.35 & 26.69 & 29.85 & 27.76\\ 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 92.09 & 91.99 & 89.64 & 90.72 &93.10  & 93.75 & 93.17 & 93.60\\ \cline{3-10}
+\multicolumn{1}{c|}{}&\multicolumn{1}{c|}{} & DICE+ReAct& FeatureNorm & LINe & VOS & LogitNorm &CIDER &  \multicolumn{2}{c}{\textbf{TagFog (Ours)}} \\ \cline{3-10} 
+ \multicolumn{1}{c|}{}& \multicolumn{1}{c|}{F$\downarrow$}& 36.85& 29.76 & 42.97&27.01 & 16.95& 16.10  & \multicolumn{2}{c}{\textbf{11.17}}\\ 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 93.29 & 90.72 &  89.42& 94.04& 96.93& 97.25  &\multicolumn{2}{c}{\textbf{97.72}}\\ \cline{3-10} \hline
+ 
+\multicolumn{1}{c|}{\multirow{6}{*}{CIFAR100}} & \multicolumn{1}{c|}{} & MSP & Mahalanobis & ODIN & DICE & VIM & Energy & BATS & ReAct\\ \cline{3-10}
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{F$\downarrow$} &78.29 & 93.86 & 64.01 & 68.14 & 61.51 &59.60  & 69.41 & 56.73 \\
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 79.25 & 55.21 & 83.44 & 83.53 & 85.00 & 83.64 & 87.52 & 88.30  \\ \cline{3-10}
+\multicolumn{1}{c|}{}&\multicolumn{1}{c|}{} & DICE+ReAct& FeatureNorm & LINe & VOS & LogitNorm &CIDER &  \multicolumn{2}{c}{\textbf{TagFog (Ours)}} \\ \cline{3-10} 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{F$\downarrow$}& 50.56& 65.61&  54.52 &80.53 & 70.81 & 50.66 & \multicolumn{2}{c}{\textbf{45.28}}\\ 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 84.22 &80.12 &  86.32 & 79.03 & 79.44&86.70 & \multicolumn{2}{c}{\textbf{90.20}}\\ \cline{3-10} \hline
+\end{tabular}
+% }
+\caption{OOD detection performance on the CIFAR10 and the CIFAR100 benchmarks with model backbone ResNet34. Values are average percentages over six OOD datasets.}
+\label{tab:cifar}
+\end{table*}\begin{table*}[!bht]
+\centering
+\setlength{\tabcolsep}{6pt}
+\normalsize
+% \resizebox{\textwidth}{!}{%
+\begin{tabular}{ccccccccccccccccc}
+\hline
+\multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Model\end{tabular}} & \multirow{2}{*}{Metrics} & \multicolumn{8}{c}{Method} \\ \cline{3-10}
+& & MSP &ODIN &  Mahalanobis & Energy & GradNorm & ViM & KNN & BATS\\ \hline
+\multicolumn{1}{c|}{\multirow{6}{*}{ResNet50}} & \multicolumn{1}{c|}{F$\downarrow$}& 58.54 & 42.43 & 80.60 & 46.72 & 41.94 & 57.97 & 40.04 & 44.81\\ 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 87.92 & 91.66 & 60.74 & 91.12 & 89.09 & 88.94 & 90.68 & 90.84\\ \cline{3-10}
+\multicolumn{1}{c|}{}&\multicolumn{1}{c|}{} & DICE & ReAct & DICE+ReAct & FeatureNorm & LINe & CIDER &  \multicolumn{2}{c}{\textbf{TagFog (Ours)}} \\ \cline{3-10} 
+ \multicolumn{1}{c|}{}& \multicolumn{1}{c|}{F$\downarrow$}& 32.63& 39.85 & 40.51 & 61.33& 34.66 & 39.74 &\multicolumn{2}{c}{\textbf{29.50}}\\ 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 93.19 & 92.12& 91.77 & 84.12& 92.55 & 92.80  &\multicolumn{2}{c}{\textbf{94.67}}\\ \cline{3-10} \hline
+ 
+\multicolumn{1}{c|}{\multirow{6}{*}{ResNet101}} & \multicolumn{1}{c|}{} & MSP &ODIN &  Mahalanobis & Energy & GradNorm & ViM & KNN & BATS\\ \cline{3-10}
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{F$\downarrow$} & 55.56 & 38.48 & 77.85 & 43.82 & 43.57 & 51.21 & 39.12 & 39.32 \\
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 88.74 & 92.20 & 66.35 & 91.87 & 87.88 & 90.78 & 91.60 & 91.81  \\ \cline{3-10}
+\multicolumn{1}{c|}{}&\multicolumn{1}{c|}{} & DICE & ReAct & DICE+ReAct & FeatureNorm & LINe & CIDER &  \multicolumn{2}{c}{\textbf{TagFog (Ours)}} \\ \cline{3-10} 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{F$\downarrow$}& 31.53& 39.98 & 35.52 & 48.23& 33.77 & 39.03 &\multicolumn{2}{c}{\textbf{28.53}}\\ 
+\multicolumn{1}{c|}{}& \multicolumn{1}{c|}{A$\uparrow$}& 93.50 & 92.26& 92.42 & 89.23& 92.81 & 92.40  &\multicolumn{2}{c}{\textbf{94.66}}\\ \cline{3-10} \hline
+\end{tabular}%
+% }
+\caption{OOD detection performance on the ImageNet100-I benchmark with model backbones ResNet50 and ResNet101. Values are average percentages over four OOD datasets.}
+\label{tab:imagenet100}
+\end{table*}
+
+\section{Experiments}
+%In this section, we evaluate our method on a suite of OOD detection tasks. We first evaluated on CIFAR benchmarks and later migrated to the large-scale dataset ImageNet100, both of which validated the excellence of our methodology.
+% \textbf{Evaluation on CIFAR and ImageNet-100 benchmark}
+\subsection{Experimental Settings}
+\textbf{Datasets.} Our method is evaluated on two sets of OOD detection benchmarks. {Each benchmark includes one training ID set, one test ID set and several OOD test sets.} For CIFAR~\cite{CIFAR} benchmarks, CIFAR10 and CIFAR100 were respectively used as the ID datasets, and six datasets were used as OOD test sets, including Textures \cite{textures}, SVHN~\cite{SVHN}, iSUN~\cite{iSUN},  Places365~\cite{Places}, LSUN-C~\cite{LSUN}, and LSUN-R~\cite{LSUN}. For large-scale ImageNet benchmarks, two different sets of 100 ImageNet~\cite{imagenet} classes, namely ImageNet100-I~\cite{MCM} and ImageNet100-II~\cite{ImageNet100_another}, were used as ID sets considering that both sets have been used in related literature, and four OOD test datasets, Places \cite{Places}, Textures, iNaturalist~\cite{iNaturalist}, and SUN~\cite{Sun} were used for evaluation. There are no overlapped classes between OOD datasets and corresponding ID datasets.  
+Please see Supplementary Section A for more dataset details.
+
+\noindent\textbf{Experimental details.} Following previous studies~\cite{CIDER,MSP,React}, ResNet18 \cite{ResNet} and ResNet34 were used as the model backbone on CIFAR benchmarks (please also see results with WideResNet28-10~\cite{LogitNorm} in the Supplementary Table 8), and ResNet50 and ResNet101 were used on the ImageNet100 benchmarks. To generate fake OOD data, each CIFAR image was divided into $4\times4$ patches and then randomly rearranged, and similarly each ImageNet100 image was divided  into $8\times8$ patches. For CIFAR10, two jigsaw images were generated per ID image. For CIFAR100 and ImageNet100, one jigsaw image was generated per ID image. For CLIP's Text Encoder, CLIP-L/14 based on ViT-L/14 was adopted  which has a 768-dimensional output. The projection module consists of two fully connected layers with architecture Linear-BN-ReLU-Linear and with hidden layer dimension $2\times$ the input feature dimension of the projection module. 
+
+For the ID training sets and all fake OOD data during training, each image was randomly cropped and resized to $32\times32$ for the CIFAR sets or $224\times224$ for the ImageNet100 training set, while maintaining the aspect ratio within a scale range of 0.2 to 1. In addition, random horizontal flipping, color jittering and grayscale transformation were performed on each image. The model was trained up to 200 epochs using stochastic gradient descent with momentum 0.9 and weight decay 1e-4. The initial learning rate was 0.05, and the learning rate was warmed up from 0.01 to the initial learning rate 0.05 in the first 10 epochs when the batch size was larger than 256. The learning rate decayed by a factor of 10 at the 150-th and the 180-th epoch on CIFAR10, at the 150-th epoch on CIFAR100, and at the 100-th, 150-th, and 180-th epoch on ImageNet100. The batch size was 512 for CIFAR and 128 for ImageNet100. {The temperatures $\tau$ and $\tau'$ were set to 0.1, and $\lambda_1$ and $\lambda_2$ were both set to 1.0 for all experiments.} {During testing, only center cropping and resizing were applied on each test image.} 
+More details on baselines and ReAct score are in the Supplementary Sections B and C.
+
+\noindent\textbf{Metrics.} The evaluation metrics include the false positive rate (\textbf{F}: FPR95) of OOD samples when the true positive rate of ID samples is at 95\%, and the area under the receiver operating characteristic curve (\textbf{A}: AUROC).
+
+
+\subsection{Efficacy Evaluation of the Method} % Comparison with competitive OOD methodologies.}\ \ 
+Table~\ref{tab:cifar10} summarizes the performance of our method and numerous competitive OOD detection methods from the literature on CIFAR10 and CIFAR100. The compared post-hoc methods, which do not require model retraining, include MSP~\cite{MSP}, Mahalanobis~\cite{Maha}, ODIN~\cite{ODIN}, Energy, ViM~\cite{Vim}, DICE~\cite{DICE}, BATS~\cite{BATS}, ReAct~\cite{React}, FeatureNorm~\cite{FeatureNorm}, and LINe~\cite{LINe}. The compared methods requiring model training include VOS~\cite{VOS}, LogitNorm~\cite{LogitNorm}, and CIDER~\cite{CIDER}. We present performance on all OOD datasets as well as the average performance. 
+As Table~\ref{tab:cifar10} shows, our method establishes state-of-the-art average performance on both CIFAR10 and CIFAR100 benchmarks.
+For example, {our method substantially outperforms VOS which produces fake OOD data in feature space assuming a strict conditional Gaussian distribution (e.g., on the CIFAR10 benchmark, FPR95 10.41\%  vs. 33.04\%, AUROC 97.99\% vs. 92.99\%). It also surpasses the current SOTA method CIDER (e.g., on the CIFAR100 benchmark, FPR95 44.33\% vs. 58.66\%, AUROC   90.47\% vs. 85.03\%).} 
+Our method achieves nearly an absolute 3\% improvement in AUROC and absolute 15\% improvement in FPR95 over the best method on the CIFAR100 benchmark. 
+Similar results can be observed with the model backbone ResNet34 (Table~\ref{tab:cifar}),  where our method again outperforms all current methods. The detailed performance on six OOD datasets with the backbone ResNet34 and results with the backbone WideResNet28-10 on both benchmarks are in the Supplementary Section D.
+
+The superior performance of our method is also confirmed on the two ImageNet100 benchmarks. Besides the aforementioned baselines whose performance on either ImageNet100 benchmark was reported in literature, the baselines KNN~\cite{KNN} and GradNorm~\cite{GradNorm} were also included for comparison. As shown in Table~\ref{tab:imagenet100}, our method with both model backbones achieves  state-of-the-art average performance on the ImageNet100-I benchmark. The detailed performance on each OOD dataset and the superior performance of our method on the other benchmark ImageNet100-II were included in Supplementary Table 10 and Table 11.
+\begin{table}[tbh]
+\centering
+\setlength{\tabcolsep}{4pt}
+% \resizebox{\linewidth}{!}{%
+\small
+\begin{tabular}{cccccccc} 
+\hline
+ \multirow{4}{*}{Fake OOD Data}& \multirow{4}{*}{$\mathcal{L}_{CI}$}&\multirow{4}{*}{$\mathcal{L}_{SC}$} & \multicolumn{2}{c}{CIFAR100} &\multicolumn{2}{c}{ImageNet100-I} \\ 
+& & & \multicolumn{2}{c}{ResNet18} & \multicolumn{2}{c}{ResNet50}\\\cline{4-5} \cline{6-7}
+& & & \multicolumn{2}{c}{Average} & \multicolumn{2}{c}{Average}\\
+&  & & F$\downarrow$ & A$\uparrow$& F$\downarrow$ & A$\uparrow$  \\ \hline
+&  &  & 63.06 &87.43 & 39.85 & 92.12\\  
+\ding{52}&  &  & 48.97 & 89.17 & 37.28 & 93.42\\  
+& \ding{52} &  & 53.65 & 88.38 & 32.89 & 93.78\\  
+ &  & \ding{52} & 54.87 & 88.27 & 35.76 & 93.40\\
+\ding{52}& \ding{52} &  & 48.59 & 89.68 & 31.95 & 94.00\\  
+&\ding{52} & \ding{52}& 48.62 & 89.82 & 32.35 &93.87\\ 
+\ding{52}& &\ding{52} & 47.53 & 89.57 & 33.50 & 93.82\\
+\ding{52}& \ding{52} & \ding{52}& \textbf{44.33} & \textbf{90.47} & \textbf{29.50}&\textbf{94.67}\\
+\hline
+\end{tabular}%
+% }
+\caption{Ablation study of the proposed learning framework.} 
+\label{tab:ablation1}
+\end{table}
+\begin{figure}[tbh]
+    \centering
+    \includegraphics[width=0.48\linewidth, height=0.35\linewidth]{Pictures/randomtext_auroc_plus.png}
+    \includegraphics[width=0.48\linewidth, height=0.35\linewidth]{Pictures/randomtext_fpr_plus.png}
+    \caption{Ablation study of the text-guided learning on  CIFAR10 and CIFAR100 benchmarks with backbone ResNet-18. 
+    All values are the average performance on the six OOD datasets. The proposed text-guided learning (`ChatGPT') is better than its two ablated versions.
+    }
+    \label{fig:ablation_text}
+\end{figure}
+\subsection{Ablation Study}
+Extensive ablation studies were performed to confirm the effect of each component in the proposed learning framework. As
+Table~\ref{tab:ablation1} shows on two benchmarks CIFAR100 and ImageNet100-I, when only one of the three main components (fake OOD data and two loss terms $\mathcal{L}_{CI}$ and $\mathcal{L}_{SC}$) is available, the model performs  better than the baseline without any of the three components (i.e., rows 2-4 vs. row 1). {Combination of any two components often leads to increased performance (rows 5-7) and already surpasses the best baseline on the CIFAR100 benchmark (AUROC 89.57\%-89.82\% vs. 87.43\%)}. Inclusion of all three components achieves the new state-of-the-art performance (last row), demonstrating the complementarity of the three components in improving OOD detection performance. 
+\begin{figure*}[tbh]
+    \centering
+    \includegraphics[width=0.3\linewidth, height=0.23\linewidth]{Pictures/cifar100_tao.png}
+    \includegraphics[width=0.3\linewidth, height=0.23\linewidth]{Pictures/cifar100_tao_.png}
+    \includegraphics[width=0.3\linewidth, height=0.23\linewidth]{Pictures/cifar100_lamda1.png}
+    \includegraphics[width=0.3\linewidth, height=0.23\linewidth]{Pictures/cifar100_lamda2.png}
+    \includegraphics[width=0.3\linewidth, height=0.23\linewidth]{Pictures/cifar100_numberood.png}
+    \includegraphics[width=0.3\linewidth, height=0.23\linewidth]{Pictures/hyper-parameters.png}
+    \caption{Sensitivity study of hyper-parameters $\tau$ and $\tau'$, $\lambda_1$ and $\lambda_2$,  and the number of fake OOD data. All experiments are on the CIFAR100 benchmark with model backbone ResNet18. The dashed line indicates the performance of the best baseline. Last subfigure: y-axis represents the standard deviation (std) of performance (A and F), x-axis represents five hyper-parameters, where N represents the number of fake OOD data.   
+    }
+    \label{fig:sensitivity}
+\end{figure*}
+
+In addition, more detailed ablation study on the text-guided learning was performed. Specifically, when the proposed ChatGPT-generated textual description (% `*NAME' in 
+Figure~\ref{fig:ablation_text}, 
+{``ChatGPT''}) was replaced by the traditional simple description of each class (% `*NAME' in Figure~\ref{fig:ablation_text}
+{``Standard''}) in the form of ``a photo of [ID class name]'', or the ChatGPT-based anchor embedding was replaced by a randomly generated embedding (% `*NAME' in Figure~\ref{fig:ablation_text}
+{``Random''}) for each ID class, OOD detection performance was clearly downgraded on both CIFAR benchmarks (Figure~\ref{fig:ablation_text}). Similar results were obtained on the ImageNet100 benchmark (Supplementary Figure 2). This supports that both ChatGPT's textual description and CLIP's textual embeddings as anchors are helpful in guiding the learning of image encoder for OOD detection. Additional experiments on the validity of text selection and visualizations of more compact visual representations obtained from the proposed learning framework were in Supplementary Section E.
+\subsection{Sensitive and Generalizability Studies}
+% temperature tau, lambda1 and lambda2,  
+The proposed learning framework is insensitive to the choice of hyper-parameters in a large range, including the temperature factors $\tau$ and $\tau'$, the weighting coefficients $\lambda_1$ and $\lambda_2$ in the loss function, and the number of fake OOD data used for model training. As Figure~\ref{fig:sensitivity} demonstrates, {when $\tau$ and $\tau'$ vary in the range $[0.05, 0.4]$, $\lambda_1$  and $\lambda_2$ in the range $[0.7, 1.5]$, $\lambda_2$ in the range $[0.7, 1.5]$, the number of fake OOD data in the range $[1\times 50,000, 4\times 50,000]$ (i.e., generating 1 to 4 fake OOD images for each of the 50,000 ID images), 
+the model performs stably (as shown in Figure \ref{fig:sensitivity}: last subfigure representing the standard deviation (std) of performance on all hyper-parameters) and is better than the best baseline ReAct in AUROC, CIDER in FPR95 on the CIFAR100 benchmark. Similar results were obtained on the other benchmarks (Supplementary Figure 3).}
+
+\begin{table}[ht]
+\centering
+\setlength{\tabcolsep}{3pt}
+\small
+% \resizebox{\linewidth}{!}{%
+\begin{tabular}{lccccc}
+\hline
+\multirow{2}{*}{Method} 
+ & \multicolumn{2}{c}{ResNet50} & \multicolumn{2}{c}{ResNet101} \\ \cline{2-5}
+ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$\\ \hline
+MSP & 58.54/\textbf{43.99}      & 87.92/\textbf{91.99}      & 55.56/\textbf{44.23}     & 88.70/\textbf{91.85}\\
+Energy & 46.72/\textbf{38.22}      & 91.12/\textbf{92.78}      & 43.82/\textbf{36.57}     & 91.87/\textbf{93.35}      
+                               \\
+ViM                     & 57.97/\textbf{38.89}      & 88.94/\textbf{93.99}      & \textbf{51.21}/52.46     & 90.78/\textbf{91.53}   \\ 
+ReAct                     & 39.85/\textbf{29.50}      & 92.12/\textbf{94.67}      & 39.98/\textbf{28.53}     & 92.26/\textbf{94.66}  \\\hline
+\end{tabular}%
+% }
+\caption{Fusion of our learning framework with various post-hoc OOD methods on the ImageNet100-I Benchmark. For each paired values by `/': the left one is from the original baseline and the right one is from the fusion one. Values are average percentages over four OOD datasets.}
+\label{tab:imagenetfusion}
+\end{table}
+A further benefit of our learning framework is its flexible fusion with existing post-hoc OOD detection methods, where the proposed score function in the post-hoc methods are simply adopted for OOD detection after model training with our learning framework. 
+Table~\ref{tab:imagenetfusion} and Table~\ref{tab:cifar_fusion} show that the fusion of our learning framework with each representative post-hoc method often improves the OOD detection performance compared to the original method on both the ImageNet100 and CIFAR benchmarks. 
+
+
+%representations obtained from training can be seen in 
+\begin{table*}[!bht]
+\centering
+\setlength{\tabcolsep}{4pt}
+\normalsize
+% \resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccccccc}
+\hline
+\multirow{3}{*}{Method} & \multicolumn{4}{c}{ResNet18} &  & \multicolumn{4}{c}{ResNet34} & \\ \cline{2-5} \cline{7-10} 
+ & \multicolumn{2}{c}{CIFAR10} & \multicolumn{2}{c}{CIFAR100} &  & \multicolumn{2}{c}{CIFAR10} & \multicolumn{2}{c}{CIFAR100}&\\ \cline{2-5} \cline{7-10} 
+ & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$ &  & F$\downarrow$ & A$\uparrow$ & F$\downarrow$ & A$\uparrow$&  \\ \hline
+MSP & 48.03/\textbf{26.57}      & 91.40/\textbf{96.19}      & 73.60/\textbf{58.24}     & 82.24/\textbf{85.63}       &   & 40.95/\textbf{26.52}      & 92.09/\textbf{96.05}      & 78.29/\textbf{59.26}      & 79.25/\textbf{85.82} &           \\
+Energy & 30.96/\textbf{10.51}      & 92.05/\textbf{97.95}      & 70.53/\textbf{47.42}     & 84.34/\textbf{89.46} &    & 26.69/\textbf{11.29}       
+                               & 93.17/\textbf{97.64}      & 69.41/\textbf{53.30}      & 83.64/\textbf{88.82}&      \\
+ViM                      & 47.90/\textbf{20.61}      & 91.02/\textbf{96.57}      & \textbf{71.43}/72.50     & \textbf{82.09}/81.76  &   & 38.35/\textbf{11.85}      
+                               & 93.75/\textbf{97.79}      & 61.51/\textbf{55.19}      & 85.00/\textbf{87.95} &      \\ 
+ReAct                     & 31.65/\textbf{10.41}      & 92.26/\textbf{97.99}      & 63.06/\textbf{44.33}     & 87.43/\textbf{90.47}   &  & 27.76/\textbf{11.17}       
+                               & 93.29/\textbf{97.72}      & 50.56/\textbf{45.28}       & 88.30/\textbf{90.20} &     \\\hline
+\end{tabular}%
+% }
+\caption{Fusion of our framework with various OOD methods on the CIFAR Benchmarks. Values are average percentages over six OOD datasets.
+}
+\label{tab:cifar_fusion} 
+\end{table*}
+
+
+
+\section{Related Work}
+OOD detection methods can be categorized into the following three groups based on accessible extra data and models.
+
+\noindent\textbf{In-distribution data only:}
+OOD detection methods with only ID data can be divided into two categories. One is training-based approach that incorporates regularization during model training~\cite{Mos,CSI,unsupood}, and the other is post-hoc approach which performs post-processing or additional analysis on the generally trained model to capture the discrepancy between ID and OOD data without model retraining.
+For example, the training-based method G-ODIN~\cite{G-ODIN} {uses a divisor/dividend structure to measure the anomaly degree of input data}, and LogitNorm~\cite{LogitNorm} normalizes logits before the cross-entropy loss to reduce overconfidence. CIDER~\cite{CIDER} uses prototype construction during training, via which data from the same ID class become more compact and close to the associated ID-specific prototype, 
+%while different classes of data are disperse,  to prototypes and disperses different-class prototypes, 
+achieving best performance on the CIFAR10 benchmarks. In contrast, our approach uses semantically rich CLIP text embeddings as prototypes and achieves better performance on multiple benchmarks.
+
+Differently in post-hoc methods, OOD scores are designed often based on information from top layers of generally trained neural networks, like softmax outputs~\cite{MSP, softmax1, softmax2}, logits~\cite{MaxLogits,Multi-label-Energy,Energy}, gradients~\cite{gradient,ODIN}, feature embeddings~\cite{Maha,Vim,featureembedding1,featureembedding2, FeatureNorm}, and model weights~\cite{DICE,LINe}. Our approach uses the state-of-the-art ReAct score~\cite{React} which improves the effect of the energy score by pruning high-activation feature components from the penultimate layer.
+
+\noindent\textbf{Extra real or fake OOD data:} OOD detection performance is often improved when additional OOD data is accessible~\cite{oe_1,oe_2}. However, acquiring real OOD data is usually expensive. As an alternative solution, generating fake OOD data for OOD detection becomes popular and economically friendly. GANs have been used to generate synthetic OOD data~\cite{gan1,gan2,gan6}, but struggling with generation of complicated images and unstable training. VOS~\cite{VOS} assumes Gaussian-like feature distributions to synthesize outliers, while FeatureNorm~\cite{FeatureNorm} uses input-level fakes to find the layer in the pre-trained network with the largest difference in feature norm between ID and ODD data for OOD score design. 
+% without teaching semantic offsets. 
+Differently, our approach uses a simple yet effective Jigsaw strategy to generate challenging OOD data which are locally similar to but globally different from real ID data for model training, without complex generation process or extra assumptions. 
+
+\noindent\textbf{Extra-modality model:} 
+Recently, large vision-language models such as CLIP~\cite{CLIP} and ALIGN~\cite{align} have enabled major advancements in cross-modality studies. However, their usage as auxiliary tools for OOD detection remains limited. Fort et al.~\cite{CLIP_morelabel} send extra OOD text not included in ID classes to CLIP's text encoder for OOD detection. 
+%using the similarity between visual and OOD %textual representations for OOD detection. 
+ZOC~\cite{CLIP_lablegenerate} train a label generator on CLIP's visual encoder to guide OOD detection, and similarly Ming et al.~\cite{MCM} design an OOD score based on the CLIP's visual and text encoders. However, all these studies require additional OOD labels and visual encoders.  Unlike these studies, our approach does not need any extra OOD label and CLIP's visual encoder.
+
+\section{Conclusion}
+In this study, a novel learning framework was proposed for OOD detection by using the Jigsaw-based fake OOD data and text-guided learning. The specially designed fake OOD data generation and the ChatGPT-based CLIP embedding for each ID class help the image encoder learn to extract more compact and semantic feature representation, which in turn helps discriminate between ID and OOD data as supported in extensive empirical evaluations. The new state-of-the-art performance of the proposed learning framework was obtained on the widely used benchmarks. Its flexible fusion with post-hoc methods indicates that the  learning framework may be easily combined with various new methods in future.
+
+\section{Acknowledgements}
+This work is supported in part by the Major Key Project of PCL (grant No. PCL2023AS7-1), the National Natural Science Foundation of China (grant No. 62071502), and Guangdong Excellent Youth Team Program (grant No. 2023B1515040025).
+
+\bibliography{aaai24}
+
+\clearpage
+% \section{Supplematery}
+% \section{A. Datasets Details}
+% \textbf{CIFAR benchmark}\\
+% For CIFAR benchmarks, we use the follow OOD datasets: \textbf{SVHN}: SVHN (Street View House Number) dataset comprises house numbers extracted from images captured by Google Street View. For our study, we utilize the complete test set of SVHN, which consists of 26,032 images, as out-of-distribution (OOD) examples.\\
+% \textbf{LSUN}: LSUN is a dataset focused on scene understanding,  primarily consisting of images depicting various scenes such as bedrooms, houses, living rooms, classrooms, and more. LSUN\_C and LSUN\_R are the image datasets obtained by performing Crop and Resize operations on the original image. For our purposes, we select a random sample of 10,000 images from LSUN to serve as out-of-distribution examples.\\
+% \textbf{Textures}: The Describable Textures Dataset (DTD) is a collection of texture and abstracted patterns images that contains 5,640 images, categorized into 47 classes based on human perception. As no categories overlap with CIFAR, we utilize the entire dataset of textures.\\
+% \textbf{iSUN}: iSUN is an extensive eye-tracking dataset comprising 20,608 natural scene images sourced from the SUN database. To serve as out-of-distribution examples, we carefully sample 8,925 images from iSUN, ensuring that there is no conceptual overlap with CIFAR. These selected images provide unique visual content for our analysis, allowing us to evaluate performance beyond the scope of CIFAR.\\
+% \textbf{Places365}: Places365 is a dataset that offers an extensive collection of photographs featuring scenes categorized into 365 different scene categories. The test set of this dataset consists of 900 images per category. For evaluation purposes, we randomly select 100 images from each category. These images serve as representative samples for evaluating the performance of algorithms or techniques on a diverse range of scene categories in the Places365 dataset.\\
+% \textbf{Large-scale Dataset benchmark}\\
+% For the ImageNet100 benchmarks, we chose two ImageNet100 datasets to demonstrate the validity of our method, the one presented in the main article (written here as {ImageNet100-I}), and the other one in the supplementary material (written here as {Imagenet100-II}).\\
+% \textbf{ImageNet100-I}. ImageNet100-I contains 100 classes randomly selected from ImageNet-1k. The categories are as follows:\\ 
+% n03877845,n03000684,n03110669,n03710721,n02825657,
+% n02113186,n01817953,n04239074,n02002556,n04356056,
+% n03187595,n03355925,n03125729,n02058221,n01580077,
+% n03016953,n02843684,n04371430,n01944390,n03887697,
+% n04037443,n02493793,n01518878,n03840681,n04179913,
+% n01871265,n03866082,n03180011,n01910747,n03388549,
+% n03908714,n01855032,n02134084,n03400231,n04483307,
+% n03721384,n02033041,n01775062,n02808304,n13052670,
+% n01601694,n04136333,n03272562,n03895866,n03995372,
+% n06785654,n02111889,n03447721,n03666591,n04376876,
+% n03929855,n02128757,n02326432,n07614500,n01695060,
+% n02484975,n02105412,n04090263,n03127925,n04550184,
+% n04606251,n02488702,n03404251,n03633091,n02091635,
+% n03457902,n02233338,n02483362,n04461696,n02871525,
+% n01689811,n01498041,n02107312,n01632458,n03394916,
+% n04147183,n04418357,n03218198,n01917289,n02102318,
+% n02088364,n09835506,n02095570,n03982430,n04041544,
+% n04562935,n03933933,n01843065,n02128925,n02480495,
+% n03425413,n03935335,n02971356,n02124075,n07714571,
+% n03133878,n02097130,n02113799,n09399592,n03594945.
+% \textbf{ImageNet100-II}. 
+% % We randomly sample another 100 classes from ImageNet-1k to create ImageNet100-II.
+% ImageNet100-II contains another 100 classes randomly selected from ImageNet-1k. The categories are as follows:\\ 
+% n01986214,n04200800,n03680355,n03208938,n02963159,
+% n03874293,n02058221,n04612504,n02841315,n02099712,
+% n02093754,n03649909,n02114712,n03733281,n02319095,
+% n01978455,n04127249,n07614500,n03595614,n04542943,
+% n02391049,n04540053,n03483316,n03146219,n02091134,
+% n02870880,n04479046,n03347037,n02090379,n10148035,
+% n07717556,n04487081,n04192698,n02268853,n02883205,
+% n02002556,n04273569,n02443114,n03544143,n03697007,
+% n04557648,n02510455,n03633091,n02174001,n02077923,
+% n03085013,n03888605,n02279972,n04311174,n01748264,
+% n02837789,n07613480,n02113712,n02137549,n02111129,
+% n01689811,n02099601,n02085620,n03786901,n04476259,
+% n12998815,n04371774,n02814533,n02009229,n02500267,
+% n04592741,n02119789,n02090622,n02132136,n02797295,
+% n01740131,n02951358,n04141975,n02169497,n01774750,
+% n02128757,n02097298,n02085782,n03476684,n03095699,
+% n04326547,n02107142,n02641379,n04081281,n06596364,
+% n03444034,n07745940,n03876231,n09421951,n02672831,
+% n03467068,n01530575,n03388043,n03991062,n02777292,
+% n03710193,n09256479,n02443484,n01728572,n03903868.
+% \textbf{OOD datasets.}\ \ For large-scale dataset, we use the following OOD test data for ImageNet100 benchmarks, whose selected categories are disjoint with ImageNet100.\\
+% \textbf{iNaturalist} is a dataset that hosts images of the natural world. It comprises 13 super-categories and 5,089 sub-categories encompassing plants, insects, birds, mammals, and more. We specifically utilize a subset within iNaturalist that consists of 110 plant classes, ensuring there is no overlap with the classes found in ImageNet100. For evaluation purposes, we randomly select 10,000 images from a pool that is separate and distinct from ImageNet100.\\
+% \textbf{SUN}. The Scene Understanding (SUN) dataset comprises 397 carefully selected categories for evaluating the performance of scene recognition algorithms, which contains 899 categories that cover more than indoor, urban, and natural places with or without human beings appearing in them. In order to conduct our evaluation, we randomly select 10,000 images from a pool that is separate and distinct from ImageNet100.\\
+% \textbf{Places} is an extensive dataset of scene photographs. It consists of labeled photos that belong to various scene semantic categories within three macro-classes: Indoor, Nature, and Urban. In order to conduct our evaluation, we randomly select 10,000 images from a pool that is separate and distinct from ImageNet100.\\
+% \textbf{Textures}.\ \ The Describable Textures Dataset (DTD) is a collection of texture and abstracted patterns images that contains 5,640 images, categorized into 47 classes based on human perception. As no categories overlap with ImageNet100, we utilize the entire dataset of textures.\\
+% \section{B. More experimental details}
+% \textbf{Software and hardware.}\ \ All methods are implemented in Pytorch1.12. We run all the experiments on NVIDIA A30 GPU.\\ 
+% \textbf{Architecture.}\ \ As shown in the figure of the main paper, there is a projection module in the backbone branch with a Linear-BN-ReLU-Linear structure, i.e., a two-layer nonlinear projection layer composition. We fix the output dimension of the projection to be 768, which is the same as the output dimension of CLIP's Text encoder.\\
+% \textbf{About baselines.}\ \ For methods based on pre-trained models such as MSP, ODIN, Energy, FeatureNorm and so on, we train a CNN classifier with certain backbone from scratch with the associated training ID datasets. In the CIFAR10 or CIFAR100 training sets, every training image was initially padded from $32\times32$ pixels to $36\times36$ pixels. Subsequently, the images were randomly cropped back to their original size of $32\times32$ pixels. To enhance diversity, random horizontal flipping was applied alongside random cropping for each training image. During testing, only center cropping coupled with resizing was implemented specifically on the dataset. We train them with cross-entropy loss for 200 epochs on CIFAR benchmarks and for 100 epochs on ImageNet100 benchmarks. For CIFAR benchmarks, the initial learning rate is 0.1 and decays by a factor of 10 at epochs at epochs 100, 150 respectively. For ImageNet100 benchmarks, the initial learning rate is 0.1 and decays by a factor of 10 at epochs at epochs 50, 75, 90 respectively. We use stochastic gradient descent with momentum 0.9, and weight decay 0.0005. The batch size was set to 128. Excluding post-hoc methods, we report performance over three runs. For LogitNorm, VOS, we follow the setup in its original paper. For CIDER, We trained 500 epochs and experimented with KNN as the OOD detection score.\\
+% \textbf{About ours.} All of our experiments report the results on random seed 0. To validate the robust performance of our method, we implemented training across 4 distinct random seeds. The out-of-distribution detection capabilities of our method using all architectures trained on CIFAR benchmarks are presented in Table~\ref{tab:seedcifar10}, \ref{tab:seedcifar100}. As we can see, our method is more competitive than other compared methods. 
+% % And the average performance of ImageNet100-I on ResNet50 is AUROC: FPR95:.
+% For ImageNet100-I benchmark on ResNet50, the average performance reached similarly AUROC $94.42^{\pm{0.19}}$ and FPR95 $30.39^{\pm{1.30}}$.
+
+% \begin{table*}
+% \centering
+% \resizebox{\textwidth}{!}
+% {%
+% \begin{tabular}{cccccccccccccccc}
+% \hline
+% \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\end{tabular}} & \multirow{3}{*}{Model} & \multicolumn{12}{c}{OOD Datasets} & \multicolumn{2}{c}{\multirow{2}{*}{Average}} \\ \cline{3-14} 
+%  &  & \multicolumn{2}{c}{SVHN} & \multicolumn{2}{c}{LSUN-R} & \multicolumn{2}{c}{LSUN-C} & \multicolumn{2}{c}{iSUN} & \multicolumn{2}{c}{Textures} & \multicolumn{2}{c}{Places365} \\
+%  &  & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ \\ \hline
+% \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\end{tabular}} 
+%  & ResNet18 & $5.82^{\pm{0.66}}$ & $98.80^{\pm{0.04}}$ & $8.36^{\pm{1.27}}$ & $98.41^{\pm0.26}$ & $3.68^{\pm1.60}$ & $99.14^{\pm0.28}$ & $8.23^{\pm1.25}$ & $98.58^{\pm0.25}$ & $18.04^{\pm2.35}$ & $96.91^{\pm0.25}$ & $25.83^{\pm1.22}$ & $94.96^{\pm0.13}$ & $\textbf{11.66}^{\pm1.04}$ & $\textbf{97.78}^{\pm0.14}$   \\
+%  \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\end{tabular}} 
+%  & ResNet34 & $4.97^{\pm0.96}$ & $99.00^{\pm0.17}$ & $8.40^{\pm1.15}$ & $98.40^{\pm0.20}$ & $1.88^{\pm0.16}$ & $99.49^{\pm0.07}$ & $8.43^{\pm1.37}$& $98.41^{\pm0.23}$ & $15.56^{\pm1.01}$ & $97.09^{\pm0.22}$& $24.48^{\pm0.70}$ & $94.69^{\pm0.17}$ & $\textbf{10.62}^{\pm0.46}$ & $\textbf{97.85}^{\pm0.11}$  \\ 
+%  \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\end{tabular}} 
+%  & WideResNet28-10 & $7.66^{\pm0.75}$ & $98.48^{\pm0.12}$& $5.37^{\pm0.64}$ & $98.95^{\pm0.14}$ & $2.40^{\pm0.13}$ & $99.38^{\pm0.08}$ & $5.02^{\pm1.03}$& $98.98^{\pm0.17}$ & $16.22^{\pm1.12}$ & $96.89^{\pm0.15}$& $24.34^{\pm0.58}$ & $94.35^{\pm0.16}$ & $\textbf{10.16}^{\pm0.21}$ & $\textbf{97.85}^{\pm0.05}$ \\
+%  \hline
+% \end{tabular}%
+% }
+% \caption{OOD detection performance on the CIFAR10 benchmark. Results are averaged over 4 independent runs.}
+% \label{tab:seedcifar10}
+% \end{table*}
+% \begin{table*}
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccccccccccccccc}
+% \hline
+% \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\end{tabular}} & \multirow{3}{*}{Model} & \multicolumn{12}{c}{OOD Datasets} & \multicolumn{2}{c}{\multirow{2}{*}{Average}} \\ \cline{3-14} 
+%  &  & \multicolumn{2}{c}{SVHN} & \multicolumn{2}{c}{LSUN-R} & \multicolumn{2}{c}{LSUN-C} & \multicolumn{2}{c}{iSUN} & \multicolumn{2}{c}{Textures} & \multicolumn{2}{c}{Places365} \\
+%  &  & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ \\ \hline
+%  \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\end{tabular}} 
+%  & ResNet18 & $39.52^{\pm4.38}$ & $92.57^{\pm0.93}$ & $40.50^{\pm6.11}$ & $92.55^{\pm1.26}$ & $19.01^{\pm5.58}$ & $96.61^{\pm0.91}$ & $42.03^{\pm5.01}$& $92.12^{\pm1.07}$ & $63.98^{\pm5.23}$ & $87.57^{\pm1.00}$& $75.48^{\pm0.66}$ & $79.44^{\pm0.78}$ & $\textbf{46.75}^{\pm2.63}$ & $\textbf{90.15}^{\pm0.55}$  \\ 
+% \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\end{tabular}} 
+%  & ResNet34 & $41.90^{\pm{3.52}}$ & $91.78^{\pm{1.20}}$ & $38.98^{\pm{5.01}}$ & $92.50^{\pm0.93}$ & $32.79^{\pm9.44}$ & $94.12^{\pm1.57}$ & $42.86^{\pm5.81}$ & $91.76^{\pm1.08}$ & $51.87^{\pm1.61}$ & $89.76^{\pm0.34}$ & $72.81^{\pm0.39}$ & $80.11^{\pm0.63}$ & $\textbf{46.86}^{\pm1.97}$ & $\textbf{90.01}^{\pm0.26}$   \\
+%  \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\end{tabular}} 
+%  & WideResNet28-10 & $38.29^{\pm2.41}$ & $93.00^{\pm0.50}$ & $36.15^{\pm9.29}$ & $93.02^{\pm2.29}$ & $20.19^{\pm3.09}$ & $96.44^{\pm0.43}$ & $37.81^{\pm9.47}$& $93.00^{\pm2.31}$ & $40.18^{\pm1.78}$ & $92.41^{\pm0.26}$& $70.73^{\pm1.74}$ & $82.24^{\pm0.92}$ & $\textbf{40.56}^{\pm4.05}$ & $\textbf{91.68}^{\pm0.88}$ \\
+%  \hline
+% \end{tabular}%
+% }
+% \caption{OOD detection performance on the CIFAR100 benchmark. Results are averaged over 4 independent runs.}
+% \label{tab:seedcifar100}
+% \end{table*}
+% \section{C. Sensitivity on the trimming percentage for ReAct Score}
+% We choose ReAct score as our OOD detection score, which crops the activation values of the feature vector to a certain range (i.e., min($a$,$c$), where all values larger than $c$ are taken as $c$, and the rest of the values are unchanged) before calculating logits, and after that, we carry out the calculation of Energy. The Energy is defined in following equation: 
+% \begin{equation}
+%     E(\ve{x}) = - \log \sum_{i=1}^{K} \exp(h_i(f(\ve{x}))) \,, \label{energy-score}
+% \end{equation}
+% where $h_i(f(\ve{x}))$ represents the $i$-th value of logit generated for sample \ve{x} after passing through the Image Encoder $f$ and classifier head $h$. And the Energy Score $-E(\ve{x})$ goes for OOD detection: the larger the score, the more likely the sample $\ve{x}$ is to be an ID sample, otherwise the reverse is true. 
+% The operation of ReAct alleviates the problem of high activation values for some OOD data features, which in turn results in better separability of Energy values for ID data and OOD data. Ideally, an appropriate threshold $c$ should be chosen to correct the activation situation of the OOD data while preserving the activation situation of the ID data. In practice, we set the value of $c$ based on the $p$-th percentile of the activation situation estimated from the ID data. For example, when $p$ = 95, it means that 95\% of the activation situation of the ID data is below the threshold $c$. Experiments on the sensitivity of the cropping percentiles on the three datasets are shown in Tables~\ref{tab:react_for_cifar10},~\ref{tab:react_for_ResNet50} and ~\ref{tab:react_for_ResNet101}.  For three datasets, the trimming percentage is insensitive in a wide range, and as clipping percentage becomes smaller, the OOD detection performance dropped. This is because, as the cropping percentage becomes smaller and the cropping threshold becomes smaller, it overly destroys the ID data activation values leading to poorer detection.\ \ 
+
+% \begin{table}[ht]
+%   \centering
+%   \resizebox{0.7\linewidth}{!}{%
+%     \begin{tabular}{cccccc}
+%       \hline
+%       % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}} 
+%       & \multirow{2}{*}{Percentage}&\multicolumn{2}{c}{CIFAR10}&\multicolumn{2}{c}{CIFAR100}\\
+%       & &{FPR95$\downarrow}$ &{AUROC$\uparrow}$&{FPR95$\downarrow}$ &{AUROC$\uparrow}$\\\hline
+%       % \multirow{9}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ ResNet18\end{tabular}}
+%       &60& 23.95 & 95.60&61.91 & 83.70 \\
+%       &65& 17.33 & 96.76&56.07 & 86.22 \\
+%       &70& 15.18 & 97.22& 51.43 & 88.16 \\
+%       &80& 12.80 & 97.67& 46.00 & 90.05\\
+%       &85& 11.86 & 97.82&  44.50 & 90.37 \\
+%       &90& 10.96 & 97.92& 44.33 & 90.47\\
+%       &95& 10.45& 97.97 & 45.92& 90.28\\
+%       &97& 10.41 &97.99 &46.39 &90.08  \\
+%       &100(Energy)& 10.51 & 97.95& 47.42 & 89.46\\
+%       \hline
+%     \end{tabular}%
+%   }
+%   \caption{Sensitivity on different trimming percentage on CIFAR10 and CIFAR100 with ResNet18. All values are percentages and averaged over multiple OOD test datasets.}
+%     \label{tab:react_for_cifar10}
+%  \end{table}
+% % \begin{table}[ht]
+% %   \centering
+% %   \resizebox{0.7\linewidth}{!}{%
+% %     \begin{tabular}{cccc}
+% %       \hline
+% %       \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}} & \multirow{2}{*}{Percentage}&\multirow{2}{*}{FPR95$\downarrow}$ & \multirow{2}{*}{AUROC$\uparrow}$\\ \\\hline
+% %       \multirow{9}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ ResNet18\end{tabular}}
+% %      &60& 61.91 & 83.70 \\
+% %       &65& 56.07 & 86.22 \\
+% %       &70& 51.43 & 88.16 \\
+% %       &80& 46.00 & 90.05 \\
+% %       &85& 44.50 & 90.37 \\
+% %       &90& \textbf{44.33} & \textbf{90.47} \\
+% %       &95& 45.92& 90.28 \\
+% %       &97& 46.39 &90.08  \\
+% %       &100(Energy)& 47.42 & 89.46\\
+% %       \hline
+% %     \end{tabular}%
+% %   }
+% %   \caption{Ablation on different trimming percentage on CIFAR100 with ResNet18. All values are percentages and averaged over multiple OOD test datasets.}
+% %     \label{tab:react_for_cifar100}
+% % \end{table}
+% \begin{table}[ht]
+%   \centering
+%   \resizebox{0.6\linewidth}{!}{%
+%     \begin{tabular}{cccc}
+%       \hline
+%       % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}}
+%       & \multirow{2}{*}{Percentage}&\multirow{2}{*}{FPR95$\downarrow}$ & \multirow{2}{*}{AUROC$\uparrow}$\\ \\\hline
+%       % \multirow{7}{*}{\begin{tabular}[c]{@{}c@{}}ImageNet100\\ ResNet50\end{tabular}}
+%       &70& 70.75 & 82.91 \\
+%       &75& 48.59 & 90.23 \\
+%       &80& 34.36 & 93.40 \\
+%       &85& 29.52 & 94.50 \\
+%       &90& 29.50 & 94.67 \\
+%       &95& 32.22 & 94.18  \\
+%       &100(Energy)& 38.22 & 92.78\\
+%       \hline
+%     \end{tabular}%
+%   }
+%   \caption{Sensitivity on different trimming percentage on ImageNet100-I with ResNet50. All values are percentages and averaged over multiple OOD test datasets.}
+%     \label{tab:react_for_ResNet50}
+% \end{table}
+% \begin{table}[ht]
+%   \centering
+%   \resizebox{0.6\linewidth}{!}{%
+%     \begin{tabular}{cccc}
+%       \hline
+%       % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}}
+%       & \multirow{2}{*}{Percentage}&\multirow{2}{*}{FPR95$\downarrow}$ & \multirow{2}{*}{AUROC$\uparrow}$\\ \\\hline
+%       % \multirow{7}{*}{\begin{tabular}[c]{@{}c@{}}ImageNet100\\ ResNet101\end{tabular}}
+%       &75& 63.64 & 85.20 \\
+%       &80& 50.12 & 89.95 \\
+%       &84& 39.13 & 92.45 \\
+%       &87& 33.02 & 93.62 \\
+%       &90& 30.09 & 94.30 \\
+%       &95& 28.53 & 94.66 \\
+%       &100(Energy)& 36.57 & 93.35\\
+%       \hline
+%     \end{tabular}%
+%   }%94.66 28.53
+%   \caption{Sensitivity on different trimming percentage on ImageNet100-I with ResNet101. All values are percentages and averaged over multiple OOD test datasets.}
+%     \label{tab:react_for_ResNet101}
+% \end{table}
+% \begin{table}[ht]
+%     \centering
+%     \begin{tabular}{l}
+%       \hline
+%       a photo of a $<$class$>$ \\
+%       a blurry photo of a $<$class$>$ \\
+%       a photo of many $<$class$>$\\
+%       a photo of the large $<$class$>$ \\
+%       a photo of the small $<$class$>$ \\
+%       $<$class$>$ is $<$description by ChatGPT$>$ \\
+%       \hline
+%     \end{tabular}
+%     \caption{The six prompt templates}
+%     \label{tab:prompt}
+% \end{table}
+% \section{D. More Results}
+% \begin{table*}[!bht]
+% \centering
+% \resizebox{0.8\linewidth}{!}{%
+% \begin{tabular}{c|cccc}
+% \hline
+% Prompt &  \{a photo of \{class\}\} & \{Desciption by ChatGPT\} & \{Integration of 6 prompts\} & \{Integration of 80 prompts\} \\ \hline
+% Distance                 & 10.45             &    12.31   &  8.40    & 8.78        \\ \hline
+% \end{tabular}%
+% }
+% \caption{Average Euclidean distance over all class pairs' embeddings. For multiple prompts per class, the average embedding over all the prompts is used as the embedding for the class.
+% }
+% \label{tab:Oushi}
+% \end{table*}
+% For CIFAR benchmarks, our proposed method can also used on WideResNet28-10 architecture. Experiment settings are the same as the architecture ResNet18 and ResNet34. As shown in Table~\ref{tab:cifar10_100_wrn}, our method implemented on WideResNet28-10 outperformed all the other methods on average performance. Furthermore, for the results of ResNet34 on CIFAR benchmarks and two architectures on ImageNet100-I benchmark, only the average performance is given in the main text, and the detailed results on the six ood datasets or four ood datasets are shown in Tables ~\ref{tab:cifar10_100_resnet34} and \ref{tab:imagenet1k}.
+
+
+% For large datasets, we utilize two ImageNet100 benchmarks, one of which has the results on the main page of the paper and the other here in Table~\ref{tab:imagenet100-more}, and still achieve the current state-of-the-art results on both network architectures. Without the SupCon setup it achieves average AUROC 92.80 on the ResNet50 architecture: and AUROC 92.99 on the ResNet101 architecture: both are also top performers.
+
+% \section{E. Text Selection and Visualization Results}
+% \textbf{Text Selection.} For the selection of text prompts for the text encoder input to CLIP, we considered four candidates: 1) \{a photo of \{class\}\}, 2) \{Desciption by ChatGPT\}, 3) \{Integration of 6 prompts\}, 4) \{Integration of 80 prompts\}.
+% \begin{table*}
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccccccccccccccc}
+% \hline
+% \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}} & \multirow{3}{*}{Method} & \multicolumn{12}{c}{OOD Datasets} & \multicolumn{2}{c}{\multirow{2}{*}{Average}} \\ \cline{3-14} 
+%  &  & \multicolumn{2}{c}{SVHN} & \multicolumn{2}{c}{LSUN-R} & \multicolumn{2}{c}{LSUN-C} & \multicolumn{2}{c}{iSUN} & \multicolumn{2}{c}{Textures} & \multicolumn{2}{c}{Places365} \\
+%  &  & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ \\ \hline
+% \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ WideResNet28-10\end{tabular}} 
+%  & MSP & 46.92 & 87.25 & 33.04 & 94.62 & 17.32 & 97.08 & 35.15 & 94.29 & 44.54 & 90.61 & 43.50 & 90.28 & 36.74 & 92.35 \\
+%  & Mahalanobis & 31.11 & 92.68 & 87.47 & 62.37 & 91.28 & 59.06 & 86.72 & 62.30 & 47.15 & 81.96 & 83.56 & 64.65 & 71.21 & 70.50 \\
+%  & ODIN & 61.09 & 73.64 & 15.22 & 96.10 & 7.07 & 98.54 & 16.75 & 95.33 & 43.63 & 82.73 & 46.49 & 82.67 & 31.71 & 88.17 \\
+%  & DICE & 46.51 & 84.57 & 25.66 & 93.15 & 0.25 & 99.89 & 29.95 & 92.10 & 51.70 & 81.83 & 45.70 & 84.49 & 33.29 & 89.34 \\ 
+%  & ViM & 10.80 & 97.95 & 20.11 & 95.98 & 13.85 & 97.38 & 19.89 & 95.97 & 17.87 & 95.85 & 42.78 & 88.33 & 20.88 & 95.24 \\
+%  & Energy & 41.25 & 87.69 & 24.19 & 95.01 & 11.37 & 97.63 & 26.40 & 94.16 & 42.52 & 89.10 & 40.04 & 88.71 & 30.96 & 92.05 \\
+%  & BATS & 38.15 & 90.97 & 22.57 & 96.13 & 10.60 & 98.07 & 24.52 & 95.83 & 34.36 & 92.93 & 32.71 & 93.23 & 27.15 & 94.53 \\ 
+%  & ReAct & 38.25 & 88.51 & 21.50 & 96.12 & 7.74 & 98.55 & 23.25 & 95.77 & 34.57 & 92.12 & 32.91 & 92.37 & 26.37 & 93.91 \\ 
+%  & DICE+ReAct & 45.84 & 85.39 & 26.47 & 93.60 & 0.39 & 99.87 & 30.41 & 92.62 & 48.65 & 85.41 & 47.49 & 84.79 & 33.21 & 90.28 \\
+%  & FeatureNorm & 3.83 & 99.18 & 8.13 & 98.32 & 0.32 & 99.81 & 5.98 & 98.71 & 14.23 & 97.06 & 48.69 & 90.91 & 13.53 & 97.33 \\
+%  & LINe & 40.48 & 85.92 & 18.80 & 96.27 & 3.37 & 99.26 & 19.94 & 95.93 & 43.88 & 87.32 & 37.87 & 89.30 & 27.39 & 92.33 \\
+%  & VOS & 44.48 & 84.15& 25.13 & 94.01 & 4.13 & 99.06 & 30.16 & 92.77 & 47.52 & 85.01 & 38.21 & 88.78 & 30.16 & 92.77 \\
+%  & LogitNorm & 10.48 & 97.81 & 12.76 & 97.64 & 0.50 & 99.78 & 12.90 & 97.71 & 34.98 & 92.06 & 25.91 & 94.06 & 16.25 & 96.51 \\
+%  & CIDER& 2.26 & 99.46 & 20.22 & 96.82 & 2.16 & 99.52 & 23.39 & 96.53 & 8.87 & 98.48 & 18.91&96.00 & 12.63 & 97.80  \\
+%  & \textbf{TagFog (Ours)} & 7.85 & 98.43 & 4.64 & 99.07 & 2.38 & 99.27 & 3.98 & 99.12 & 17.18 & 96.67 & 23.70 & 94.37 & \textbf{9.95} & \textbf{97.84}   \\ \hline
+%  \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ WideResNet28-10\end{tabular}} 
+% & MSP & 70.24 & 84.42 & 74.49 & 83.05 & 65.60 & 87.25 & 75.70 & 82.57 & 81.91 & 77.05 & 76.87 & 80.23 & 74.14 & 82.43 \\
+% & Mahalanobis & 55.26 & 89.79 & 46.46 & 91.17 & 97.91 & 64.37 & 43.56 & 91.45 & 25.39 & 95.08 & 82.65 & 76.20 & 58.54 & 84.68 \\
+%  & ODIN & 81.23 & 80.24 & 46.57 & 91.16 & 55.07 & 90.76 & 48.34 & 90.64 & 77.62 & 77.97 & 79.10 & 78.41 & 64.66 & 84.86 \\
+% & DICE & 73.03 & 80.77 & 80.46 & 82.01 & 10.64 & 97.96 & 84.04 & 80.47 & 77.50 & 77.23 & 80.62 & 76.99 & 67.72 & 82.57 \\ 
+% & ViM & 52.74 & 89.95 & 38.90 & 92.20 & 69.26 & 86.06 & 33.54 & 93.11 & 31.84 & 93.23 & 78.21 & 78.31 & 50.75 & 88.81 \\
+% & Energy & 66.49 & 87.81 & 68.04 & 86.38 & 45.53 & 92.65 & 70.83 & 85.69 & 82.89 & 77.33 & 80.47 & 79.88 & 69.04 & 84.96\\
+%  & BATS & 60.19 & 90.17 & 57.22 & 89.85 & 58.42 & 87.66 & 60.36 & 89.25 & 70.43 & 85.03 & 76.68 & 81.74 & 63.88 & 87.28 \\
+%  & ReAct & 64.93 & 88.75 & 66.51 & 87.19 & 45.54 & 92.58 & 69.45 & 86.60 & 80.69 & 81.22 & 79.59 & 80.54 & 67.78 & 86.15 \\ 
+% & DICE+ReAct & 67.24 & 86.81 & 80.23 & 82.78 & 8.59 & 98.22 & 82.15 & 82.52 & 68.19 & 84.11 & 78.64 & 79.14 & 64.17 & 85.60 \\
+%  & FeatureNorm & 31.17 & 93.68 & 96.44 & 63.35 & 4.10 & 99.01 & 95.85 & 62.77 & 68.69 & 68.86 & 87.33 & 73.84 & 63.93 & 76.92 \\
+%  & LINe & 66.67 & 87.32 & 64.59 & 87.98 & 68.01 & 86.73 & 26.25 & 95.53 & 83.67 & 75.70 & 81.44 & 77.20 & 65.11 & 85.08 \\
+%  & VOS& 71.91 & 84.52 & 77.95 & 81.62 & 53.05& 90.77& 79.48 & 81.44 & 81.67 & 79.06&79.34 & 78.50 & 73.90 & 82.65\\
+%  & LogitNorm & 47.31 & 92.79 & 78.92 & 81.05 & 6.08 & 98.93 & 78.58 & 80.85 & 64.57 & 81.92 & 75.04 & 81.84 & 58.42 & 86.23 \\
+%  & CIDER & 17.59 & 96.30 & 71.45 & 84.55 & 40.54 & 88.16& 68.08 & 84.51 & 29.88 & 93.07 & 80.84 & 73.03& 51.40 & 86.60  \\
+%  & \textbf{TagFog (Ours)}& 39.53 & 93.19 & 48.17 & 90.09 & 23.09 & 96.06 & 50.17& 90.14 & 39.41 & 92.58& 72.97 & 81.20 & \textbf{45.56} & \textbf{90.54}  \\ \hline
+% \end{tabular}%
+% }
+% \caption{OOD detection performance on the CIFAR10 and CIFAR100 benchmarks with WideResNet28-10. $\uparrow$ indicates that larger values are better and $\downarrow$ indicates that smaller values are better. All values are percentages.}
+% \label{tab:cifar10_100_wrn}
+% \end{table*}
+% \begin{table*}
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccccccccccccccc}
+% \hline
+% \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}} & \multirow{3}{*}{Method} & \multicolumn{12}{c}{OOD Datasets} & \multicolumn{2}{c}{\multirow{2}{*}{Average}} \\ \cline{3-14} 
+%  &  & \multicolumn{2}{c}{SVHN} & \multicolumn{2}{c}{LSUN-R} & \multicolumn{2}{c}{LSUN-C} & \multicolumn{2}{c}{iSUN} & \multicolumn{2}{c}{Textures} & \multicolumn{2}{c}{Places365}\\
+%  &  & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ \\ \hline
+% \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ ResNet34\end{tabular}} 
+%  & MSP & 33.79 & 94.18 & 42.62 & 92.31 & 20.47 & 96.86 & 45.17 & 91.71 & 49.95 & 89.66 & 53.69 & 87.84 & 40.95 & 92.09 \\
+%  & Mahalanobis & 41.38 & 94.10 & 52.67 & 92.54 & 92.99 & 88.48 & 52.26 & 92.41 & 38.95 & 94.24 & 55.89 & 90.19 & 55.69 & 91.99 \\
+%  & ODIN & 43.80 & 86.52 & 23.66 & 93.70 & 7.03 & 98.74 & 26.03 & 93.18 & 45.73 & 83.19 & 52.08 & 82.55 & 33.06 & 89.64 \\
+%  & DICE & 36.67 & 90.64 & 35.13 & 92.79 & 6.67 & 98.70 & 40.95 & 90.92 & 50.73 & 86.60 & 49.65 & 84.70 & 36.63 & 90.72 \\ 
+%  & ViM & 29.66 & 95.06 & 38.13 & 94.00 & 49.00 & 93.84 & 37.49 & 93.84 & 28.19 & 94.94 & 47.58 & 90.78 & 38.35 & 93.75 \\
+%  & Energy & 20.65 & 95.25 & 25.64 & 94.13 & 5.32 & 99.05 & 28.17 & 93.46 & 38.83 & 88.91 & 41.49 & 88.26 & 26.69 & 93.17 \\
+%  & BATS & 26.37 & 94.75 & 30.02 & 93.72 & 10.67 & 98.30 & 32.47 & 92.90 & 37.71 & 91.71 & 41.84 & 90.27 & 29.85 & 93.60 \\ 
+%  & ReAct & 24.19 & 94.40 & 26.69 & 94.16 & 6.72 & 98.87 & 29.18 & 93.46 & 39.50 & 89.33 & 40.30 & 89.55 & 27.76 & 93.29 \\ 
+%  & DICE+ReAct & 38.22 & 90.64 & 34.83 & 92.79 & 6.67 & 98.70 & 40.95 & 89.92 & 50.73 & 87.17 & 49.67 & 84.72 & 36.85 & 90.72 \\
+%  & FeatureNorm & 4.01 & 99.18 & 44.30& 91.80 & 0.53 & 99.87 & 37.73 & 93.25 & 25.32 &  94.19& 66.69 & 80.28 & 29.76 & 93.10 \\
+%  & LINe & 27.64 & 94.98 & 54.03 & 88.20 & 3.41 & 99.31 & 56.53 & 87.04 & 54.26 & 86.95 & 61.93 & 80.02 & 42.97 & 89.42 \\
+%  & VOS & 27.93 & 93.55 & 21.64 & 96.03 & 8.34 & 98.36 & 26.00 & 95.20 & 37.84 & 91.57 & 40.89 & 89.53 & 27.01 & 94.04 \\
+%  & LogitNorm & 17.40 & 96.96 & 11.04 & 97.92 & 0.48 & 99.80 & 11.39 & 97.86 & 31.51 & 94.71 & 29.90 & 94.31 & 16.95 & 96.93 \\
+%  & CIDER & 4.93 & 99.22 & 21.45 & 96.53 & 2.99 & 99.33 & 22.69 & 96.43 & 15.37 & 97.56 & 29.16 & 94.42 & 16.10 & 97.25 \\
+%  & \textbf{TagFog (Ours)} & 5.87 & 98.84& 9.05 & 98.31 & 2.02 & 99.44 & 8.87 & 98.30 & 16.63 & 96.88 & 24.56 & 94.52 & \textbf{11.17} &\textbf{97.72}  \\ \hline
+%  \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ ResNet34\end{tabular}} 
+%   & MSP & 81.31 & 77.61 & 74.39 & 82.08 & 76.52 & 80.65 & 75.99 & 80.96 & 81.72 & 76.90 & 79.81 & 77.30 & 78.29 & 79.25 \\
+%  & Mahalanobis & 98.81 & 54.62 & 97.38 & 53.35 & 99.48 & 36.04 & 94.64 & 58.99 & 75.67 & 76.95 & 97.17 & 51.33 & 93.86 & 55.21 \\
+%  & ODIN & 85.55 & 76.83 & 38.18 & 92.96 & 68.48 & 84.16 & 41.92 & 91.84 & 71.19 & 79.28 & 78.74 & 75.54 & 64.01 & 83.44 \\
+%  & DICE & 53.65 & 89.97 & 85.83 & 76.80 & 32.29 & 93.49 & 86.01 & 77.83 & 68.17 & 82.49 & 82.90 & 76.31 & 68.14 & 83.53 \\ 
+%  & ViM & 75.80 & 82.31 & 37.70 & 93.40 & 89.49 & 73.78 & 38.51 & 93.01 & 49.47 & 89.33 & 78.09 & 78.17 & 61.51 & 85.00 \\
+%  & Energy & 76.73 & 81.52 & 58.02 & 88.40 & 61.12 & 85.88 & 61.82 & 86.95 & 80.73 & 77.17 & 78.06 & 76.72 & 69.41 & 83.64 \\
+%  & BATS & 60.48 & 89.50 & 38.64 & 92.96 & 65.69 & 84.84 & 40.80 & 92.29 & 59.65 & 86.59 & 75.13 & 78.96 & 56.73 & 87.52 \\ 
+%  & ReAct & 43.10 & 92.22 & 41.60 & 91.58 & 52.61 & 87.32 & 41.95 & 91.29 & 53.31 & 87.65 & 70.80 & 79.73 & 50.56 & 88.30 \\ 
+%  & DICE+ReAct & 48.18 & 91.19 & 84.17 & 78.80 & 32.01 & 93.71 & 82.23 & 79.65 & 66.74 & 83.96 & 80.26 & 78.04 & 65.61 & 84.22 \\
+%  & FeatureNorm & 21.02 & 95.61 & 97.06 & 67.20 & 9.87 & 98.21 & 91.79 & 73.87 & 45.23 & 84.79 & 92.64 & 61.02 & 59.60 & 80.12 \\
+%  & LINe & 39.97 & 91.17 & 61.02 & 86.90 & 26.51 & 94.02 & 62.62 & 86.16 & 55.18 & 86.80 & 81.81 & 72.90 & 54.52 & 86.32 \\
+%  & VOS & 83.52 & 81.24 & 77.81 & 78.50 & 79.40 & 80.39 & 78.34 & 78.23 & 84.35 & 77.81 & 79.77 & 78.01 & 80.53 & 79.03 \\
+%  & LogitNorm & 64.65 & 88.69 & 93.39& 69.28 & 10.57 & 98.22 & 94.39 & 68.36 & 81.56 & 74.45 & 80.30 & 77.59 & 70.81 & 79.44 \\
+%  & CIDER & 23.09 & 95.16 & 69.50 & 81.85 & 16.16 & 96.33 & 71.68 & 82.98 & 43.87 & 90.42 & 79.63 & 73.43 & 50.66 & 86.70 \\
+%  & \textbf{TagFog (Ours)} & 43.22 & 91.12 & 34.31 & 93.36 & 32.62 & 93.94 & 37.17 & 92.80 & 51.44 & 90.10 & 72.91 & 79.89 & \textbf{45.28} & \textbf{90.20} \\ \hline
+% \end{tabular}%
+% }
+% \caption{OOD detection performance on the  CIFAR10 and CIFAR100 benchmarks with ResNet34. $\uparrow$ indicates that larger values are better and $\downarrow$ indicates that smaller values are better. All values are percentages.}
+% \label{tab:cifar10_100_resnet34}
+% \end{table*}
+% For the form of the third prompt see Table~\ref{tab:prompt}. For the form of the fourth prompt we use the prompt in the official code of CLIP. For the prompts that need to be integrated, we will use multiple prompts of a certain category to get multiple embeddings through CLIP's CLIP-L/14 text encoder and then average the text embedding element by element to get the text embedding as the anchor points. In order to choose better textual anchors, the simple intuition is that being further away from each other in feature space means that the semantic information of the respective representations is richer and different, which is better for OOD detection. So we calculated the average Euclidean distance between these embeddings (anchors) using CIFAR10 as an example, and the results are shown in Table~\ref{tab:Oushi}. The second text prompt used as input to CLIP in the main text generates the furthest Euclidean distance between the various types of embeddings.
+% \\\begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=1.0\linewidth, height=0.4\linewidth]{Pictures/res34_tsne.png}
+%     \caption{t-SNE visualization of penultimate layer's output of ResNet34 trained on CIFAR10 by traditional training method (left) and our method (right). 
+%     }
+%     \label{fig:tsne}
+% \end{figure}\textbf{Visualization Results.}\ \ 
+% To show the effectiveness of our approach and to achieve a more compact feature representation of ID, t-SNE plots of features on the CIFAR10 dataset are presented in Figure \ref{fig:tsne}. It can be seen that the compactness of the features obtained by our method is better than that obtained by the traditional CEloss training, which side by side shows the importance of the textual semantic information as an anchor.\\
+
+% \section{F. Sensitive Studies and Ablation Studies of Text-guided learning on another benchmark}
+% About results of ablation studies of text-guided learning and sensitive studies on other benchmarks can been seen in Figures~\ref{fig:ablation_text} and \ref{fig:sensitivity_anotherbenchmark}.
+% \begin{figure}[ht]
+%     \centering
+%     \includegraphics[width=0.48\linewidth, height=0.35\linewidth]{Pictures/imagenet100_anchor.png}
+%     \includegraphics[width=0.48\linewidth, height=0.35\linewidth]{Pictures/imagenet100_anchor_fpr.png}
+%     \caption{Ablation study of the text-guided learning on the ImageNet100-I benchmark with model backbone ResNet-50. 
+%   %  Comparison of results between random anchor and CLIP's textural anchor for guiding ID embedding learning and OOD detection performance on ResNet-18.
+%     All values are percentages and are the average performance on the four OOD datasets. The proposed text-guided learning (`ChatGPT's Textual Anchor') is better than its two ablated versions.
+%     %Higher AUROC is better, FPR95 the opposite.
+%     }
+%     \label{fig:ablation_text}
+% \end{figure}
+% \section{G. Enhancements in other OOD methods}
+% Our method combined with other multiple OOD methods will also further improve their original detection performance. The results of average performance about ImageNet100 have been mentioned in main paper, and the more results on multiple ood datasets and complete results of CIFAR benchmarks can been seen in Table~\ref{tab:imagenetfusion} and Table~\ref{tab:cifar_fusion}. The effectiveness of our approach is well illustrated: the additional knowledge of semantic bias and the richer semantic information learned is additive to the individual OOD detection approaches.
+% \section{Additional comparison with methods using contrastive learning}
+% In our approach, in order to further separate the ID from the constructed fake OOD data in the representation space, we apply the idea of supervised contrast learning. In order to show the effectiveness of our approach, we show two other approaches applying contrast learning CSI and SSD+ in table. Our approach outperforms these two approaches on multiple benchmarks, which further proves the effectiveness of our approach.
+% \begin{table}[ht]
+% \centering
+% \resizebox{\columnwidth}{!}{%
+% \begin{tabular}{ccccccccc}
+% \hline
+% \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Method\end{tabular}} & \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ ResNet18\end{tabular}} & \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ ResNet18\end{tabular}}& \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}ImageNet100-I\\ ResNet50\end{tabular}}& \multicolumn{2}{c}{\begin{tabular}[c]{@{}c@{}}ImageNet100-II\\ ResNet50\end{tabular}} \\ 
+% \cline{2-9} & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$& FPR95$\downarrow$ & AUROC$\uparrow$ \\ \hline
+% CSI & 23.11 & 96.01 & 70.37 & 83.46  & 36.29 & 91.86 & 46.43 & 90.55 \\
+% SSD+ & 19.92 & 96.80 & 69.19 & 85.67  & 32.68 & 93.12 &39.50 &92.56\\  
+% Ours & \textbf{10.41} & \textbf{97.99} & \textbf{44.33} & \textbf{90.47}  & \textbf{29.50} & \textbf{94.67}& \textbf{33.50} &\textbf{93.53} \\ 
+% \hline
+% \end{tabular}%
+% }
+% \caption{The performance of CSI, SSD+ and ours on four benchmarks. Our method outperforms these two methods.}
+% \label{tab:cifar}
+% \end{table}
+
+% \section{Analysis of successful and unsuccessful cases}
+% The AUROC metric is a measure of the overall OOD detection capability of the model. In practice, a threshold needs to be set to distinguish between the ID and OOD groups. Here, we present successful and unsuccessful cases on ImageNet100, using a threshold selected under the condition that 95\% of ID samples are correctly recognized. The chosen threshold score is 5.66, where scores greater than this threshold are classified as ID and scores below it are classified as OOD. Examples of successful and unsuccessful cases are shown in Figure~\ref{fig:success}.
+% \begin{figure}[tbh]
+%     \centering
+%     \subcaptionbox{TP}{
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]
+%     {Pictures/TP1.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TP_2.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TP_3.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TP_4.png}
+%     }
+%     \subcaptionbox{FP}{
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FP1.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FP2.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FP3_qigan.png}
+%      \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FP4_gongdian2.png}
+%     }
+%     \subcaptionbox{TN}{
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TN1.png}
+%      \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TN2.png}
+%      \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TN_3.png}
+%      \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/TN_4.png}
+%     }
+%     \subcaptionbox{FN}{
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FN1.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FN2.png}
+%     \includegraphics[width=0.1\linewidth, height=0.1\linewidth]{Pictures/FN3_cunqianguan.png}
+%     \includegraphics[width=0.09\linewidth, height=0.09\linewidth]{Pictures/FN4_toukui.png}
+%     }
+%     \caption{Successful and unsuccessful cases. TP: True Positive (True ID), FP: False Positive (False ID), FN: False Negative (False OOD), TN: True Negative (True OOD)
+%     }
+%     \label{fig:success}
+% \end{figure}
+% As Figure~\ref{fig:success} demonstrates, each FP case mainly occurs due to the close resemblance between the OOD sample and certain ID class (In FP: OOD images from left to right looks like ID classes 'head cabbage', 'brain coral', 'flagpole', and palace'), leading to misclassification as ID. The FN cases mainly occur due to small size of category objects and dominance of complex background in ID images (In FN: {ID objects from left to right are 'snail', 'passenger car', 'piggy bank' and 'pickelhaube'}), which leads to misclassification of the ID images as OOD. To summarize, the near OOD data which is very similar to the ID images and the background in the ID image are the factors that limit the OOD detection ability, how to construct the fake near OOD data as well as the background data is our future work.
+
+% \begin{table*}[ht]
+% \centering
+% \resizebox{0.95\textwidth}{!}{%
+% \begin{tabular}{cccccccccccc}
+% \hline
+% \multicolumn{1}{c}{\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}} Model\end{tabular}}} & \multicolumn{1}{c}{\multirow{3}{*}{Method}} & \multicolumn{8}{c}{OOD Datasets}& \multicolumn{2}{c}{\multirow{2}{*}{Average}}  \\ \cline{3-10} 
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{iNaturalist} & \multicolumn{2}{c}{SUN} & \multicolumn{2}{c}{Places} & \multicolumn{2}{c}{Textures}\\
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ \\ \hline
+
+% \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}} ResNet50\end{tabular}} 
+% & MSP & 55.25 & \multicolumn{1}{c}{89.71}           & 56.23 & \multicolumn{1}{c}{88.42}           & 60.36 &                                                                                                    \multicolumn{1}{c}{87.03}           & 62.30 & \multicolumn{1}{c}{86.50}           & 58.54 & \multicolumn{1}{c}{87.92}           \\
+% & ODIN                    & 36.72 &\multicolumn{1}{c}{93.37} & 41.84 & \multicolumn{1}{c}{91.98} & 40.87 & \multicolumn{1}{c}{91.58} & 49.93 & \multicolumn{1}{c}{89.72} & 42.34 & \multicolumn{1}{c}{91.66} \\
+% & Mahalanobis             & 96.09 & \multicolumn{1}{c}{53.16} & 96.17 & \multicolumn{1}{c}{49.67} & 95.88 & \multicolumn{1}{c}{49.66} & 34.27 & \multicolumn{1}{c}{90.47} & 80.60 & \multicolumn{1}{c}{60.74}                               \\
+% & Energy                  & 48.70                 & \multicolumn{1}{c}{91.84}      & 40.61                & \multicolumn{1}{c}{92.06}      & 48.01                   & \multicolumn{1}{c}{90.20}   &49.56         & \multicolumn{1}{c}{90.40}           & 46.72 & \multicolumn{1}{c}{91.12}           \\
+% & GradNorm & 39.26 & 90.17 & 41.17 & 89.46 & 50.51 & 86.04 & 36.83 & 90.68 & 41.94 & 89.09\\
+% & ViM                     & 74.21 & \multicolumn{1}{c}{87.16} & 71.29 & \multicolumn{1}{c}{86.33} & 73.03 & \multicolumn{1}{c}{84.69} & 13.37 & \multicolumn{1}{c}{\textbf{97.60}} &  57.97& \multicolumn{1}{c}{88.94} \\
+% & KNN & 42.36 & 92.20 & 48.43 & 87.80 & 56.38 & 85.42 & \textbf{12.98} & 97.31 & 40.04 & 90.68\\
+% & BATS                    & 47.56 & \multicolumn{1}{c}{90.83}           & 38.70 & \multicolumn{1}{c}{92.48}           & 47.39 & \multicolumn{1}{c}{89.51}           & 45.57 & \multicolumn{1}{c}{90.52}           & 44.81 & \multicolumn{1}{c}{90.84}   \\
+% % & VOS & & & & & & & & & &\\
+% & DICE                    & 30.16 & \multicolumn{1}{c}{94.19}           & 30.06 & \multicolumn{1}{c}{93.71}           & 39.27 & \multicolumn{1}{c}{91.40}           & 31.05 & \multicolumn{1}{c}{93.45}           & 32.63 & \multicolumn{1}{c}{93.19}   \\
+% & ReAct                   & 38.87 & \multicolumn{1}{c}{93.03}           & 34.65 & \multicolumn{1}{c}{93.23}           & 41.97 & \multicolumn{1}{c}{91.11}           & 43.90 & \multicolumn{1}{c}{91.12}           & 39.85 & \multicolumn{1}{c}{92.12}           \\
+% & DICE+ReAct                & 36.27 & \multicolumn{1}{c}{92.90}           & 39.98 & 92.52&\multicolumn{1}{c}{49.43}           & 89.53 & \multicolumn{1}{c}{36.37}           & \multicolumn{1}{c}{92.14}           & 40.51 & \multicolumn{1}{c}{91.77}   \\
+% & FeatureNorm & 65.26 & 84.03 & 65.13 & 83.78 & 74.49 & 79.37 & 40.46 & 89.31 & 61.33 & 84.12\\
+% & LINe & 32.56 & 93.22 & 31.39 & 93.75 & 40.30 & 91.07 & 34.40 & 92.17 & 34.66 & 92.55\\
+% & CIDER & 48.81 & 92.43 & 35.20 & 93.66 & 52.06 & 89.66 & 22.89 & 95.43 & 39.74 & 92.80\\
+% & \multicolumn{1}{c}{\textbf{TagFog (Ours)}} & \textbf{20.43} & \textbf{96.56} & \textbf{28.94} & \textbf{94.81} & \textbf{32.76} & \textbf{93.91} & 35.87 & 93.39 & \textbf{29.50} & \textbf{94.67} \\ \hline
+
+% \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}} ResNet101\end{tabular}} & MSP & 53.36 & 90.24 & 54.10 & 88.93 & 57.30 & 87.78 & 57.46 & 88.00 & 55.56 & 88.74\\
+% & ODIN & 33.97 & 93.56 & 37.41 & 92.83 & 45.75 & 90.45 & 36.79 & 91.97 & 38.48 & 92.20 \\
+% & Mahalanobis & 93.59 & 61.19 & 93.71 & 56.16 & 93.87 & 55.48 & 30.25 & 92.58 & 77.85 & 66.35\\
+% & Energy & 46.69 & 92.45 & 44.63 & 90.97 & 44.63 & 90.97 & 45.53 & 91.28 & 43.82 & 91.87 \\
+% & GradNorm & 46.00 & 87.07 & 40.84 & 89.14 & 49.14 & 85.99 & 38.28 & 89.32 & 43.57 &  87.88\\
+% & ViM & 65.71 & 89.27 & 62.69 & 88.63 & 66.64 & 86.99 & \textbf{9.79} & \textbf{98.22} & 51.21 & 90.78 \\
+
+% & KNN & 41.93 & 92.96 & 47.54 & 88.92 & 54.61 & 86.96 & 12.39 & 97.55 & 39.12 & 91.60\\
+% & BATS & 36.79 & 91.97 & 32.98 & 93.95 & 42.42 & 91.07 & 45.10 & 90.25 & 39.32 &91.81 \\
+% & DICE & 31.41 & 94.15 & 28.70 & 94.18 & 37.12 & 91.93 & 28.90 & 93.72 & 31.53 & 93.50\\
+% & ReAct & 47.86 & 91.07 & 28.56 & \textbf{94.83} & 35.95 & \textbf{92.87} & 47.54 & 90.26 & 39.98 & 92.26\\
+% & DICE+ReAct & 39.60 & 91.33 & 30.23 & 94.24 & 39.33 & 91.65 & 32.91 & 92.48 & 35.52 & 92.42\\
+% & FeatureNorm & 52.19 & 89.38 & 47.93 & 89.39 & 59.16 & 86.19 & 33.63 & 91.96 & 48.23 & 89.23 \\
+% & LINe & 39.71 & 91.61 & \textbf{26.94} & 94.75 & \textbf{35.06} & 92.47 & 33.39 & 92.43 & 33.77 & 92.81\\
+% & CIDER & 47.27 & 91.72 & 34.14 & 93.36 & 49.41 & 89.67 & 25.30 & 94.84 & 39.03 & 92.40\\
+% & \multicolumn{1}{c}{\textbf{TagFog (Ours)}} & \textbf{19.93} & \textbf{96.65} & 32.75 & 93.57 & 39.18 & 92.20 & 22.25 & 96.21 & \textbf{28.53} & \textbf{94.66}\\ \hline
+% \end{tabular}%
+% }
+% \caption{OOD detection performance on the ImageNet100-I benchmark with two architectures. $\uparrow$ indicates that larger values are better and $\downarrow$ indicates that smaller values are better. All values are percentages.}
+% \label{tab:imagenet1k}
+% \end{table*}
+% \begin{table*}[!bht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccccccccccc}
+% \hline
+% % \multicolumn{1}{c}{\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\\end{tabular}}} 
+% & \multicolumn{1}{c}{\multirow{3}{*}{Method}} & \multicolumn{8}{c}{OOD Datasets}& \multicolumn{2}{c}{\multirow{2}{*}{Average}}  \\ \cline{3-10} 
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{iNaturalist} & \multicolumn{2}{c}{SUN} & \multicolumn{2}{c}{Places} & \multicolumn{2}{c}{Textures} \\
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{F$\downarrow}$ & \multicolumn{1}{c}{A$\uparrow}$ & \multicolumn{1}{c}{F$\downarrow}$ & \multicolumn{1}{c}{A$\uparrow}$ & \multicolumn{1}{c}{F$\downarrow}$ & \multicolumn{1}{c}{A$\uparrow}$ & \multicolumn{1}{c}{F$\downarrow}$ & \multicolumn{1}{c}{A$\uparrow}$ & \multicolumn{1}{c}{F$\downarrow}$ & \multicolumn{1}{c}{A$\uparrow}$ \\ \hline
+% % \multirow{15}{*}{\begin{tabular}[c]{@{}c@{}}ImageNet100\\\end{tabular}}  
+% & MSP & 69.28/60.74 & \multicolumn{1}{c}{85.84/88.66}           & 70.14/61.29 & \multicolumn{1}{c}{84.20/87.23}           & 69.43/61.87 &                                                                                                    \multicolumn{1}{c}{84.29/86.70}           & 64.27/57.80 & \multicolumn{1}{c}{84.09/86.61}           & 68.28/60.43 & \multicolumn{1}{c}{84.60/87.30}           \\
+% & ODIN                    & 44.22/53.00 &\multicolumn{1}{c}{92.42/89.52} & 54.71/66.90 & \multicolumn{1}{c}{88.94/85.01} & 57.52/70.40 & \multicolumn{1}{c}{88.01/82.77} & 42.87/48.40 & \multicolumn{1}{c}{89.76/89.19} & 49.83/59.67 & \multicolumn{1}{c}{89.78/86.62} \\
+% & Mahalanobis             & 96.60/93.63 & \multicolumn{1}{c}{45.22/59.38} & 98.01/95.59 & \multicolumn{1}{c}{42.55/56.32} & 97.77/94.73 & \multicolumn{1}{c}{43.87/57.83} & 38.44/31.83 & \multicolumn{1}{c}{87.88/92.34} & 82.70/78.83 & \multicolumn{1}{c}{54.88/66.47}                               \\
+% & Energy                  & 64.60/58.86                 & \multicolumn{1}{c}{89.08/90.54}      & 62.70/53.04                & \multicolumn{1}{c}{88.03/90.61}      & 60.70/52.50                   & \multicolumn{1}{c}{87.78/89.76}   &51.38/43.53         & \multicolumn{1}{c}{87.89/90.39}           & 59.85/51.98 & \multicolumn{1}{c}{88.20/90.33}           \\
+% & GradNorm & 30.87/45.65 & 92.97/87.46 & 38.99/46.64 & 90.81/86.85 & 45.55/53.88 & 88.53/83.35 & 34.34/33.55 & 89.97/90.89 & 37.44/44.93 & 90.57/87.14\\
+% & ViM                     & 84.92/72.40 & \multicolumn{1}{c}{81.92/84.88} & 83.18/73.80 & \multicolumn{1}{c}{81.47/83.99} & 81.45/76.20 & \multicolumn{1}{c}{81.55/81.54} & 20.00/22.20 & \multicolumn{1}{c}{96.07/95.63} & 67.39/61.15 & \multicolumn{1}{c}{85.25/86.51} \\
+% & KNN & 43.45/56.96 & 92.48/86.98 & 63.04/63.04 & 86.53/85.37 & 69.75/64.54 & 84.80/83.68 & \textbf{12.98/\textbf{15.83}} & \textbf{97.17}/\textbf{96.24} & 47.13/50.09 & 90.24/88.07\\
+% & BATS                    & 43.05/48.54 & \multicolumn{1}{c}{92.65/90.92}           & 58.75/64.55 & \multicolumn{1}{c}{87.83/86.18}           & 57.72/64.38 & \multicolumn{1}{c}{87.43/85.15}           & 38.88/42.59 & \multicolumn{1}{c}{91.97/89.84}           & 49.60/55.02 & \multicolumn{1}{c}{89.97/88.02}   \\
+% % & VOS & & & & & & & & & &\\
+% & DICE                    & 35.08/39.83 & \multicolumn{1}{c}{93.29/92.90}           & 36.89/\textbf{36.58} & \multicolumn{1}{c}{\textbf{92.53}/\textbf{92.78}}           & 43.71/42.91 & \multicolumn{1}{c}{90.66/91.01}           & 31.84/28.78 & \multicolumn{1}{c}{92.08/92.72}           & 36.46/37.02 & \multicolumn{1}{c}{92.11/92.35}   \\
+% & ReAct                   & 30.60/44.66 & \multicolumn{1}{c}{94.40/92.95}           & 47.55/53.17 & \multicolumn{1}{c}{89.99/89.20}           & 47.21/51.92 & \multicolumn{1}{c}{89.53/88.67}           & 50.89/44.93 & \multicolumn{1}{c}{87.57/90.59}           & 44.06/48.67 & \multicolumn{1}{c}{90.45/90.35}           \\
+% & DICE+ReAct                & 26.69/\textbf{30.12} & \multicolumn{1}{c}{94.69/93.28}           & \textbf{35.75}/41.37 & \multicolumn{1}{c}{92.40/90.84}           & 42.98/47.24 & \multicolumn{1}{c}{90.52/88.68}           & 31.31/28.14 & \multicolumn{1}{c}{91.94/93.35}           & 34.18/36.72 & \multicolumn{1}{c}{92.39/91.67}   \\
+% & FeatureNorm & 65.14/55.49 & 83.59/84.89 & 64.79/69.09 & 83.07/83.14 & 72.88/75.92 & 78.78/78.94 & 38.76/40.98 & 89.78/87.58 & 60.39/60.37 & 83.80/83.64 \\
+% & LINe & \textbf{22.62}/53.31 & 95.60/91.22 & 36.51/55.15 & 91.93/89.72 & \textbf{38.89}/55.55 & 90.83/89.41 & 35.41/54.01 & 91.11/87.74 & 33.86/54.50 & 92.37/89.52\\
+% & CIDER & 72.68/72.42 & 85.95/85.52 & 44.68/48.13 & 92.22/90.76 & 53.52/57.38 & 90.30/88.68 & 21.22/23.33 & 95.97/95.51 & 48.03/50.31 & 91.11/90.12\\
+% & \multicolumn{1}{c}{\textbf{TagFog (Ours)}} & 25.58/35.73 & \textbf{95.89}/\textbf{94.12}& 39.21/37.85 & 91.68/92.31 & 40.75/\textbf{40.17} & \textbf{92.45}/\textbf{91.54} & 28.46/30.28 & 94.12/93.80 & \textbf{33.50}/\textbf{36.01} & \textbf{93.53}/\textbf{92.94} \\ \hline
+
+% \end{tabular}%
+% }
+% \caption{Comparison between different methods for OOD detection on the ImageNet100-II benchmark with ResNet50 / ResNet101. All values are percentages. The left of '/' is performance of ResNet50, and the right of '/' is  ResNet101.}
+% \label{tab:imagenet100-more}
+% \end{table*}
+% \begin{figure*}[tbh]
+%     \centering
+%     \includegraphics[width=0.19\linewidth, height=0.15\linewidth]{Pictures/cifar10_tao.png}
+%     \includegraphics[width=0.19\linewidth, height=0.15\linewidth]{Pictures/cifar10_tao_.png}
+%     \includegraphics[width=0.19\linewidth, height=0.15\linewidth]{Pictures/cifar10_lamda1.png}
+%     \includegraphics[width=0.19\linewidth, height=0.15\linewidth]{Pictures/cifar10_lamda2.png}
+%     \includegraphics[width=0.19\linewidth, height=0.15\linewidth]{Pictures/cifar10_numberood_.png}
+%     \caption{Sensitivity study of hyper-parameters $\tau$ (1st) and $\tau'$ (2nd), $\lambda_1$ and $\lambda_2$ (3rd and 4th), and the number of fake OOD data (last subfigure). All experiments are on the CIFAR10 benchmark with model backbone ResNet18. 
+%   %  Effect of the number of fake OOD samples. Left: CIFAR10,ResNet-18.Right:CIFAR100,ResNet-34.
+%     The dashed line indicates the performance of the best baseline. Last subfigure: x-axis represents the number of false OOD data for training.    
+%     }
+%     \label{fig:sensitivity_anotherbenchmark}
+% \end{figure*}
+% \begin{table*}[!bht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccccccccccc}
+% \hline
+% \multicolumn{1}{c}{\multirow{3}{*}{\begin{tabular}[c]{@{}c@{}} Model\end{tabular}}} & \multicolumn{1}{c}{\multirow{3}{*}{Method}} & \multicolumn{8}{c}{OOD Datasets}& \multicolumn{2}{c}{\multirow{2}{*}{Average}}  \\ \cline{3-10} 
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{2}{c}{iNaturalist} & \multicolumn{2}{c}{SUN} & \multicolumn{2}{c}{Places} & \multicolumn{2}{c}{Textures} \\
+% \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ & \multicolumn{1}{c}{FPR95$\downarrow}$ & \multicolumn{1}{c}{AUROC$\uparrow}$ \\ \hline
+% \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}} ResNet50\end{tabular}}  & MSP & 55.25/\textbf{35.82} & \multicolumn{1}{c}{89.71/\textbf{94.43}}           & 56.23/\textbf{45.74} & \multicolumn{1}{c}{88.42/\textbf{91.48}}           & 60.36/\textbf{48.92} &                                                                                                    \multicolumn{1}{c}{87.03/\textbf{90.50}}           & 62.30/\textbf{45.48} & \multicolumn{1}{c}{86.50/\textbf{91.55}}           & 58.54/\textbf{43.99} & \multicolumn{1}{c}{87.92/\textbf{91.99}} 
+% \\
+%  & Energy                  & 48.70/\textbf{28.80}                 & \multicolumn{1}{c}{91.84/\textbf{95.30}}      & 40.61/\textbf{40.56}                & \multicolumn{1}{c}{92.06/\textbf{92.23}}      & 48.01/\textbf{43.98}                  & \multicolumn{1}{c}{90.20/\textbf{91.36}}   &49.56/\textbf{39.56}         & \multicolumn{1}{c}{90.40/\textbf{92.20}}           & 46.72/\textbf{38.22} & \multicolumn{1}{c}{91.12/\textbf{92.78}}           \\
+%  & ViM                     & 74.21/\textbf{55.33} & \multicolumn{1}{c}{87.16/\textbf{92.83}} & 71.29/\textbf{41.44} & \multicolumn{1}{c}{86.33/\textbf{93.25}} & 73.03/\textbf{52.21} & \multicolumn{1}{c}{84.69/\textbf{91.17}} & 13.37/\textbf{6.58} & \multicolumn{1}{c}{97.60/\textbf{98.72}} &  57.97/\textbf{38.89}& \multicolumn{1}{c}{88.94/\textbf{93.99}} \\
+%  & ReAct                   & 38.87/\textbf{20.43} & \multicolumn{1}{c}{93.03/\textbf{96.56}}           & 34.65/\textbf{28.94} & \multicolumn{1}{c}{93.23/\textbf{94.81}}           & 41.97/\textbf{32.76} & \multicolumn{1}{c}{91.11/\textbf{93.91}}           & 43.90\textbf{29.50} & \multicolumn{1}{c}{91.12/\textbf{94.67}}           & 39.85\textbf{29.50} & \multicolumn{1}{c}{92.12/\textbf{94.67}}           \\
+% \hline
+% \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}ResNet101\end{tabular}}  & MSP & 53.36/\textbf{34.19} & 90.24/\textbf{94.47} & 54.10/\textbf{47.22} & 88.93/\textbf{90.95} & 57.30/\textbf{51.17} & 87.78/\textbf{90.02} & 57.46/\textbf{44.34} & 88.00/\textbf{91.99} & 55.56/\textbf{44.23} & 88.70/\textbf{91.85}\\
+% & Energy & 46.69/\textbf{26.57} & 92.45/\textbf{95.82} & 44.63/\textbf{40.26} & 90.97/\textbf{92.54} & 44.63/45.47 & 90.97/\textbf{91.35} & 45.53/\textbf{33.99} & 91.28/\textbf{93.68} & 43.82/\textbf{36.57}& 91.87/\textbf{93.35} \\
+% & ViM & 65.71/75.25 & 89.27/88.50 & 62.69/\textbf{58.33} & 88.63/\textbf{90.64} & 66.64/\textbf{65.34} & 86.99/\textbf{88.77} & 9.79/10.90 & 98.22/\textbf{98.23} & 51.21/52.46 & 90.78/\textbf{91.53} \\
+% & ReAct & 47.86/\textbf{19.93} & 91.07/\textbf{96.65} & 28.56/32.75 & 94.83/93.57 & 35.95/39.18 & 92.87/92.20 & 47.54/\textbf{22.25} & 90.26/\textbf{96.21} & 39.98/\textbf{28.53} & 92.26/\textbf{94.66}\\
+% \hline
+% \end{tabular}%
+% }
+% \caption{Fusion of our framework with various OOD methods on ImageNet100-I Benchmark. For each paired values by `/': the left one is from the original baseline and the right one is from the fusion one.
+% }
+% \label{tab:imagenetfusion}
+% \end{table*}
+
+% \begin{table*}[!bht]
+% \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{cccccccccccccccc}
+% \hline
+% \multirow{3}{*}{\begin{tabular}[c]{@{}c@{}}ID Dataset\\ Model\end{tabular}} & \multirow{3}{*}{Method} & \multicolumn{12}{c}{OOD Datasets} & \multicolumn{2}{c}{\multirow{2}{*}{Average}} \\ \cline{3-14} 
+%  &  & \multicolumn{2}{c}{SVHN} & \multicolumn{2}{c}{LSUN-R} & \multicolumn{2}{c}{LSUN-C} & \multicolumn{2}{c}{iSUN} & \multicolumn{2}{c}{Textures} & \multicolumn{2}{c}{Places365} \\
+%  &  & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ & FPR95$\downarrow$ & AUROC$\uparrow$ \\ \hline
+% \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ ResNet18\end{tabular}} 
+%  & MSP & 61.22/\textbf{22.88} & 86.99/\textbf{96.86} & 41.62/\textbf{21.28} & 93.84/\textbf{97.14} & 34.30/\textbf{14.61} & 95.40/\textbf{98.01} & 43.14/\textbf{21.69} & 93.21/\textbf{97.14} & 53.40/\textbf{32.36} & 90.19/\textbf{95.38} & 54.51/\textbf{46.61} & 88.74/\textbf{92.59} & 48.03/\textbf{26.57} & 91.40/\textbf{96.19} \\
+%  & Energy & 41.25/\textbf{6.07} & 87.69/\textbf{98.75} & 24.19/\textbf{6.36} & 95.01/\textbf{98.76} & 11.37/\textbf{2.06} & 97.63/\textbf{99.43} & 26.40/\textbf{6.24} & 94.16/\textbf{98.78} & 42.52/\textbf{17.00} & 89.10/\textbf{96.94} & 40.04/\textbf{25.32} & 88.71/\textbf{95.07} & 30.96/\textbf{10.51} & 92.05/\textbf{97.95} \\
+%  & ViM & 53.75/\textbf{1.52} & 88.67/\textbf{99.49} & 34.17/\textbf{29.61} & 94.34/\textbf{95.59}& 82.31/\textbf{1.68} & 87.18/\textbf{99.52} & 31.41/32.63 & 94.25/\textbf{95.17} & 36.15/\textbf{18.97} & 92.83/\textbf{96.80}& 49.64/\textbf{39.27} & 88.86/\textbf{92.85} & 47.90/\textbf{20.61} & 91.02/\textbf{96.57} \\
+%  & ReAct & 43.19/\textbf{6.19} & 87.56/\textbf{98.75}& 24.82/\textbf{6.50} & 95.12/\textbf{98.74} & 12.23/\textbf{2.12} & 97.53/\textbf{99.43} & 26.90/\textbf{6.36} & 94.31/\textbf{98.75} & 41.95/\textbf{16.13} & 90.02/\textbf{97.12} & 40.78/\textbf{25.14} & 89.00/\textbf{95.14} & 31.65/\textbf{10.41} & 92.26/\textbf{97.99}    \\ \hline
+%  \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ ResNet18\end{tabular}} 
+%   & MSP & 69.74/\textbf{58.92} & 84.73/\textbf{86.66} & 66.89/\textbf{46.81} & 85.65/\textbf{89.91} & 77.08/\textbf{39.25} & 81.83/\textbf{92.36} & 69.40/\textbf{47.45} & 84.77/\textbf{89.49} & 80.08/\textbf{76.99} & 77.65/\textbf{78.79} & 78.38/80.02 & 78.81/76.57 & 73.60/\textbf{58.24} & 82.24/\textbf{85.63} \\
+%   & Energy & 68.90/\textbf{41.30} & 87.66/\textbf{92.36} & 59.71/\textbf{35.65} & 88.58/\textbf{93.89} & 73.21/\textbf{13.37} & 84.46/\textbf{97.77} & 64.03/\textbf{36.93} & 87.50/\textbf{93.49} & 79.61/\textbf{79.31} & 78.22/\textbf{80.02} & 77.74/77.94 & 79.64/79.20 & 70.53/\textbf{47.42} & 84.34/\textbf{89.46} \\
+%   & ViM & 73.70/\textbf{29.54} & 84.45/\textbf{94.97} & 61.30/91.35 & 88.05/78.12 & 92.76/92.97 & 69.87/\textbf{73.87} & 61.92/91.52 & 87.34/77.47 & 57.93/\textbf{46.38} & 86.31/\textbf{91.17} & 81.01/83.25 & 76.54/74.97 & 71.43/72.50 & 82.09/81.76 \\
+%   & ReAct & 58.24/\textbf{37.88} & 90.02/\textbf{92.77} & 50.82/\textbf{35.45} & 90.98/\textbf{93.46} & 70.70/\textbf{13.94} & 85.75/\textbf{97.46} & 55.91/\textbf{35.99} & 90.18/\textbf{93.10} & 70.85/\textbf{66.74} & 85.39/\textbf{86.88} & 71.85/76.00 & 82.25/79.13 & 63.06/\textbf{44.33} & 87.43/\textbf{90.47} \\ \hline
+%   \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ ResNet34\end{tabular}} 
+%   & MSP &33.79/\textbf{17.88} & 94.18/\textbf{97.39} & 42.62/\textbf{24.18}& 92.31/\textbf{96.65} & 20.47/\textbf{16.54} & 96.86/\textbf{97.73} & 45.17/\textbf{24.31} & 91.71/\textbf{96.62} & 49.95/\textbf{32.80} & 89.66/\textbf{95.21} & 53.69/\textbf{43.38} & 87.84/\textbf{92.68} & 40.95/\textbf{26.52} & 92.09/\textbf{96.05} \\
+%   & Energy & 20.65/\textbf{5.64} & 95.25/\textbf{98.86} & 25.64/\textbf{8.89} & 94.13/\textbf{98.32} & 5.32/\textbf{1.82} & 99.05/\textbf{99.47} & 28.17/\textbf{8.63} & 93.46/\textbf{98.31} & 38.83/\textbf{17.91} & 88.91/\textbf{96.45} & 41.49/\textbf{24.84} & 88.26/\textbf{94.46} & 26.69/\textbf{11.29} & 93.17/\textbf{97.64} \\
+%   & ViM & 29.66/\textbf{1.15} & 95.06/\textbf{99.75} & 38.13/\textbf{14.17} & 94.00/\textbf{97.56} & 49.00/\textbf{2.48} & 93.84/\textbf{99.36} & 37.49/\textbf{14.34} & 93.84/\textbf{97.52} & 28.19/\textbf{12.16} & 94.94/\textbf{97.83} & 47.58/\textbf{26.81} & 90.78/\textbf{94.71} & 38.35/\textbf{11.85} & 93.75/\textbf{97.79} \\
+%   & ReAct & 24.19/\textbf{5.87} & 94.40/\textbf{98.84} & 26.69/\textbf{9.05} & 94.16/\textbf{98.31} & 6.72/\textbf{2.02} & 98.87/\textbf{99.44} & 29.18/\textbf{8.87} & 93.46/\textbf{98.30} & 39.50/\textbf{16.63} & 89.33/\textbf{96.88} & 40.30/\textbf{24.56} & 89.55/\textbf{94.52} & 27.76/\textbf{11.17} & 93.29/\textbf{97.72} \\  \hline
+%   \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ ResNet34\end{tabular}} 
+%   & MSP & 81.31/\textbf{61.07} & 77.61/\textbf{86.84} & 74.39/\textbf{47.64} & 82.08/\textbf{89.37} & 76.52/\textbf{44.67} & 80.65/\textbf{90.66} & 75.99/\textbf{49.69} & 80.96/\textbf{88.49} & 81.72/\textbf{72.93} & 76.90/\textbf{81.92} & 79.81/\textbf{79.55} & 77.30/\textbf{77.64} & 78.29/\textbf{59.26} & 79.25/\textbf{85.82}  \\
+%   & Energy & 76.73/\textbf{44.67} & 81.52/\textbf{91.73} & 58.02/\textbf{44.05} & 88.40/\textbf{91.81} & 61.12/\textbf{34.56} & 85.88/\textbf{94.10} & 61.82/\textbf{47.92} & 86.95/\textbf{90.88} & 80.73/\textbf{71.63} & 77.17/\textbf{84.74} & 78.06/\textbf{76.99} & 76.72/\textbf{79.66} & 69.41/\textbf{53.30} & 83.64/\textbf{88.82} \\
+%   & ViM & 75.80/\textbf{15.77} & 82.31/\textbf{96.94} & 37.70/78.33 & 93.40/84.58 & 89.49/\textbf{35.99} & 73.78/\textbf{93.35} & 38.51/77.57 & 93.01/84.35 & 49.47/\textbf{39.29} & 89.33/\textbf{92.46} & 78.09/84.20 & 78.17/76.00 & 61.51/\textbf{55.19} & 85.00/\textbf{87.95} \\
+%   & ReAct & 43.10/43.22 & 92.22/91.12 & 41.60/\textbf{34.31} & 91.58/\textbf{93.36} & 52.61/\textbf{32.62} & 87.32/\textbf{93.94} & 41.95/\textbf{37.17} & 91.29/\textbf{92.80} & 53.31/\textbf{51.44} & 87.65/\textbf{90.10} & 70.80/72.91 & 79.73/\textbf{79.89} & 50.56/\textbf{45.28} & 88.30/\textbf{90.20} \\ \hline
+%   \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR10\\ WideResNet28-10\end{tabular}} 
+%  & MSP & 46.92/\textbf{18.32} & 87.25/\textbf{97.23} & 33.04/\textbf{14.74} & 94.62/\textbf{97.72} & 17.32/\textbf{17.90} & 97.08/\textbf{97.41} & 35.15/\textbf{15.15} & 94.29/\textbf{97.79} & 44.54/\textbf{29.54} & 90.61/\textbf{95.38} & 43.50/\textbf{38.69} & 90.28/\textbf{93.27} & 36.74/\textbf{22.39}& 92.35/\textbf{94.47}\\
+%  & Energy & 41.25/\textbf{7.18} & 87.69/\textbf{98.55} & 24.19/\textbf{5.03} & 95.01/\textbf{98.96} & 11.37/\textbf{1.97} & 97.63/\textbf{99.43} & 26.40/\textbf{4.27} & 94.16/\textbf{99.05} & 42.52/\textbf{18.95} & 89.10/\textbf{95.92} & 40.04/\textbf{23.64} & 88.71/\textbf{94.40} & 30.96/\textbf{10.17} & 92.05/\textbf{97.72} \\
+%  & ViM & 10.80/\textbf{1.06} & 97.95/\textbf{99.70} & 20.11/\textbf{10.30} & 95.98/\textbf{97.90} & 13.85/\textbf{1.35} & 97.38/\textbf{99.56} & 19.89/\textbf{9.10} & 95.97/\textbf{98.11} & 17.87/\textbf{8.46} & 95.85/\textbf{98.37} & 42.78/\textbf{26.85} & 88.33/\textbf{94.25} & 20.88/\textbf{9.52} & 95.24/\textbf{97.98} \\
+%   & ReAct & 38.25/\textbf{7.85} & 88.51/\textbf{98.43} & 21.50/\textbf{4.64} & 96.12/\textbf{99.07} & 7.74/\textbf{2.38} & 98.55/\textbf{99.27} & 23.25/\textbf{3.98} & 95.77/\textbf{99.12}& 34.57/\textbf{17.18} & 92.12/\textbf{96.67} & 32.91/\textbf{23.70} & 92.37/\textbf{94.37} & 26.37/\textbf{9.95} & 93.91/\textbf{97.84} \\ \hline
+%   \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}CIFAR100\\ WideResNet28-10\end{tabular}} 
+%  & MSP & 70.24/\textbf{59.05} & 84.42/\textbf{86.65} & 74.49/\textbf{59.26} & 83.05/\textbf{84.88} & 65.60/\textbf{48.62} & 87.25/\textbf{90.71} & 75.70/\textbf{61.92} & 82.57/\textbf{83.41} & 81.91/\textbf{71.49} & 77.05/\textbf{81.80} & 76.87/\textbf{75.82} & 80.23/79.13 & 74.14/\textbf{62.52} & 82.43/\textbf{84.43}  \\
+%  & Energy & 66.49/\textbf{46.92} & 87.81/\textbf{91.36} & 68.04/\textbf{52.74} & 86.38/\textbf{89.27} & 45.53/\textbf{22.26} & 92.65/\textbf{96.38} & 70.83/\textbf{57.88} & 85.69/\textbf{87.79} & 82.89/\textbf{67.07} & 77.33/\textbf{85.61} & 80.47/\textbf{74.50} & 79.88/\textbf{80.78} & 69.04/\textbf{53.56} & 84.96/\textbf{88.53}\\
+%  & ViM & 52.74/\textbf{12.48} & 89.95/\textbf{97.46} & 38.90/59.06 & 92.20/87.26 & 69.26/\textbf{22.86} & 86.06/\textbf{95.89} & 33.54/61.13 & 93.11/86.59 & 31.84/46.65 & 93.23/89.33 & 78.21/80.15 & 78.31/77.20 & 50.75/\textbf{47.06} & 88.81/\textbf{88.96} \\
+%  & ReAct & 64.93/\textbf{39.53} & 88.75/\textbf{93.19} & 66.51/\textbf{48.17} & 87.19/\textbf{90.09} & 45.54/\textbf{23.09} & 92.58/\textbf{96.06} & 69.45/\textbf{50.17} & 86.60/\textbf{90.14} & 80.69/\textbf{39.41} & 81.22/\textbf{92.58} & 79.59/\textbf{72.97} & 80.54/\textbf{81.20} & 67.78/\textbf{45.56} & 86.15/\textbf{90.54}  \\\hline
+% \end{tabular}%
+% }
+% \caption{Fusion of our framework with various OOD methods on CIFAR Benchmarks. For each paired values by `/': the left one is from the original baseline and the right one is from the fusion one.
+% }
+% \label{tab:cifar_fusion}
+% \end{table*}
+
+\end{document}

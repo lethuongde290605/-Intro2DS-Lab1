@@ -1,0 +1,46 @@
+{
+    "api_keys": {
+        "semantic_scholar": "pQyYkwKlPkaR7cfWIDHWwarH41mLLFiW2FBKGbnY",
+        "arxiv": ""
+    },
+    "download_settings": {
+        "base_dir": "./data",
+        "delay_between_papers": 1.0,
+        "delay_between_versions": 0.5,
+        "retry_attempts": 3,
+        "keep_extensions": [
+            "tex",
+            "bib"
+        ]
+    },
+    "progress": {
+        "prefix": "2412",
+        "start": 5271,
+        "end": 10270,
+        "current": 5292,
+        "completed_papers": [
+            "2412-05271",
+            "2412-05272",
+            "2412-05273",
+            "2412-05274",
+            "2412-05275",
+            "2412-05276",
+            "2412-05277",
+            "2412-05278",
+            "2412-05279",
+            "2412-05280",
+            "2412-05281",
+            "2412-05282",
+            "2412-05283",
+            "2412-05284",
+            "2412-05285",
+            "2412-05286",
+            "2412-05287",
+            "2412-05288",
+            "2412-05289",
+            "2412-05290",
+            "2412-05291"
+        ],
+        "failed_papers": []
+    }
+}
