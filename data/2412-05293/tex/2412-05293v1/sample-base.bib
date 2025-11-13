@@ -1,0 +1,797 @@
+
+% Journals
+
+% First the Full Name is given, then the abbreviation used in the AMS Math
+% Reviews, with an indication if it could not be found there.
+% Note the 2nd overwrites the 1st, so swap them if you want the full name.
+
+ %{AMS}
+ @String{AMSTrans = "American Mathematical Society Translations" }
+ @String{AMSTrans = "Amer. Math. Soc. Transl." }
+ @String{BullAMS = "Bulletin of the American Mathematical Society" }
+ @String{BullAMS = "Bull. Amer. Math. Soc." }
+ @String{ProcAMS = "Proceedings of the American Mathematical Society" }
+ @String{ProcAMS = "Proc. Amer. Math. Soc." }
+ @String{TransAMS = "Transactions of the American Mathematical Society" }
+ @String{TransAMS = "Trans. Amer. Math. Soc." }
+
+ %ACM
+ @String{CACM = "Communications of the {ACM}" }
+ @String{CACM = "Commun. {ACM}" }
+ @String{CompServ = "Comput. Surveys" }
+ @String{JACM = "J. ACM" }
+ @String{ACMMathSoft = "{ACM} Transactions on Mathematical Software" }
+ @String{ACMMathSoft = "{ACM} Trans. Math. Software" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newsletter" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newslett." }
+
+ @String{AmerSocio = "American Journal of Sociology" }
+ @String{AmerStatAssoc = "Journal of the American Statistical Association" }
+ @String{AmerStatAssoc = "J. Amer. Statist. Assoc." }
+ @String{ApplMathComp = "Applied Mathematics and Computation" }
+ @String{ApplMathComp = "Appl. Math. Comput." }
+ @String{AmerMathMonthly = "American Mathematical Monthly" }
+ @String{AmerMathMonthly = "Amer. Math. Monthly" }
+ @String{BIT = "{BIT}" }
+ @String{BritStatPsych = "British Journal of Mathematical and Statistical
+          Psychology" }
+ @String{BritStatPsych = "Brit. J. Math. Statist. Psych." }
+ @String{CanMathBull = "Canadian Mathematical Bulletin" }
+ @String{CanMathBull = "Canad. Math. Bull." }
+ @String{CompApplMath = "Journal of Computational and Applied Mathematics" }
+ @String{CompApplMath = "J. Comput. Appl. Math." }
+ @String{CompPhys = "Journal of Computational Physics" }
+ @String{CompPhys = "J. Comput. Phys." }
+ @String{CompStruct = "Computers and Structures" }
+ @String{CompStruct = "Comput. \& Structures" }
+ @String{CompJour = "The Computer Journal" }
+ @String{CompJour = "Comput. J." }
+ @String{CompSysSci = "Journal of Computer and System Sciences" }
+ @String{CompSysSci = "J. Comput. System Sci." }
+ @String{Computing = "Computing" }
+ @String{ContempMath = "Contemporary Mathematics" }
+ @String{ContempMath = "Contemp. Math." }
+ @String{Crelle = "Crelle's Journal" }
+ @String{GiornaleMath = "Giornale di Mathematiche" }
+ @String{GiornaleMath = "Giorn. Mat." } % didn't find in AMS MR., ibid.
+
+ %IEEE
+ @String{Computer = "{IEEE} Computer" }
+ @String{IEEETransComp = "{IEEE} Transactions on Computers" }
+ @String{IEEETransComp = "{IEEE} Trans. Comput." }
+ @String{IEEETransAC = "{IEEE} Transactions on Automatic Control" }
+ @String{IEEETransAC = "{IEEE} Trans. Automat. Control" }
+ @String{IEEESpec = "{IEEE} Spectrum" } % didn't find in AMS MR
+ @String{ProcIEEE = "Proceedings of the {IEEE}" }
+ @String{ProcIEEE = "Proc. {IEEE}" } % didn't find in AMS MR
+ @String{IEEETransAeroElec = "{IEEE} Transactions on Aerospace and Electronic
+     Systems" }
+ @String{IEEETransAeroElec = "{IEEE} Trans. Aerospace Electron. Systems" }
+
+ @String{IMANumerAna = "{IMA} Journal of Numerical Analysis" }
+ @String{IMANumerAna = "{IMA} J. Numer. Anal." }
+ @String{InfProcLet = "Information Processing Letters" }
+ @String{InfProcLet = "Inform. Process. Lett." }
+ @String{InstMathApp = "Journal of the Institute of Mathematics and
+     its Applications" }
+ @String{InstMathApp = "J. Inst. Math. Appl." }
+ @String{IntControl = "International Journal of Control" }
+ @String{IntControl = "Internat. J. Control" }
+ @String{IntNumerEng = "International Journal for Numerical Methods in
+     Engineering" }
+ @String{IntNumerEng = "Internat. J. Numer. Methods Engrg." }
+ @String{IntSuper = "International Journal of Supercomputing Applications" }
+ @String{IntSuper = "Internat. J. Supercomputing Applic." } % didn't find
+%% in AMS MR
+ @String{Kibernetika = "Kibernetika" }
+ @String{JResNatBurStand = "Journal of Research of the National Bureau
+     of Standards" }
+ @String{JResNatBurStand = "J. Res. Nat. Bur. Standards" }
+ @String{LinAlgApp = "Linear Algebra and its Applications" }
+ @String{LinAlgApp = "Linear Algebra Appl." }
+ @String{MathAnaAppl = "Journal of Mathematical Analysis and Applications" }
+ @String{MathAnaAppl = "J. Math. Anal. Appl." }
+ @String{MathAnnalen = "Mathematische Annalen" }
+ @String{MathAnnalen = "Math. Ann." }
+ @String{MathPhys = "Journal of Mathematical Physics" }
+ @String{MathPhys = "J. Math. Phys." }
+ @String{MathComp = "Mathematics of Computation" }
+ @String{MathComp = "Math. Comp." }
+ @String{MathScand = "Mathematica Scandinavica" }
+ @String{MathScand = "Math. Scand." }
+ @String{TablesAidsComp = "Mathematical Tables and Other Aids to Computation" }
+ @String{TablesAidsComp = "Math. Tables Aids Comput." }
+ @String{NumerMath = "Numerische Mathematik" }
+ @String{NumerMath = "Numer. Math." }
+ @String{PacificMath = "Pacific Journal of Mathematics" }
+ @String{PacificMath = "Pacific J. Math." }
+ @String{ParDistComp = "Journal of Parallel and Distributed Computing" }
+ @String{ParDistComp = "J. Parallel and Distrib. Comput." } % didn't find
+%% in AMS MR
+ @String{ParComputing = "Parallel Computing" }
+ @String{ParComputing = "Parallel Comput." }
+ @String{PhilMag = "Philosophical Magazine" }
+ @String{PhilMag = "Philos. Mag." }
+ @String{ProcNAS = "Proceedings of the National Academy of Sciences
+                    of the USA" }
+ @String{ProcNAS = "Proc. Nat. Acad. Sci. U. S. A." }
+ @String{Psychometrika = "Psychometrika" }
+ @String{QuartMath = "Quarterly Journal of Mathematics, Oxford, Series (2)" }
+ @String{QuartMath = "Quart. J. Math. Oxford Ser. (2)" }
+ @String{QuartApplMath = "Quarterly of Applied Mathematics" }
+ @String{QuartApplMath = "Quart. Appl. Math." }
+ @String{RevueInstStat = "Review of the International Statisical Institute" }
+ @String{RevueInstStat = "Rev. Inst. Internat. Statist." }
+
+ %SIAM
+ @String{JSIAM = "Journal of the Society for Industrial and Applied
+     Mathematics" }
+ @String{JSIAM = "J. Soc. Indust. Appl. Math." }
+ @String{JSIAMB = "Journal of the Society for Industrial and Applied
+     Mathematics, Series B, Numerical Analysis" }
+ @String{JSIAMB = "J. Soc. Indust. Appl. Math. Ser. B Numer. Anal." }
+ @String{SIAMAlgMeth = "{SIAM} Journal on Algebraic and Discrete Methods" }
+ @String{SIAMAlgMeth = "{SIAM} J. Algebraic Discrete Methods" }
+ @String{SIAMAppMath = "{SIAM} Journal on Applied Mathematics" }
+ @String{SIAMAppMath = "{SIAM} J. Appl. Math." }
+ @String{SIAMComp = "{SIAM} Journal on Computing" }
+ @String{SIAMComp = "{SIAM} J. Comput." }
+ @String{SIAMMatrix = "{SIAM} Journal on Matrix Analysis and Applications" }
+ @String{SIAMMatrix = "{SIAM} J. Matrix Anal. Appl." }
+ @String{SIAMNumAnal = "{SIAM} Journal on Numerical Analysis" }
+ @String{SIAMNumAnal = "{SIAM} J. Numer. Anal." }
+ @String{SIAMReview = "{SIAM} Review" }
+ @String{SIAMReview = "{SIAM} Rev." }
+ @String{SIAMSciStat = "{SIAM} Journal on Scientific and Statistical
+     Computing" }
+ @String{SIAMSciStat = "{SIAM} J. Sci. Statist. Comput." }
+
+ @String{SoftPracExp = "Software Practice and Experience" }
+ @String{SoftPracExp = "Software Prac. Experience" } % didn't find in AMS MR
+ @String{StatScience = "Statistical Science" }
+ @String{StatScience = "Statist. Sci." }
+ @String{Techno = "Technometrics" }
+ @String{USSRCompMathPhys = "{USSR} Computational Mathematics and Mathematical
+     Physics" }
+ @String{USSRCompMathPhys = "{U. S. S. R.} Comput. Math. and Math. Phys." }
+ @String{VLSICompSys = "Journal of {VLSI} and Computer Systems" }
+ @String{VLSICompSys = "J. {VLSI} Comput. Syst." }
+ @String{ZAngewMathMech = "Zeitschrift fur Angewandte Mathematik und
+     Mechanik" }
+ @String{ZAngewMathMech = "Z. Angew. Math. Mech." }
+ @String{ZAngewMathPhys = "Zeitschrift fur Angewandte Mathematik und Physik" }
+ @String{ZAngewMathPhys = "Z. Angew. Math. Phys." }
+
+% Publishers % ================================================= |
+
+ @String{Academic = "Academic Press" }
+ @String{ACMPress = "{ACM} Press" }
+ @String{AdamHilger = "Adam Hilger" }
+ @String{AddisonWesley = "Addison-Wesley" }
+ @String{AllynBacon = "Allyn and Bacon" }
+ @String{AMS = "American Mathematical Society" }
+ @String{Birkhauser = "Birkha{\"u}ser" }
+ @String{CambridgePress = "Cambridge University Press" }
+ @String{Chelsea = "Chelsea" }
+ @String{ClaredonPress = "Claredon Press" }
+ @String{DoverPub = "Dover Publications" }
+ @String{Eyolles = "Eyolles" }
+ @String{HoltRinehartWinston = "Holt, Rinehart and Winston" }
+ @String{Interscience = "Interscience" }
+ @String{JohnsHopkinsPress = "The Johns Hopkins University Press" }
+ @String{JohnWileySons = "John Wiley and Sons" }
+ @String{Macmillan = "Macmillan" }
+ @String{MathWorks = "The Math Works Inc." }
+ @String{McGrawHill = "McGraw-Hill" }
+ @String{NatBurStd = "National Bureau of Standards" }
+ @String{NorthHolland = "North-Holland" }
+ @String{OxfordPress = "Oxford University Press" }  %address Oxford or London?
+ @String{PergamonPress = "Pergamon Press" }
+ @String{PlenumPress = "Plenum Press" }
+ @String{PrenticeHall = "Prentice-Hall" }
+ @String{SIAMPub = "{SIAM} Publications" }
+ @String{Springer = "Springer-Verlag" }
+ @String{TexasPress = "University of Texas Press" }
+ @String{VanNostrand = "Van Nostrand" }
+ @String{WHFreeman = "W. H. Freeman and Co." }
+
+@String(PAMI  = {IEEE Trans. Pattern Anal. Mach. Intell.})
+@String(IJCV  = {Int. J. Comput. Vis.})
+@String(CVPR  = {IEEE Conf. Comput. Vis. Pattern Recog.})
+@String(ICCV  = {Int. Conf. Comput. Vis.})
+@String(ECCV  = {Eur. Conf. Comput. Vis.})
+@String(NeurIPS = {Adv. Neural Inform. Process. Syst.})
+@String(ICML  = {Int. Conf. Mach. Learn.})
+@String(ICLR  = {Int. Conf. Learn. Represent.})
+@String(ACCV  = {Asian Conf. Comput. Vis.})
+@String(BMVC  = {Brit. Mach. Vis. Conf.})
+@String(CVPRW = {IEEE Conf. Comput. Vis. Pattern Recog. Worksh.})
+@String(AAAI  = {AAAI})
+@String(IJCAI = {IJCAI})
+@String(ICIP  = {IEEE Int. Conf. Image Process.})
+@String(ICPR  = {Int. Conf. Pattern Recog.})
+@String(ICASSP=	{ICASSP})
+@String(ICME  = {Int. Conf. Multimedia and Expo})
+@String(JMLR  = {J. Mach. Learn. Res.})
+@String(TMLR  = {Trans. Mach. Learn Res.})
+@String(TOG   = {ACM Trans. Graph.})
+@String(TIP   = {IEEE Trans. Image Process.})
+@String(TVCG  = {IEEE Trans. Vis. Comput. Graph.})
+@String(TCSVT = {IEEE Trans. Circuit Syst. Video Technol.})
+@String(TMM   = {IEEE Trans. Multimedia})
+@String(ACMMM = {ACM Int. Conf. Multimedia})
+@String(PR    = {Pattern Recognition})
+
+@String(MNI	  = {Nature Mach. Intell.})
+@String(SPL	  = {IEEE Sign. Process. Letters})
+@String(VR    = {Vis. Res.})
+@String(JOV	  = {J. Vis.})
+@String(TVC   = {The Vis. Comput.})
+@String(JCST  = {J. Comput. Sci. Tech.})
+@String(CGF   = {Comput. Graph. Forum})
+@String(CVM   = {Computational Visual Media})
+
+
+
+% Short form of conference & journal abbreviations -- especially for submission version
+% if desired, remove these macros in favor of the above ones
+@String(PAMI  = {IEEE TPAMI})
+@String(IJCV  = {IJCV})
+@String(CVPR  = {CVPR})
+@String(ICCV  = {ICCV})
+@String(ECCV  = {ECCV})
+@String(NeurIPS = {NeurIPS})
+@String(ICML  = {ICML})
+@String(ICLR  = {ICLR})
+@String(ACCV  = {ACCV})
+@String(BMVC  =	{BMVC})
+@String(CVPRW = {CVPRW})
+@String(AAAI  = {AAAI})
+@String(IJCAI = {IJCAI})
+@String(ICIP  = {ICIP})
+@String(ICPR  = {ICPR})
+@String(ICASSP=	{ICASSP})
+@String(ICME  =	{ICME})
+@String(JMLR  = {JMLR})
+@String(TMLR  = {TMLR})
+@String(TOG   = {ACM TOG})
+@String(TIP   = {IEEE TIP})
+@String(TVCG  = {IEEE TVCG})
+@String(TCSVT = {IEEE TCSVT})
+@String(TMM   =	{IEEE TMM})
+@String(ACMMM = {ACM MM})
+@String(PR    = {PR})
+
+
+@inproceedings{GradNorm,
+  author={Chen, Zhao and Badrinarayanan, Vijay and Lee, Chen-Yu and Rabinovich, Andrew},
+  title={Gradnorm: Gradient normalization for adaptive loss balancing in deep multitask networks},
+  booktitle={ICML},
+  pages={794--803},
+  year={2018}
+}
+@Eprint{basic1,
+  author={Kuan, Johnson and Mueller, Jonas},
+  title={Back to the basics: Revisiting out-of-distribution detection baselines},
+  archivePrefix={arXiv},
+  eprint={2207.03061},
+  year={2022}
+}
+
+@Eprint{basic2,
+  author={Salehi, Mohammadreza and Mirzaei, Hossein and Hendrycks, Dan and Li, Yixuan and Rohban, Mohammad Hossein and Sabokrou, Mohammad},
+  title={A unified survey on anomaly, novelty, open-set, and out-of-distribution detection: Solutions and future challenges}, 
+  archivePrefix={arXiv},
+  eprint={2110.14051},
+  year={2021}
+}
+@Eprint{basic3,
+  author={Shen, Zheyan and Liu, Jiashuo and He, Yue and Zhang, Xingxuan and Xu, Renzhe and Yu, Han and Cui, Peng},
+  title={Towards Out-Of-Distribution Generalization: A Survey},
+  archivePrefix={arXiv},
+  eprint={2108.13624},
+  year={2021}
+}
+
+@inproceedings{MSP,
+  author={Hendrycks, Dan and Gimpel, Kevin},
+  title={A Baseline for Detecting Misclassified and Out-of-Distribution Examples in Neural Networks},
+  booktitle= ICLR,
+  year={2016} 
+}
+
+@inproceedings{ODIN,
+  author={Liang, Shiyu and Li, Yixuan and Srikant, R},
+  title={Enhancing The Reliability of Out-of-distribution Image Detection in Neural Networks},
+  booktitle=ICLR,
+  year={2018}
+}
+
+@inproceedings{React,
+  author={Sun, Yiyou and Guo, Chuan and Li, Yixuan},
+  title={React: Out-of-distribution detection with rectified activations},
+  booktitle={NeurIPS},
+  pages={144--157},
+  year={2021}  
+}
+
+@inproceedings{LINe,
+  author={Ahn, Yong Hyun and Park, Gyeong-Moon and Kim, Seong Tae},
+  title={{LINe}: Out-of-Distribution Detection by Leveraging Important Neurons},
+  booktitle={CVPR},
+  pages={19852--19862},
+  year={2023}
+}
+
+@inproceedings{SSD+,
+  author={Sehwag, Vikash and Chiang, Mung and Mittal, Prateek},
+  title={SSD: A Unified Framework for Self-Supervised Outlier Detection},
+  booktitle=ICLR,
+  year={2021}
+}
+
+@inproceedings{CIDER,
+  author={Ming, Yifei and Sun, Yiyou and Dia, Ousmane and Li, Yixuan},
+  title={How to Exploit Hyperspherical Embeddings for Out-of-Distribution Detection?},
+  booktitle=ICLR,
+  year={2023},
+}
+
+
+@inproceedings{OE,
+  author={Hendrycks, Dan and Mazeika, Mantas and Dietterich, Thomas},
+  title={Deep anomaly detection with outlier exposure},
+  booktitle=ICLR,
+  year={2019}
+}
+
+
+@inproceedings{gan_method1,
+  author={Neal, Lawrence and Olson, Matthew and Fern, Xiaoli and Wong, Weng-Keen and Li, Fuxin},
+  title={Open set learning with counterfactual images},
+  booktitle=ECCV,
+  pages={613--628},
+  year={2018}
+}
+@inproceedings{gan_method2,
+  author={Kong, Shu and Ramanan, Deva},
+  title={Opengan: Open-set recognition via open data generation},
+  booktitle=ICCV,
+  pages={813--822},
+  year={2021},
+}
+
+
+@inproceedings{VOS,
+  author={Du, Xuefeng and Wang, Zhaoning and Cai, Mu and Li, Yixuan}, 
+  title={VOS: Learning What You Don't Know by Virtual Outlier Synthesis},
+  booktitle=ICLR,
+  year={2021}
+}
+
+@inproceedings{NPOS,
+    author={Tao, Leitian and Du, Xuefeng and Zhu, Jerry and Li, Yixuan},
+    title={Non-parametric Outlier Synthesis},
+    booktitle=ICLR,
+    year={2023}
+}
+
+@inproceedings{dreamood,
+  author={Du, Xuefeng and Sun, Yiyou and Zhu, Jerry and Li, Yixuan},
+  title={Dream the Impossible: Outlier Imagination with Diffusion Models},
+  booktitle=NeurIPS,
+  year={2023}
+}
+
+@Eprint{foundation_models,
+  author={Bommasani, Rishi and Hudson, Drew A and Adeli, Ehsan and Altman, Russ and Arora, Simran and von Arx, Sydney and Bernstein, Michael S and Bohg, Jeannette and Bosselut, Antoine and Brunskill, Emma and others},
+  title={On the opportunities and risks of foundation models},
+  archivePrefix={arXiv},
+  year={2021},
+  eprint={2108.07258}
+}
+
+@Eprint{BLIP-2,
+  author={Li, Junnan and Li, Dongxu and Savarese, Silvio and Hoi, Steven},
+  title={Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models},
+  archivePrefix={arXiv},
+  year={2023},
+  eprint={2301.12597}
+}
+
+@article{image-captioning,
+  author={Stefanini, Matteo and Cornia, Marcella and Baraldi, Lorenzo and Cascianelli, Silvia and Fiameni, Giuseppe and Cucchiara, Rita},
+  title={From show to tell: A survey on deep learning-based image captioning},
+  journal=PAMI,
+  volume={45},
+  number={1},
+  pages={539--559},
+  year={2022},
+  publisher={IEEE}
+}
+@inproceedings{VAQ,
+  author={Kafle, Kushal and Kanan, Christopher},
+  title={Visual question answering: Datasets, algorithms, and future challenges},
+  year={2017},
+  booktitle={CVIU},
+  pages={3--20},
+}
+
+@inproceedings{CLIP,
+  author={Radford, Alec and Kim, Jong Wook and Hallacy, Chris and Ramesh, Aditya and Goh, Gabriel and Agarwal, Sandhini and Sastry, Girish and Askell, Amanda and Mishkin, Pamela and Clark, Jack and others},
+  title={Learning transferable visual models from natural language supervision},
+  booktitle= ICML,
+  pages={8748--8763},
+  year={2021},
+}
+
+@inproceedings{DALL-E,
+  author={Ramesh, Aditya and Pavlov, Mikhail and Goh, Gabriel and Gray, Scott and Voss, Chelsea and Radford, Alec and Chen, Mark and Sutskever, Ilya},
+  title={Zero-shot text-to-image generation},
+  booktitle=ICML,
+  pages={8821--8831},
+  year={2021}
+}
+
+@Eprint{LLaVA,
+  author={Liu, Haotian and Li, Chunyuan and Wu, Qingyang and Lee, Yong Jae},
+  title={Visual instruction tuning},
+  archivePrefix={arXiv},
+  year={2023},
+  eprint={2304.08485}
+}
+
+@inproceedings{stablediffusion,
+  author={Rombach, Robin and Blattmann, Andreas and Lorenz, Dominik and Esser, Patrick and Ommer, Bj{\"o}rn},
+  title={High-resolution image synthesis with latent diffusion models},
+  booktitle=CVPR,
+  pages={10684--10695},
+  year={2022}
+}
+
+@Eprint{groundingdino,
+  author={Liu, Shilong and Zeng, Zhaoyang and Ren, Tianhe and Li, Feng and Zhang, Hao and Yang, Jie and Li, Chunyuan and Yang, Jianwei and Su, Hang and Zhu, Jun and others},
+  title={Grounding dino: Marrying dino with grounded pre-training for open-set object detection},
+  archivePrefix={arXiv},
+  year={2023},
+  eprint={2303.05499}
+}
+
+@inproceedings{LogitNorm,
+  author={Wei, Hongxin and Xie, Renchunzi and Cheng, Hao and Feng, Lei and An, Bo and Li, Yixuan}, 
+  title={Mitigating neural network overconfidence with logit normalization},
+  booktitle={ICML},
+  pages={23631--23644},
+  year={2022}
+}
+
+@misc{chatgpt,
+    author = "{OpenAI}",
+    title="Introducing ChatGPT",
+    howpublished="\url{https://openai.com/blog/chatgpt}", 
+    year = 2022,
+    note = "Accessed: 2023-03-15",
+}
+
+@inproceedings{background,
+  author={Ren, Jie and Liu, Peter J and Fertig, Emily and Snoek, Jasper and Poplin, Ryan and Depristo, Mark and Dillon, Joshua and Lakshminarayanan, Balaji},
+  title={Likelihood ratios for out-of-distribution detection},
+  booktitle=NeurIPS,
+  year={2019}
+}
+
+@article{background2,
+    author={Kim, Jaeyoung and Kong, Seo Taek and Na, Dongbin and Jung, Kyu-Hwan},  
+    title={Key Feature Replacement of In-Distribution Samples for Out-of-Distribution Detection},    
+    journal={AAAI},
+    year={2023}
+}
+
+@inproceedings{SupCon,
+  author={Khosla, Prannay and Teterwak, Piotr and Wang, Chen and Sarna, Aaron and Tian, Yonglong and Isola, Phillip and Maschinot, Aaron and Liu, Ce and Krishnan, Dilip},
+  title={Supervised contrastive learning},
+  booktitle={NeurIPS},
+  pages={18661--18673},
+  year={2020}
+}
+
+@inproceedings{motivation1_morechallenge,
+  author={Chen, Jiefeng and Li, Yixuan and Wu, Xi and Liang, Yingyu and Jha, Somesh},
+  title={ATOM: Robustifying Out-of-Distribution Detection Using Outlier Mining},
+  booktitle={ECML PKDD},
+  pages={430--445},
+  year={2021}
+}
+
+@inproceedings{motivation2_morechallenge,
+  author={Ming, Yifei and Fan, Ying and Li, Yixuan},
+  title={Poem: Out-of-distribution detection with posterior sampling},
+  booktitle={ICML},
+  pages={15650--15665},
+  year={2022},
+}
+
+
+@Eprint{condition1,
+  author={Nichol, Alex and Dhariwal, Prafulla and Ramesh, Aditya and Shyam, Pranav and Mishkin, Pamela and McGrew, Bob and Sutskever, Ilya and Chen, Mark},
+  title={Glide: Towards photorealistic image generation and editing with text-guided diffusion models},
+  archivePrefix={arXiv},
+  year={2021},
+  eprint={2112.10741}
+}
+
+@article{condition2,
+  author={Saharia, Chitwan and Ho, Jonathan and Chan, William and Salimans, Tim and Fleet, David J and Norouzi, Mohammad},
+  title={Image super-resolution via iterative refinement},
+  journal= PAMI,
+  volume={45},
+  number={4},
+  pages={4713--4726},
+  year={2022},
+  publisher={IEEE}
+}
+
+@inproceedings{Energy,
+  title={Energy-based out-of-distribution detection},
+  author={Liu, Weitang and Wang, Xiaoyun and Owens, John and Li, Yixuan},
+  booktitle=NeurIPS,
+  pages={21464--21475},
+  year={2020}
+}
+
+@techreport{CIFAR,
+    author = { Krizhevsky, A.  and  Hinton, G. } ,
+    title = {Learning multiple layers of features from tiny images},
+    institution = {University of Toronto},
+    year = {2009}
+}
+
+@inproceedings{SVHN,
+  author={ Netzer, Y.  and  Wang, T.  and  Coates, A.  and  Bissacco, A.  and  Ng, A. Y. },
+  title={Reading Digits in Natural Images with Unsupervised Feature Learning},
+  booktitle=NeurIPS,
+  year={2011},
+}
+
+@Eprint{LSUN,
+  author={Yu, Fisher and Seff, Ari and Zhang, Yinda and Song, Shuran and Funkhouser, Thomas and Xiao, Jianxiong},
+  title={Lsun: Construction of a large-scale image dataset using deep learning with humans in the loop},
+  eprint={1506.03365},
+  archivePrefix={arXiv},
+  year={2015}
+}
+
+@Eprint{iSUN,
+  author={Xu, Pingmei and Ehinger, Krista A and Zhang, Yinda and Finkelstein, Adam and Kulkarni, Sanjeev R and Xiao, Jianxiong},
+  title={Turkergaze: Crowdsourcing saliency with webcam based eye tracking},
+  eprint={1504.06755},
+  archivePrefix={arXiv},
+  year={2015},
+}
+
+@inproceedings{textures,
+  author={Cimpoi, Mircea and Maji, Subhransu and Kokkinos, Iasonas and Mohamed, Sammy and Vedaldi, Andrea},
+  title={Describing textures in the wild},
+  booktitle={CVPR},
+  pages={3606--3613},
+  year=2014
+}
+@article{Places,
+  author={Zhou, Bolei and Lapedriza, Agata and Khosla, Aditya and Oliva, Aude and Torralba, Antonio},
+  title={Places: A 10 million image database for scene recognition},
+  journal=PAMI,
+  volume={40},
+  number={6},
+  pages={1452--1464},
+  year={2017},
+}
+
+@inproceedings{iNaturalist,
+  author={Van Horn, Grant and Mac Aodha, Oisin and Song, Yang and Cui, Yin and Sun, Chen and Shepard, Alex and Adam, Hartwig and Perona, Pietro and Belongie, Serge},
+  title={The inaturalist species classification and detection dataset},
+  booktitle=CVPR,
+  pages={8769--8778},
+  year=2018
+}
+
+@inproceedings{Sun,
+  author={Xiao, Jianxiong and Hays, James and Ehinger, Krista A and Oliva, Aude and Torralba, Antonio},
+  title={Sun database: Large-scale scene recognition from abbey to zoo},
+  booktitle=CVPR,
+  pages={3485--3492},
+  year={2010}
+}
+
+@inproceedings{ResNet,
+  author={He, Kaiming and Zhang, Xiangyu and Ren, Shaoqing and Sun, Jian},
+  title={Deep residual learning for image recognition},
+  booktitle= CVPR,
+  pages={770--778},
+  year={2016}
+}
+
+@inproceedings{swintransformer,
+  author={Liu, Ze and Lin, Yutong and Cao, Yue and Hu, Han and Wei, Yixuan and Zhang, Zheng and Lin, Stephen and Guo, Baining},
+  title={Swin transformer: Hierarchical vision transformer using shifted windows},
+  booktitle= ICCV ,
+  pages={10012--10022},
+  year={2021}
+}
+
+@inproceedings{Maha,
+  author={Lee, Kimin and Lee, Kibok and Lee, Honglak and Shin, Jinwoo},
+  title={A simple unified framework for detecting out-of-distribution samples and adversarial attacks},
+  booktitle= NeurIPS,
+  pages={7167--7177},
+  year={2018}
+}
+
+@inproceedings{DICE,
+  author={Sun, Yiyou and Li, Yixuan},
+  title={{DICE}: Leveraging sparsification for out-of-distribution detection},
+  booktitle={ECCV},
+  pages={691--708},
+  year={2022}
+}
+
+@inproceedings{Vim,
+  author={Wang, Haoqi and Li, Zhizhong and Feng, Litong and Zhang, Wayne},
+  title={Vim: Out-of-distribution with virtual-logit matching},
+  booktitle= CVPR,
+  pages={4921--4930},
+  year={2022}
+}
+@inproceedings{BATS,
+  author={Zhu, Yao and Chen, YueFeng and Xie, Chuanlong and Li, Xiaodan and Zhang, 
+  Rong and Xue, Hui and Tian, Xiang and Chen, Yaowu and others},
+  title={Boosting Out-of-distribution Detection with Typical Features},
+  booktitle=NeurIPS,
+  pages={20758--20769},
+  year={2022}
+}
+@inproceedings{FeatureNorm,
+  author={Yu, Yeonguk and Shin, Sungho and Lee, Seongju and Jun, Changhyun and Lee, Kyoobin},
+  title={Block Selection Method for Using Feature Norm in Out-of-Distribution Detection},
+  booktitle=CVPR,
+  pages={15701--15711},
+  year={2023}
+}
+@inproceedings{CSI,
+  author={Tack, Jihoon and Mo, Sangwoo and Jeong, Jongheon and Shin, Jinwoo},
+  title={Csi: Novelty detection via contrastive learning on distributionally shifted instances},
+  booktitle= NeurIPS,
+  pages={11839--11852},
+  year={2020}
+}
+
+@inproceedings{NINCO,
+  author={Bitterwolf, Julian and Mueller, Maximilian and Hein, Matthias},
+  title={In or Out? Fixing ImageNet Out-of-Distribution Detection Evaluation},
+  booktitle= ICML,
+  pages={2471--2506},
+  year={2023}
+}
+
+@inproceedings{imagenet1k,
+  author={Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
+  title={Imagenet: A large-scale hierarchical image database},
+  booktitle= CVPR,
+  pages={248--255},
+  year={2009}
+}
+
+@inproceedings{MaxLogit,
+  author={Hendrycks, Dan and Basart, Steven and Mazeika, Mantas and Zou, Andy and Kwon, Joseph and Mostajabi, Mohammadreza and Steinhardt, Jacob and Song, Dawn},
+  title={Scaling Out-of-Distribution Detection for Real-World Settings},  
+  booktitle={ICML},
+  pages={8759--8773},
+  year={2022}
+}
+
+@inproceedings{KNN,
+  author={Sun, Yiyou and Ming, Yifei and Zhu, Xiaojin and Li, Yixuan},
+  title={Out-of-distribution detection with deep nearest neighbors},
+  booktitle={ICML},
+  pages={20827--20840},
+  year={2022}
+}
+@inproceedings{SHE,
+  author={Zhang, Jinsong and Fu, Qiang and Chen, Xu and Du, Lun and Li, Zelin and Wang, Gang and Han, Shi and Zhang, Dongmei and others},
+  title={Out-of-Distribution Detection based on In-Distribution Data Patterns Memorization with Modern Hopfield Energy},
+  booktitle=ICLR,
+  year={2022}
+}
+@inproceedings{ASH,
+  author={Djurisic, Andrija and Bozanic, Nebojsa and Ashok, Arjun and Liu, Rosanne},
+  title={Extremely Simple Activation Shaping for Out-of-Distribution Detection},
+  booktitle= ICLR,
+  year={2022}
+}
+@inproceedings{GODIN,
+  author={Hsu, Yen-Chang and Shen, Yilin and Jin, Hongxia and Kira, Zsolt},
+  title={Generalized odin: Detecting out-of-distribution image without learning from out-of-distribution data},
+  booktitle= CVPR,
+  pages={10951--10960},
+  year={2020}
+}
+
+@inproceedings{DINO,
+  author={Caron, Mathilde and Touvron, Hugo and Misra, Ishan and J{\'e}gou, Herv{\'e} and Mairal, Julien and Bojanowski, Piotr and Joulin, Armand},
+  title={Emerging properties in self-supervised vision transformers},
+  booktitle=ICCV,
+  pages={9650--9660},
+  year={2021}
+}
+@inproceedings{tip-adapter,
+  author={Zhang, Renrui and Zhang, Wei and Fang, Rongyao and Gao, Peng and Li, Kunchang and Dai, Jifeng and Qiao, Yu and Li, Hongsheng},
+  title={Tip-adapter: Training-free adaption of clip for few-shot classification},
+  booktitle=ECCV,
+  pages={493--510},
+  year={2022}
+}
+@inproceedings{cafo,
+  author={Zhang, Renrui and Hu, Xiangfei and Li, Bohao and Huang, Siyuan and Deng, Hanqiu and Qiao, Yu and Gao, Peng and Li, Hongsheng},
+  title={Prompt, generate, then cache: Cascade of foundation models makes strong few-shot learners},
+  booktitle=CVPR,
+  pages={15211--15222},
+  year={2023}
+}
+@inproceedings{LMC,
+  author={Qu, Haoxuan and Hui, Xiaofei and Cai, Yujun and Liu, Jun},
+  title={LMC: Large Model Collaboration with Cross-assessment for Training-Free Open-Set Object Recognition},
+  booktitle={NeurIPS},
+  year={2023}
+}
+@inproceedings{imageretrieval,
+  author={Almaz{\'a}n, Jon and Ko, Byungsoo and Gu, Geonmo and Larlus, Diane and Kalantidis, Yannis},
+  title={Granularity-aware adaptation for image retrieval over multiple tasks},
+  booktitle=ECCV,
+  pages={389--406},
+  year={2022}
+}
+
+@inproceedings{MCM,
+  title={Delving into out-of-distribution detection with vision-language representations},
+  author={Ming, Yifei and Cai, Ziyang and Gu, Jiuxiang and Sun, Yiyou and Li, Wei and Li, Yixuan},
+  pages={35087--35102},
+  booktitle=NeurIPS,
+  year={2022}
+}
+@inproceedings{ZOC,
+  title={Zero-shot out-of-distribution detection based on the pre-trained model clip},
+  author={Esmaeilpour, Sepideh and Liu, Bing and Robertson, Eric and Shu, Lei},
+  booktitle= AAAI,
+  pages={6568--6576},
+  year={2022}
+}
+
+@inproceedings{CLIPN,
+  author={Wang, Hualiang and Li, Yi and Yao, Huifeng and Li, Xiaomeng},
+  title={Clipn for zero-shot ood detection: Teaching clip to say no},
+  booktitle= ICCV,
+  pages={1802--1812},
+  year={2023}
+}
+
+@Eprint{CLIPOOD,
+  author={Shu, Yang and Guo, Xingzhuo and Wu, Jialong and Wang, Ximei and Wang, Jianmin and Long, Mingsheng},
+  title={CLIPood: Generalizing CLIP to Out-of-Distributions},
+  archivePrefix={arXiv},
+  year={2023},
+  eprint={2302.00864}
+}
+@article{opt,
+  author={Zhang, Susan and Roller, Stephen and Goyal, Naman and Artetxe, Mikel and Chen, Moya and Chen, Shuohui and Dewan, Christopher and Diab, Mona and Li, Xian and Lin, Xi Victoria and others},
+  title={Opt: Open pre-trained transformer language models},
+  archivePrefix={arXiv},
+  year={2022},  
+  eprint={2205.01068}
+}
+@inproceedings{oe_1,
+  author={Katz-Samuels, Julian and Nakhleh, Julia B and Nowak, Robert and Li, Yixuan},
+  year={2022},
+  title={Training ood detectors in their natural habitats},
+  booktitle={ICML},
+  pages={10848--10865},
+}
+

@@ -1,25 +1,88 @@
 #!/usr/bin/env python3
 """
 ArXiv Batch Downloader with Progress Tracking
-Main entry point for the application
+Main entry point for the application - supports multithreading
 """
 import time
 import os
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from config_manager import load_config, save_config
 from arxiv_client import format_arxiv_id, get_latest_version
 from downloader import download_paper
 from metrics_collector import MetricsCollector, PaperMetrics
+from shared import config_lock
+
+
+def process_paper(arxiv_id, config, config_path, paper_metrics, settings):
+    """
+    Process a single paper (download + collect metrics)
+    Thread-safe function to be called by thread pool
+    
+    Args:
+        arxiv_id: ArXiv paper ID
+        config: Configuration dictionary
+        config_path: Path to config file
+        paper_metrics: PaperMetrics collector
+        settings: Download settings
+        
+    Returns:
+        tuple: (arxiv_id, success, paper_info)
+    """
+    safe_id = format_arxiv_id(arxiv_id)
+    
+    print(f"\n{'='*80}")
+    print(f"📄 Processing: {arxiv_id}")
+    print(f"{'='*80}")
+    
+    # Time the paper processing
+    paper_start_time = time.time()
+    success, paper_info = download_paper(arxiv_id, config, config_path, collect_metrics=True)
+    paper_end_time = time.time()
+    
+    # Record metrics (thread-safe)
+    paper_metrics.add_paper(
+        paper_id=arxiv_id,
+        success=success,
+        process_time=paper_end_time - paper_start_time,
+        size_before=paper_info.get('size_before', 0),
+        size_after=paper_info.get('size_after', 0),
+        num_references=paper_info.get('num_references', 0),
+        num_versions=paper_info.get('num_versions', 0),
+        reference_fetch_success=paper_info.get('reference_fetch_success', False)
+    )
+    
+    # Update config progress (thread-safe)
+    with config_lock:
+        if success:
+            if safe_id not in config["progress"]["completed_papers"]:
+                config["progress"]["completed_papers"].append(safe_id)
+        else:
+            if safe_id not in config["progress"]["failed_papers"]:
+                config["progress"]["failed_papers"].append(safe_id)
+        
+        # Save progress periodically
+        save_config(config, config_path)
+    
+    # Delay between papers
+    if success:
+        time.sleep(settings["delay_between_papers"])
+    else:
+        print(f"⚠️  Failed to process {arxiv_id}")
+        time.sleep(settings["delay_between_papers"] * 2)
+    
+    return arxiv_id, success, paper_info
 
 
 def main():
-    """Main execution function for batch downloading arXiv papers"""
+    """Main execution function for batch downloading arXiv papers with multithreading"""
     config_path = "config.json"
     
     # Load config
     config = load_config(config_path)
     progress = config["progress"]
     settings = config["download_settings"]
+    max_workers = settings.get("max_workers", 5)  # Default to 5 if not set
     
     # Initialize metrics collectors
     metrics_dir = "./metrics"
@@ -33,61 +96,66 @@ def main():
     paper_metrics.start_timing()
     
     print("=" * 80)
-    print("🚀 ArXiv Batch Downloader with Progress Tracking")
+    print("🚀 ArXiv Batch Downloader with Progress Tracking (Multithreaded)")
     print("=" * 80)
     print(f"📁 Output directory: {settings['base_dir']}")
     print(f"📊 Range: {progress['prefix']}.{progress['start']:05d} to {progress['prefix']}.{progress['end']:05d}")
     print(f"📈 Current progress: {progress['current']}")
     print(f"✅ Completed: {len(progress['completed_papers'])} papers")
     print(f"❌ Failed: {len(progress['failed_papers'])} papers")
+    print(f"🧵 Max workers: {max_workers}")
     print("=" * 80)
     
     # Resume from last position
     start_from = progress["current"]
     
+    # Build list of papers to process
+    papers_to_process = []
+    for i in range(start_from, progress["end"] + 1):
+        arxiv_id = f"{progress['prefix']}.{i:05d}"
+        safe_id = format_arxiv_id(arxiv_id)
+        
+        # Skip if already completed
+        if safe_id in progress["completed_papers"]:
+            print(f"⏭️  Skipping {arxiv_id} (already completed)")
+            continue
+        
+        papers_to_process.append((i, arxiv_id))
+    
+    print(f"\n📋 Total papers to process: {len(papers_to_process)}")
+    print("=" * 80)
+    
     try:
-        for i in range(start_from, progress["end"] + 1):
-            arxiv_id = f"{progress['prefix']}.{i:05d}"
-            safe_id = format_arxiv_id(arxiv_id)
+        # Process papers using thread pool
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            # Submit all tasks
+            future_to_paper = {
+                executor.submit(process_paper, arxiv_id, config, config_path, paper_metrics, settings): (idx, arxiv_id)
+                for idx, arxiv_id in papers_to_process
+            }
             
-            # Skip if already completed
-            if safe_id in progress["completed_papers"]:
-                print(f"⏭️  Skipping {arxiv_id} (already completed)")
-                continue
-            
-            # Update current position
-            progress["current"] = i
-            
-            # Download paper
-            print(f"\n{'='*80}")
-            print(f"📄 Processing {i - start_from + 1}/{progress['end'] - start_from + 1}: {arxiv_id}")
-            print(f"{'='*80}")
-            
-            # Time the paper processing
-            paper_start_time = time.time()
-            success, paper_info = download_paper(arxiv_id, config, config_path, collect_metrics=True)
-            paper_end_time = time.time()
-            
-            # Record metrics
-            paper_metrics.add_paper(
-                paper_id=arxiv_id,
-                success=success,
-                process_time=paper_end_time - paper_start_time,
-                size_before=paper_info.get('size_before', 0),
-                size_after=paper_info.get('size_after', 0),
-                num_references=paper_info.get('num_references', 0),
-                num_versions=paper_info.get('num_versions', 0)
-            )
-            
-            # Save progress after each paper
-            save_config(config, config_path)
-            
-            # Delay between papers
-            if success:
-                time.sleep(settings["delay_between_papers"])
-            else:
-                print(f"⚠️  Will retry {arxiv_id} later if needed")
-                time.sleep(settings["delay_between_papers"] * 2)
+            # Process completed tasks
+            completed = 0
+            for future in as_completed(future_to_paper):
+                idx, arxiv_id = future_to_paper[future]
+                completed += 1
+                
+                try:
+                    result_id, success, paper_info = future.result()
+                    
+                    # Update current position
+                    with config_lock:
+                        progress["current"] = max(progress["current"], idx)
+                    
+                    status = "✅" if success else "❌"
+                    print(f"\n{status} [{completed}/{len(papers_to_process)}] Completed: {result_id}")
+                    
+                except Exception as e:
+                    print(f"\n❌ Exception processing {arxiv_id}: {e}")
+                    with config_lock:
+                        safe_id = format_arxiv_id(arxiv_id)
+                        if safe_id not in config["progress"]["failed_papers"]:
+                            config["progress"]["failed_papers"].append(safe_id)
         
         print("\n" + "=" * 80)
         print("🎉 Download completed!")

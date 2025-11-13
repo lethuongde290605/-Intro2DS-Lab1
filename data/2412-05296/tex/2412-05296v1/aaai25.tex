@@ -1,0 +1,351 @@
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+%\usepackage[submission]{aaai25}  % DO NOT CHANGE THIS
+
+\usepackage{aaai25}  % DO NOT CHANGE THIS
+\usepackage{times}  % DO NOT CHANGE THIS
+\usepackage{helvet}  % DO NOT CHANGE THIS
+\usepackage{courier}  % DO NOT CHANGE THIS
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
+\setlength{\pdfpagewidth}{8.5in} % DO NOT CHANGE THIS
+\setlength{\pdfpageheight}{11in} % DO NOT CHANGE THIS
+%
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%
+% These are are recommended to typeset listings but not required. See the subsubsection on listing. Remove this block if you don't have listings in your paper.
+\usepackage{newfloat}
+\usepackage{listings}
+\DeclareCaptionStyle{ruled}{labelfont=normalfont,labelsep=colon,strut=off} % DO NOT CHANGE THIS
+\lstset{%
+	basicstyle={\footnotesize\ttfamily},% footnotesize acceptable for monospace
+	numbers=left,numberstyle=\footnotesize,xleftmargin=2em,% show line numbers, remove this entire line if you don't want the numbers.
+	aboveskip=0pt,belowskip=0pt,%
+	showstringspaces=false,tabsize=2,breaklines=true}
+\floatstyle{ruled}
+\newfloat{listing}{tb}{lst}{}
+\floatname{listing}{Listing}
+%
+% Keep the \pdfinfo as shown here. There's no need
+% for you to add the /Title and /Author tags.
+\pdfinfo{
+/TemplateVersion (2025.1)
+}
+
+% DISALLOWED PACKAGES
+% \usepackage{authblk} -- This package is specifically forbidden
+% \usepackage{balance} -- This package is specifically forbidden
+% \usepackage{color (if used in text)
+% \usepackage{CJK} -- This package is specifically forbidden
+% \usepackage{float} -- This package is specifically forbidden
+% \usepackage{flushend} -- This package is specifically forbidden
+% \usepackage{fontenc} -- This package is specifically forbidden
+% \usepackage{fullpage} -- This package is specifically forbidden
+% \usepackage{geometry} -- This package is specifically forbidden
+% \usepackage{grffile} -- This package is specifically forbidden
+% \usepackage{hyperref} -- This package is specifically forbidden
+% \usepackage{navigator} -- This package is specifically forbidden
+% (or any other package that embeds links such as navigator or hyperref)
+% \indentfirst} -- This package is specifically forbidden
+% \layout} -- This package is specifically forbidden
+% \multicol} -- This package is specifically forbidden
+% \nameref} -- This package is specifically forbidden
+% \usepackage{savetrees} -- This package is specifically forbidden
+% \usepackage{setspace} -- This package is specifically forbidden
+% \usepackage{stfloats} -- This package is specifically forbidden
+% \usepackage{tabu} -- This package is specifically forbidden
+% \usepackage{titlesec} -- This package is specifically forbidden
+% \usepackage{tocbibind} -- This package is specifically forbidden
+% \usepackage{ulem} -- This package is specifically forbidden
+% \usepackage{wrapfig} -- This package is specifically forbidden
+% DISALLOWED COMMANDS
+% \nocopyright -- Your paper will not be published if you use this command
+% \addtolength -- This command may not be used
+% \balance -- This command may not be used
+% \baselinestretch -- Your paper will not be published if you use this command
+% \clearpage -- No page breaks of any kind may be used for the final version of your paper
+% \columnsep -- This command may not be used
+% \newpage -- No page breaks of any kind may be used for the final version of your paper
+% \pagebreak -- No page breaks of any kind may be used for the final version of your paperr
+% \pagestyle -- This command may not be used
+% \tiny -- This is not an acceptable font size.
+% \vspace{- -- No negative value may be used in proximity of a caption, figure, table, section, subsection, subsubsection, or reference
+% \vskip{- -- No negative value may be used to alter spacing above or below a caption, figure, table, section, subsection, subsubsection, or reference
+
+\usepackage{color} 
+
+\setcounter{secnumdepth}{0}
+
+%%%%%%%%% AUTHORS
+% Title
+%\title{AMG: Affect-contextualized Memory Music-Video Generation from Human Brain Signal}
+%\title{RAM: Reconstructing Affect-contextualized Memory via Music-Video from Human Brain Signal}
+%\title{Reconstructing Affect-contextualized Memory from Human Brain Signal: In terms of Music and Video Generation}
+%\title{Reconstructing Personalized Affect-Contextualized Memory via Music and Video Generation from Human Brain Signals}
+%\title{Facing Old Memory: Decoding Affect-Contextualized Memory from Human Brain Signals through Music and Video Generation}
+%\title{Tracing the footprints of your memory: Decoding Affect-Contextualized Memory from Human Brain Signals via Music and Video Generation}
+\title{Revisiting Your Memory: Reconstruction of Affect-Contextualized Memory via EEG-guided Audiovisual Generation}
+
+% copyright elimination for arxiv submission.
+\nocopyright
+
+\author{
+    Joonwoo Kwon\textsuperscript{\rm 1}\equalcontrib,
+    Heehwan Wang\textsuperscript{\rm 1}\equalcontrib,
+    Jinwoo Lee\textsuperscript{\rm 1}\equalcontrib,
+    Sooyoung Kim\textsuperscript{\rm 1}\equalcontrib, \\
+    Shinjae Yoo\textsuperscript{\rm 2},
+    Yuewei Lin\textsuperscript{\rm 2}\textsuperscript{\textdagger},
+    Jiook Cha\textsuperscript{\rm 1}\thanks{Co-corresponding authors.}
+}
+
+\affiliations{
+    \textsuperscript{\rm 1}Seoul National University, Republic of Korea \; \; \;
+    \textsuperscript{\rm 2}Brookhaven National Laboratory, Upton, NY, USA \\
+    \{pioneers, dhkdgmlghks, adem1997, rlatndud0513\}@snu.ac.kr, \\ \{sjyoo, ywlin\}@bnl.gov, \; connectome@snu.ac.kr,}
+
+\begin{document}
+\maketitle
+
+\begin{abstract} 
+%joon fine-tuned
+In this paper, we introduce \textbf{RecallAffectiveMemory}, a novel task designed to reconstruct autobiographical memories through audio-visual generation guided by affect extracted from electroencephalogram (EEG) signals. To support this pioneering task, we present the \textbf{EEG-AffectiveMemory} dataset, which encompasses textual descriptions, visuals, music, and EEG recordings collected during memory recall from nine participants. Furthermore, we propose \textbf{RYM} (Recall Your Memory), a three-stage framework for generating synchronized audio-visual contents while maintaining dynamic personal memory affect trajectories. Experimental results indicate that our method can faithfully reconstruct affect-contextualized audio-visual memory across all subjects, both qualitatively and quantitatively, with participants reporting strong affective concordance between their recalled memories and the generated content. Our approaches advance affect decoding research and its practical applications in personalized media creation via neural-based affect comprehension.
+
+
+
+%heehwan fine-tuned
+%In this paper, we introduce RecallAffectiveMemory, a novel framework for reconstructing autobiographical memories through affect-contextualized audio-visual generation guided by electroencephalogram (EEG) signals. Our contributions include, firstly, the EEG-AffectiveMemory dataset, containing text descriptions, images, music, and EEG recordings collected during memory recall; secondly, successful decoding of dynamic affective states from EEG signals during memory recall; and, thirdly, RYM (Recall Your Memory), a three-stage framework generating synchronized audio-visual content while preserving personal memory affect trajectories. Experimental results with nine participants demonstrate RYM's robust performance both quantitatively and qualitatively, with participants reporting strong affective concordance between their recalled memories and the generated content. This work advances affect decoding research and practical applications in personalized media creation through neural-based affect understanding.
+
+%We introduce RecallAffectiveMemory, a novel framework for reconstructing autobiographical memories from EEG signals by generating affect-contextualized audiovisual content. We present \textbf{EEG-AffectiveMemory} dataset, comprising comprehensive text descriptions, images, music, and EEG signals collected during autobiographical memory recall. Furthermore, we propose \textbf{RYM}, a simple yet effective three-stage multi-modal framework specifically designed to generate synchronized audio-visual content from autobiographical memories while reflecting their dynamic affective trajectories. Experimental results demonstrate that RYM achieves remarkable performance both quantitatively and qualitatively, with participants reporting strong affective concordance and high satisfaction with the generated content. Our study not only establishes a new foundation for further affect decoding and Brain-Computer Interface (BCI) research but also demonstrates the practical potential of neural-based affect understanding for personalized entertainment and media creation. The codes and the datasets are released upon acceptance.
+\end{abstract}
+
+%--------------------------------
+\section{Introduction}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth, height=9cm]{figures/Fig1.png}
+    \caption{Study overview. (a) Conceptual scheme of \textbf{RecallAffectiveMemory} task. (b) The \textbf{EEG-AffectiveMemory} dataset collection process with nine participants recalling their memories.}
+    \label{fig:fig1}
+\end{figure*}
+
+%We each have one moment that once stirred the very depths of our affects, leaving an indelible mark on us forever. 
+%At the moment that an audio or visual trigger invites us to feel what we felt and see what we saw, the past becomes the present. 
+Autobiographical memories, constructed from sensory impressions and affective states, are central to shaping our sense of self. 
+When familiar sights or sounds activate these memories, they bridge past and present experiences, allowing us to relive both sensations and affects.
+%These memories resurface when triggered by familiar sights or sounds, offering a unique window into the interplay between affect and memory. 
+
+Affective memory recall is a core area of research in cognitive and affective neuroscience, providing insights into how affect dynamics shape the richness and retrieval of personal experiences. Research has established that affect plays a crucial role in forming memories composed of visual and auditory information \cite{labar2006cognitive, jancke2008music, buchanan2007retrieval}. Autobiographical memory recall, in particular, may effectively evoke robust affective states, underscoring the deep interconnection between affect and memory \cite{siedlecka2019experimental}. Despite the co-occurrence of various affects during memory recall, prior studies have mainly focused on static self-reported measures, offering limited insights into the temporal dynamics of affect \cite{mills2014validity, onton2009high}. Recent research has shifted toward examining how multiple affective states change and interact over time in naturalistic scenarios \cite{kuppens2017emotion}. This approach employs stimuli such as movies or music to investigate both the neural substrates of affective states and their influence on sensory processing and memory formation \cite{mcclay2023dynamic, camacho2022emocodes}. 
+
+This evolving focus has advanced affect decoding research, with studies demonstrating the successful application of machine learning for decoding affective states from neural signals, including movie viewing, music listening, and memory recall \cite{saarimaki2021naturalistic,chanel2009short, iacoviello2015real, placidi2015basis, dar2024insights}. While EEG-based affect decoding shows promise for real-world applications, its untapped potential in decoding the rich and dynamic affective states evoked during autobiographical memory-recall remains a critical and largely unexplored frontier. Understanding these dynamics and developing methods for their neural decoding could lead to breakthroughs in uncovering the fundamental role of recalling unforgettable memories in everyday affective experiences.
+
+In parallel, affect-guided content generation has rapidly evolved, opening new possibilities for transforming affect-contextualized memories into multimedia experiences. Early studies demonstrated basic affect-guided neural style transfer in images \cite{huang2018automatic} and music \cite{sigel2021music}, while recent advances have enabled more nuanced control of affective expression through affect-specific text prompts \cite{son2023computational, weng2023affective, agostinelli2023musiclm, copet2024simple}. Furthermore, recent generative models \cite{rombach2022high, feng2022training, ma2024directed, liu2022compositional, parmar2024one} support more sophisticated control over the generation process. %For instance, sketch-guided image generation \cite{parmar2024one} enables precise visual control, maintaining the visual characteristics of the reference drawing, while melody-conditioned music generation allows for diverse musical expressions based on particular melodic cues \cite{agostinelli2023musiclm, copet2024simple}. 
+
+Building on these advancements, the integration of generative models with affect decoding offers a novel opportunity to create multimedia content that preserves both the content and affective context of autobiographical memories. Given the critical role of affective states in shaping sensory processing during memory formation and recall, this integration has the potential to transform personalized entertainment and media creation, providing individuals with a deeply resonant experience where their autobiographical memories are enriched by AI-generated content.
+
+%While early studies demonstrated emotional style transfer capabilities in images \cite{huang2018automatic} and music \cite{sigel2021music}, recent advances in generative models have enabled more nuanced control of emotional expression through emotion-specific text prompts\cite{son2023computational, weng2023affective, agostinelli2023musiclm, copet2024simple}. 
+
+Here, we aim to decode temporal dynamics of affective states from EEG during autobiographical memory recall and develop a system for generating affectively resonant videos accompanied by music from personal memories using generative artificial intelligence (genAI). To support this task, we present \textbf{EEG-AffectiveMemory} dataset, which captures multi-modal data including text descriptions, sketch paintings, associated musical pieces, and EEG signals during memory recall. Of note, our experimental protocol specifically targets affective state transitions by having participants recall episodes containing mixed affects (e.g., "\textit{sad but cozy}" and "\textit{happy but lonely}") and report real-time affective states during memory recall and generated content viewing. This design enables simultaneous tracking of dynamic affective changes alongside their neural correlates.
+
+Leveraging this comprehensive dataset, we propose \textbf{RYM}, a three-stage multi-modal framework that decodes dynamic affective transitions from neural signals and generates synchronized audio-visual content reflecting the affective trajectories during memory recall. 
+To summarize, our work has three main contributions.
+\begin{itemize}
+  \item For the first time, we introduce a novel task and comprehensive multi-modal dataset for studying affect-contextualized autobiographical memories. This dataset will be accessible on our project page.
+  \item We successfully decode dynamic affective states from EEG signals during memory recall, capturing temporal affective trajectories.
+  \item We propose RYM, a simple yet effective framework that faithfully generates synchronized audio-visual content while preserving the affective dynamics of personal memories.
+\end{itemize}
+
+%--------------------------------
+\section{Related Works}
+
+\textbf{Affect Decoding using Human Brain Signal.} Machine learning models have shown increasing success in decoding affect from neural signals (EEG, fMRI) \cite{saarimaki2021naturalistic}. While traditional studies used controlled stimuli, research has shifted toward naturalistic approaches using movies and music \cite{koelstra2011deap, zheng2015investigating}. EEG has emerged as a preferred modality due to its high temporal resolution and accessibility \cite{al2017review, vempati2023systematic}. Several influential open-source datasets (DEAP, SEED, DREAMER) combine EEG with naturalistic stimuli, with DREAMER demonstrating portable EEG feasibility \cite{koelstra2011deap, zheng2015investigating, katsigiannis2017dreamer}. Recent datasets explore increasingly natural contexts: social video watching (AMIGOS) \cite{miranda2018amigos} and facial expression recording (PME4) \cite{chen2022emotion}. These resources have advanced both neural pattern analysis and affect dynamics decoding using machine learning and deep learning models \cite{saarimaki2021naturalistic, vempati2023systematic}. Despite these advances, the neural dynamics of autobiographical memory recall, a powerful affect elicitor, remain largely unexplored \cite{siedlecka2019experimental}. While early studies showed potential in decoding memory-induced affect using conventional machine learning \cite{chanel2009short}, subsequent research demonstrated successful affect classification from EEG signals \cite{iacoviello2015real, placidi2015basis}. Recent work shows deep learning models outperform conventional machine learning approaches in memory-induced affect classification \cite{dar2024insights}, while their requirements on larger training datasets significantly hinder their applications \cite{al2017review, vempati2023systematic}.
+%EEG-based affect decoding utilizes various features (PSD, Wavelet transforms, Hjorth parameters) with both conventional machine learning and deep learning approaches \cite{al2017review, vempati2023systematic}.
+%Conventional machine learning classifiers (SVM, KNN) achieve 70--97\% accuracy across major datasets, while deep learning methods demonstrate superior performance (85--99\%) but require larger training sets \cite{al2017review, vempati2023systematic}. 
+Recently, CEBRA \cite{schneider2023learnable} addresses the sample size limitation in affect decoding through contrastive learning, using temporally aligned variables like affect time-series. Demonstrating efficacy in various neural decoding tasks \cite{wang2024predicting, merk2023invasive}, CEBRA significantly outperforms traditional approaches like frontal alpha asymmetry in cross-participant affect valence decoding \cite{yi2024awe}. Thus, we utilized CEBRA to effectively extract affect dynamics from individual subjects within a single session of neural recordings.
+
+\textbf{Neural Style Transfer.} Neural Style Transfer (NST) enables example-guided style transfer while preserving content \cite{gatys2016image, johnson2016perceptual, gatys2017controlling, ghiasi2017exploring, chen2016fast, ulyanov2017improved, dumoulin2016learned, ulyanov2016texture}.
+The introduction of adaptive instance normalization \cite{huang2017arbitrary} and its extensions \cite{sheng2018avatar,kotovenko2019content, jing2020dynamic, shen2018neural, li2017universal, chandran2021adaptive, wang2023microast, wang2021rethinking} advanced arbitrary style transfer capabilities, though requiring intensive computation with pre-trained convolutional neural networks (CNNs). Recently, AesFA achieved lightweight implementations without pre-trained CNNs, enabling real-time high-resolution applications \cite{kwon2024aesfa}. Meantime, diffusion models have advanced style transfer through textual inversion \cite{zhang2023inversion} and CLIP-based disentanglement \cite{wang2023stylediffusion} to text-conditioned approaches \cite{everaert2023diffusion, yang2023zero, kwon2022clipstyler,chung2024style, fu2022language}. Recent work explores affect-based style transfer using affect-color palettes \cite{huang2018automatic}, facial expression-based color palettes \cite{son2023computational}, and visually-abstract affects from text \cite{weng2023affective}, but remains limited to static representations. We address this limitation by proposing a framework that leverages dynamic affective information from EEG signals to generate affect-contextualized music videos.
+
+\textbf{Music Style Transfer.} Following NST in computer vision, music style transfer enables content and style separation in musical pieces \cite{dai2018music}. While lacking formal definitions, research frameworks typically treat melody, harmony, and rhythm as content, while considering timbre, articulation, and dynamics as style elements \cite{dai2018music, grinstein2018audio, cifka2019supervised}. Early music style transfer focused on timbre transformation while preserving structural content using WaveNet and adversarial networks \cite{engel2017neural, huang2018timbretron, bonnici2022timbre, grinstein2018audio, hung2019musical}. Research evolved to broader style elements, enabling genre transformation through manipulation of melody, harmony, and instruments \cite{brunner2018midi, cifka2019supervised}. Recent work explores the affective expression of music, separating low-level features (pitch, harmony) from high-level features (rhythm, dynamics, tempo) for controllable style transfer \cite{{tan2020music}}. Recent advances in LLMs enable text-conditioned and melody-guided music generation \cite{agostinelli2023musiclm, copet2024simple}, simplifying synthesis through text descriptions and audio references. Nonetheless, none of these approaches directly utilize neural signals to extract affect, nor do they utilize affect dynamics. 
+%Latest approaches incorporate pseudo-word style representations \cite{li2024music}, allowing structure-preserving style transfer for arbitrary input music.
+
+
+%--------------------------------
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/Fig2.png}
+    \caption{The \textbf{RYM} architecture comprises three primary components: an affect extractor, an affect-text alignment, and affect-contextualized decoding. The recorded EEG signals are fed to an affect extractor, making an dynamic affect representations, which are subsequently aligned with text prompts using pre-trained language models (e.g., Claude). A synchronized affect-contextualized text prompt is then processed into the music and visual generation models.}
+    \label{fig:fig2}
+\end{figure}
+
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth, height=10cm]{figures/Fig3.png}
+    \caption{CEBRA results. (a) idiosyncratic temporal dynamics of real-time valence keypress during memory recall task. (b) learning curve of CEBRA's multi-session training. (c) each participant's latent neural representation of valence.}
+    \label{fig:fig3}
+\end{figure*}
+
+\section{Experimental Designs}
+%The study consisted of two sessions. 
+%In session 1, EEG signals and real-time affective ratings were recorded during memory recall. 
+%Participants also provided a brief essay and sketch of their recalled memories, which were later used to generate personalized music videos. 
+%Session 2 was conducted three days later to assess the generated music videos through a user study. 
+Total 10 participants were recruited, and 9 participants who completed both sessions were included in the analysis (8 females; $mean_{age}$ = 24.1 years, $std_{age}$ = 1.5 years). 
+All participants provided written informed consent. 
+Experiments were conducted in a soundproof room.
+
+\textbf{Session 1.} One day prior, participants were instructed to prepare an affective memory, evoking mixed affects (e.g., recalling a high school graduation may involve both sadness about parting with friends and excitement about college life), and a song that enhanced the vividness of their recall. 
+The selected song had to have a piano solo cover available on a streaming platform.
+
+The first session comprised four stages. 
+First, participants were fitted with Enobio 20 EEG devices (Neuroelectrics), and signal quality calibration with 2-minute eyes-closed resting-state EEG recording was performed. 
+Second, participants repeatedly listened to their chosen song while writing a 50-75 word essay in Korean describing their memory. 
+Third, while listening to the same song, participants created a digital sketch of their memory using \textit{Tayasui Sketches} on an iPad. 
+Last, during the memory recall, participants closed their eyes as EEG data was recorded and indicated affective changes using real-time keypresses. 
+They kept pressing ‘1’ for positive, ‘3’ for negative, and no key for neutral states. 
+Keypress events were temporally mapped to the EEG signals as. 
+Participants stopped recalling when no new scenes appeared or affective responses subsided. 
+Afterward, participants rated their confidence in their keypress responses on a 1-7 Likert scale (i.e., 1 = Very insecure, 7 = Very confident) and reported acceptable performance ($mean$ = 5.2, $std$ = 1.0).
+
+\textbf{Session 2.} Session 2 consisted of three stages. 
+First, participants freely watched both a "real" video (based on their CEBRA-decoded affective sequence) and a "fake" video (based on permuted affective sequences) to reduce confounding effects from surprise reactions during the following evaluation. 
+Second, after a 30-second break, the participants re-watched each video and evaluated the affective changes depicted in the video using the same keypress method as in session 1. 
+While session 1 keypresses reported subjective feelings, session 2 keypresses assessed affective recognition of the videos. 
+Last, after another 30-second break, participants watched the videos again and rated which better represented their memory and its affective dynamics. 
+They chose from four options: \textit{Both, Real, Fake, Neither}. 
+%Participants were told that both real and fake videos were created differently but authentically, and video order was pseudo-randomized to prevent sequence effects.
+
+% Task 소개
+\begin{figure*}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/Fig4.png}
+    \caption{Qualitative results. (a) the images and (b) the music (mel-spectogram for visualization) are randomly selected. Note that the images are randomly sampled from the generated video output.}
+    \label{fig:fig4}
+\end{figure*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.45\textwidth, height=5cm]{figures/Fig5.png}
+    \caption{The affective correlations of visual and audio attributes.}
+    \label{fig:fig5}
+\end{figure}
+
+\begin{table}[h]
+\renewcommand*{\arraystretch}{1.2}
+\centering \resizebox{0.45\textwidth}{!}{
+\begin{tabular}{cc|cc}
+    & Output & CLIP($\downarrow$) & CLAP($\downarrow$) \\ \hline \hline
+    & neutral      & 30.71    & 1.020           \\
+    Semantic & positive     & 30.67    & 1.056           \\
+    & negative     & 30.69    & 1.074           \\ \hline
+    \newline
+\end{tabular}}
+
+\centering \resizebox{0.45\textwidth}{!}{
+\begin{tabular}{cc|cc}
+    & Affective Word-Output & CLIP($\downarrow$) & CLAP($\downarrow$) \\ \hline \hline
+    & positive-neutral     & 37.88    & 1.360           \\
+    & positive-positive    & 37.87    & 1.351           \\
+    Affect & positive-negative    & 37.84    & 1.368           \\
+    Difference & negative-neutral     & 38.41    & 1.270            \\
+    & negative-positive    & 38.38    & 1.268           \\
+    & negative-negative    & 38.36    & 1.253          \\ \hline
+           
+\end{tabular}}
+\caption{Quantitative results calculating distances between text prompt and output (thumbnail image and music) at CLIP and CLAP spaces.}
+\label{tab:quantitative}
+\end{table}
+
+\section{Method}
+%Here, we introduce a novel methodology that successfully transfers one's affect and/or preferences into desired audio/visual medium (in this paper, music and video). 
+%Specifically, we utilized contrastive learning-based nonl-inear dimensionality reduction to effectively extract affect from individual subjects within a single session of neural recordings. 
+%In addition, we explicitly aligned dynamic affective transitions with corresponding text descriptions using the pre-trained language model, which are then fed to the pre-trained generative models for music and video.
+%\subsection{Architecture Overview}
+%Depicted in Figure~\ref{fig:fig2}, the RYM architecture comprises three primary components: an affect extractor, an affect-text alignment, and affect-contextualized decoding. Specifically, the measured EEG signals are fed to an affect extractor, making an dynamic affect representations which are then aligned with text prompt using pre-trained language models (e.g., Claude. (2023)). An aligned affect-contextualized text prompt is then processed into the music and image generation models.
+
+\subsection{Extracting Human Affects}
+To effectively extract affects from individual subjects within a single session of neural recordings, we utilized the contrastive learning-based neural network, CEBRA \cite{schneider2023learnable}. By leveraging temporally synchronized behavioral sequences as auxiliary variables, CEBRA non-linearly reduces the dimensions of neural signals to maximize the separation between distinct behavioral states while clustering signals from similar states. Initially validated in animal neuroscience \cite{kim2024normative} and invasive BCI applications \cite{merk2023invasive}, CEBRA has recently demonstrated superior performance in human affect decoding during movie viewing \cite{yi2024awe}, suggesting its potential for EEG-based affect decoding.
+
+%CEBRA \cite{schneider2023learnable} is a contrastive learning-based neural network designed to robustly learn latent neural embeddings associated with specific behaviors even from single-session neural recordings. By leveraging temporally synchronized behavioral sequences as auxiliary variables, CEBRA non-linearly reduces the dimensions of neural signals to maximize the separation between distinct behavioral states while clustering signals from similar states. 
+%Initially validated in animal neuroscience \cite{kim2024normative} and invasive BCI applications \cite{merk2023invasive}, %CEBRA has recently demonstrated superior performance in human affect decoding during movie viewing \cite{yi2024awe}, suggesting its potential for EEG-based affect decoding. 
+In our study, CEBRA utilizes keypressed valence sequences (neutral, positive, negative) as auxiliary variables to identify individual-level latent clusters for each affective state. We performed multi-session training of CEBRA with 10 participants' EEG and key-pressed valence sequence, aligning individuals' latent valence-neural representations. To examine the generalizability of embeddings, we conducted leave-one-out valence decoding tasks. We trained a k-nearest neighbor (KNN) classifier with 9 participants' CEBRA embeddings to predict valence label at each timepoint and evaluated its predictive performances with the other's embeddings. 
+
+\subsection{Aligning Extracted Affects With Text}
+To effectively incorporate extracted affects into audio/visual output, it is essential to convert them into text prompts, which are commonly used for directing generative processes. Specifically, we pre-defined descriptive terms for positive and negative affective states with the pre-trained language model, \textit{claude.ai}. For each affective state, we randomly selected words from the predetermined word samples and fine-tuned the original text prompts that the subject articulated in their memories with affective samples using the pre-trained language model. In the neutral state, the original text prompts remain unaltered.
+
+\subsection{Implementation Details}
+\textbf{Affect Extraction.} To decode each individual's affect dynamics from memory-recall EEG signals, we conducted multi-session training of CEBRA. We set hyperparameters as follows: batch size=2,048, model architecture=‘offset-10 model’, the number of hidden units=95, learning rate=.005, the number of iterations=2000, hybrid=False. 
+Following the previous study on the optimal number of dimensionality for generalizable valence representation across individuals and stimuli \cite{yi2024awe}, we set the number of latent embeddings' dimensionality as 7. 
+The neighborhood parameters of KNN classifiers were fixed at the square of the number of the input time points. 
+
+
+\textbf{Music and Video Generation.} Using MusicGen-melody \cite{copet2024simple}, we generated music using affect-specific text prompts and memory-associated guiding melodies selected by participants. The generated content was then segmented according to affective state durations and integrated into a final sample using 40 ms crossfading to match the affective trajectory. For video generation, we used stable diffusion ver.1.5 \cite{rombach2022high}. In all our experiments, we fix the parameters of text encoders and LDMs for music and video generation, respectively. We use the author-released codes using default configurations. All experiments were conducted using the PyTorch framework \cite{paszke2019pytorch} on a single NVIDIA A100(40G) GPU.
+
+%--------------------------------
+\section{Experimental Results}
+%To evaluate the performance of our models on the new task, we utilize metrics in three aspects: qualitative, quantitative and user-level.
+
+\textbf{Affect Decoding.} Participants showed individual differences in temporal dynamics of affective states during memory recall and the duration of the recall (see Figure~\ref{fig:fig3}a). Despite these variations, our CEBRA model demonstrated a plateau in learning performance in multiple-session training with EEG signals and real-time valence keypresses from nine participants (see Figure~\ref{fig:fig3}b). The individually derived latent valence-neural embeddings from this model revealed a consistent geometric structure across individuals (see Figure~\ref{fig:fig3}c). Using these embeddings with a KNN classifier for leave-one-out classification for each individual yielded a test-weighted F1 score of 0.9.
+
+\textbf{Qualitative Evaluation.} Figure~\ref{fig:fig4} illustrates that our approach produces qualitatively satisfactory visual and audio outputs across all affective states and subjects. 
+Our model preserves the elements of the original sketch while integrating corresponding affects through tones, colors, and visual composition. 
+The positive video clip showed brighter colors and a vibrant tone throughout the videos, whereas the negative displayed darker tones and a gloomier atmosphere. 
+Moreover, the generated output demonstrated satisfactory visual coherence across video frames. 
+Also, our model successfully transfers the style of original guiding melodies. 
+As in Figure~\ref{fig:fig4}, the positive affects reflecting music clips showed broader frequency distributions with stronger energy in high-frequency regions, creating brighter and more vibrant spectral patterns. 
+In contrast, the negative affects reflecting content showed concentrated energy in lower frequency bands, resulting in darker and more focused spectral patterns. 
+These results demonstrated clear acoustic differences between affective expressions in generated music.
+The down-sampled version of generated music samples can be accessed within the supplementary materials.
+
+\textbf{Quantitative Evaluation.} We show quantitative evaluation in Tab.~\ref{tab:quantitative} and Figure~\ref{fig:fig5}. 
+Semantic evaluation using CLIP and CLAP embeddings shows consistent distances between reference prompts and affect-contextualized outputs across affective states, indicating semantic coherence. 
+Additionally, the minimal distances between outputs and their corresponding affective word embeddings (e.g., positive-positive pairs) validate our model's ability to effectively direct content generation toward intended affective states.
+
+We examined how affective inputs create variations in visual (e.g., hue, saturation, value) and musical (e.g., mode, brightness, intensity) attributes of generated content.
+While visual generation shows significant correlations between affects and hue/value, musical generation demonstrates stronger correlations across all features, suggesting more effective affective expression through musical elements.
+%The image results show higher correlation coefficients between emotions and hue/value compared to random emotional inputs. For music, all three characteristics show significant correlations with emotions. This suggests that the emotional input during music creation influences the mode score, emotional brightness, and intensity of the resulting music, and music generation has a higher correlation with emotions than visual generation.
+
+% 감정 변화에 따라 저 값들이 얼만큼 correlation이 있었는지
+% 이미지의 특징에는 대표적으로 hue, saturation, value가 있으며 음악의 특징에는 mode score, emotional brightness, intensity가 있다. 감정이 반영됨에 따라 어떤 특징들이 변화하여 이미지과 뮤직에 차이를 만들어내는지 알아보기 위해 감정과 특징 사이의 연관성이 있는지 확인하였다. 긍정/부정의 감정이 반영됐을 때 이미지의 경우 HSV이 어떻게 변화하는지의 경향성을 확인할 수 있다. (예를들어, 긍정 이미지는 색상이 따뜻하고 명도가 높으면 감정과 hue, value와의 연관성이 높게 나타남 - 이해하기 위한 예시, 우리는 확인하지 않음)대조군으로는 랜덤한 감정들과 특징 사이의 연관성을 비교하였다. 이미지 결과를 보면 감정과 색상(hue), 명도(value)의 corr이 random 감정과 비교했을 때 높게 나타난다. 이는 감정이 달라지면 이미지의 hue, value가 달라진다는 것을 의미한다. 음악의 경우, 세가지 특징 모두 감정과 연관성이 있는 것으로 확인된다. 음악을 만들때 들어간 감정에 따라 음악의 mode score, emotional brightness, intensity가 달라진다는 것을 의미한다.
+%Images are characterized primarily by hue, saturation, and value, while music is characterized by mode score, emotional brightness, and intensity. We examined the correlation between emotions and these features to understand how different emotional inputs create variations in images and music. We can observe trends in how HSV values change in images when positive/negative emotions are reflected. (For example, positive images might show strong correlations between emotion and hue/value when they have warm colors and high brightness - this is just an illustrative example, not verified in our study.) As a control group, we compared these correlations against those between random emotions and features. The image results show higher correlation coefficients between emotions and hue/value compared to random emotional inputs. This indicates that changes in emotion lead to corresponding changes in the hue and value of images. For music, all three characteristics show significant correlations with emotions. This suggests that the emotional input during music creation influences the mode score, emotional brightness, and intensity of the resulting music.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.40\textwidth]{figures/Fig6.png}
+    \caption{User study results. (a) Cross-correlation coefficients of real-time valence keypresses between the session 1 and 2. (b) preference assessment results. }
+    \label{fig:fig6}
+\end{figure}
+
+\textbf{User Study.}
+Participants showed valence dynamics more closely aligned with their valence reports during Session 1 when viewing the CEBRA-decoded true video compared to the fake video (see Figure~\ref{fig:fig6}a). A Wilcoxon rank-sum test on the best cross-correlation coefficients between real-time valence keypresses in Session 1 and 2 revealed that the true condition produced significantly higher coefficients than the perm condition (\textit{P} = .012). Additionally, about 56\% of participants reported that the true video better reflected their memories and associated affective changes (see Figure~\ref{fig:fig6}b). In a preference rating, 5 out of 9 participants chose the true video. These results suggest that our approach can be promising to capture one’s idiosyncratic affect dynamics in their personal memories and generate them as music videos. 
+
+%--------------------------------
+\section{Conclusion \& Future Works}
+%This research has several key contributions to multiple fields. In both cognitive/affective neuroscience and BCI, we establish a novel task and experimental paradigm for studying affective dynamics during autobiographical memory recall, supported by comprehensive multi-modal data. We demonstrate the successful application of CEBRA in decoding temporal affective trajectories from neural signals during memory recall. Furthermore, we developed a framework generating personalized content that synchronizes with individual affective experiences.
+This research makes significant contributions to cognitive/affective neuroscience and brain-computer interfaces (BCI). We introduce \textbf{RecallAffectiveMemory}, a novel task for studying dynamic affective states during autobiographical memory recall, supported by a comprehensive multimodal dataset (\textbf{EEG-AffectiveMemory}). We demonstrate successful temporal affective trajectory decoding using CEBRA and present \textbf{RYM}, a framework generating personalized audiovisual content synchronized with individual affective experiences.
+
+%Our comprehensive evaluation validates these contributions through multiple complementary approaches. The significant correlation between real-time user-reported affective dynamics during memory recall and generated content viewing validates the successful preservation of affective trajectories in generated content.
+Our evaluation, incorporating real-time user reports, temporal alignment of affective trajectories with generated content attributes (visual and musical), and representation-level validation (CLIP \& CLAP), demonstrates the effectiveness of our approach in faithfully reconstructing affect-contextualized memories.
+
+Despite successfully generating affect-contextualized content, future work will address two key limitations: improving the smoothness of transitions between affective states in the generated content and exploring the feasibility of end-to-end generative models for more seamless integration of affective trajectories. Further research will also focus on broader applications, including therapeutic interventions and enhanced human-computer interaction.
+
+
+
+
+
+%The temporal alignment between affective trajectories during memory recall and generated content attributes (visual: hue, value; musical: mode, brightness, intensity) demonstrates successful affective style adaptation. 
+%Additionally, CLIP and CLAP-based evaluations provide representation-level validation, establishing metrics for assessing affect-contextualized content generation. These multilayered evaluation results collectively demonstrate our framework's effectiveness.
+
+%However, this study has two main limitations. First, while successfully generating affect-contextualized content, our framework requires improvement in the transition smoothness of content between affective states. Second, the feasibility of extending our approach to end-to-end generative models needs further investigation, potentially offering more seamless integration of affective trajectory preservation.
+
+%--------------------------------
+\bibliography{aaai25}
+
+\end{document}

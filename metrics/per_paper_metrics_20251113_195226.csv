@@ -1,0 +1,3 @@
+paper_id,success,process_time_seconds,size_before_bytes,size_after_bytes,num_references,num_versions,reference_fetch_success,timestamp
+2412.05294,True,4.1237077713012695,0,0,0,1,False,1763038336.2991674
+2412.05293,True,5.650677680969238,2319975,118444,38,1,True,1763038337.7613406

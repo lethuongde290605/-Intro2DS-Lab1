@@ -228,13 +228,14 @@ class MetricsCollector:
 
 class PaperMetrics:
     """
-    Tracks per-paper metrics and statistics
+    Tracks per-paper metrics and statistics (thread-safe)
     """
     
     def __init__(self):
         self.papers: List[Dict] = []
         self.start_time: Optional[float] = None
         self.entry_discovery_time: float = 0
+        self._lock = threading.Lock()  # Thread-safety lock
         
     def start_timing(self):
         """Start overall timing"""
@@ -246,9 +247,10 @@ class PaperMetrics:
         
     def add_paper(self, paper_id: str, success: bool, process_time: float, 
                   size_before: int = 0, size_after: int = 0, 
-                  num_references: int = 0, num_versions: int = 0):
+                  num_references: int = 0, num_versions: int = 0,
+                  reference_fetch_success: bool = False):
         """
-        Add metrics for a processed paper
+        Add metrics for a processed paper (thread-safe)
         
         Args:
             paper_id: ArXiv paper ID
@@ -258,42 +260,46 @@ class PaperMetrics:
             size_after: Size in bytes after removing figures
             num_references: Number of references found
             num_versions: Number of versions processed
+            reference_fetch_success: Whether references were successfully fetched from Semantic Scholar
         """
-        self.papers.append({
-            'paper_id': paper_id,
-            'success': success,
-            'process_time_seconds': process_time,
-            'size_before_bytes': size_before,
-            'size_after_bytes': size_after,
-            'num_references': num_references,
-            'num_versions': num_versions,
-            'timestamp': time.time()
-        })
+        with self._lock:
+            self.papers.append({
+                'paper_id': paper_id,
+                'success': success,
+                'process_time_seconds': process_time,
+                'size_before_bytes': size_before,
+                'size_after_bytes': size_after,
+                'num_references': num_references,
+                'num_versions': num_versions,
+                'reference_fetch_success': reference_fetch_success,
+                'timestamp': time.time()
+            })
     
     def get_statistics(self) -> Dict:
         """
-        Calculate statistics from collected paper metrics
+        Calculate statistics from collected paper metrics (thread-safe)
         
         Returns:
             Dictionary with various statistics
         """
-        if not self.papers:
-            return {
-                'total_papers': 0,
-                'successful_papers': 0,
-                'failed_papers': 0,
-                'success_rate': 0,
-                'average_process_time_seconds': 0,
-                'total_process_time_seconds': 0,
-                'average_size_before_bytes': 0,
-                'average_size_after_bytes': 0,
-                'average_references_per_paper': 0,
-                'total_references': 0,
-                'entry_discovery_time_seconds': self.entry_discovery_time
-            }
-        
-        successful = [p for p in self.papers if p['success']]
-        failed = [p for p in self.papers if not p['success']]
+        with self._lock:
+            if not self.papers:
+                return {
+                    'total_papers': 0,
+                    'successful_papers': 0,
+                    'failed_papers': 0,
+                    'success_rate': 0,
+                    'average_process_time_seconds': 0,
+                    'total_process_time_seconds': 0,
+                    'average_size_before_bytes': 0,
+                    'average_size_after_bytes': 0,
+                    'average_references_per_paper': 0,
+                    'total_references': 0,
+                    'entry_discovery_time_seconds': self.entry_discovery_time
+                }
+            
+            successful = [p for p in self.papers if p['success']]
+            failed = [p for p in self.papers if not p['success']]
         
         # Calculate statistics
         total_papers = len(self.papers)
@@ -346,21 +352,28 @@ class PaperMetrics:
             
             # Reference scraping success rate
             'papers_with_references': len([p for p in successful if p['num_references'] > 0]),
-            'reference_success_rate': len([p for p in successful if p['num_references'] > 0]) / num_successful if num_successful > 0 else 0
+            'reference_success_rate': len([p for p in successful if p['num_references'] > 0]) / num_successful if num_successful > 0 else 0,
+            'reference_success_rate_percentage': (len([p for p in successful if p['num_references'] > 0]) / num_successful * 100) if num_successful > 0 else 0,
+            
+            # Reference fetch from Semantic Scholar success rate (regardless of arXiv refs)
+            'papers_with_reference_fetch_success': len([p for p in successful if p.get('reference_fetch_success', False)]),
+            'reference_fetch_success_rate': len([p for p in successful if p.get('reference_fetch_success', False)]) / num_successful if num_successful > 0 else 0,
+            'reference_fetch_success_rate_percentage': (len([p for p in successful if p.get('reference_fetch_success', False)]) / num_successful * 100) if num_successful > 0 else 0
         }
     
     def save_per_paper_csv(self, output_path: str):
-        """Save per-paper metrics to CSV file"""
+        """Save per-paper metrics to CSV file (thread-safe)"""
         import csv
         
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        with open(output_path, 'w', newline='', encoding='utf-8') as f:
-            if not self.papers:
-                return
-                
-            writer = csv.DictWriter(f, fieldnames=self.papers[0].keys())
-            writer.writeheader()
-            writer.writerows(self.papers)
+        with self._lock:
+            os.makedirs(os.path.dirname(output_path), exist_ok=True)
+            with open(output_path, 'w', newline='', encoding='utf-8') as f:
+                if not self.papers:
+                    return
+                    
+                writer = csv.DictWriter(f, fieldnames=self.papers[0].keys())
+                writer.writeheader()
+                writer.writerows(self.papers)
         
         print(f"💾 Saved per-paper metrics to {output_path}")
     

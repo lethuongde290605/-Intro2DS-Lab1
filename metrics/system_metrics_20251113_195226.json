@@ -1,0 +1,150 @@
+{
+  "ram_samples": [
+    {
+      "timestamp": 1763038332.1035767,
+      "elapsed_seconds": 0.0002753734588623047,
+      "ram_mb": 38.31640625
+    },
+    {
+      "timestamp": 1763038333.1780581,
+      "elapsed_seconds": 1.0747568607330322,
+      "ram_mb": 54.97265625
+    },
+    {
+      "timestamp": 1763038334.1814783,
+      "elapsed_seconds": 2.078176975250244,
+      "ram_mb": 57.1484375
+    },
+    {
+      "timestamp": 1763038335.1892169,
+      "elapsed_seconds": 3.0859155654907227,
+      "ram_mb": 58.890625
+    },
+    {
+      "timestamp": 1763038336.2002888,
+      "elapsed_seconds": 4.09698748588562,
+      "ram_mb": 59.91015625
+    },
+    {
+      "timestamp": 1763038337.2200496,
+      "elapsed_seconds": 5.116748332977295,
+      "ram_mb": 60.78515625
+    },
+    {
+      "timestamp": 1763038338.2426317,
+      "elapsed_seconds": 6.1393303871154785,
+      "ram_mb": 65.41015625
+    },
+    {
+      "timestamp": 1763038339.2613394,
+      "elapsed_seconds": 7.158038139343262,
+      "ram_mb": 60.6875
+    },
+    {
+      "timestamp": 1763038340.2937608,
+      "elapsed_seconds": 8.190459489822388,
+      "ram_mb": 61.3125
+    },
+    {
+      "timestamp": 1763038341.340381,
+      "elapsed_seconds": 9.237079620361328,
+      "ram_mb": 61.4375
+    },
+    {
+      "timestamp": 1763038342.8639357,
+      "elapsed_seconds": 10.760634422302246,
+      "ram_mb": 70.5625
+    },
+    {
+      "timestamp": 1763038344.268653,
+      "elapsed_seconds": 12.165351629257202,
+      "ram_mb": 80.6875
+    },
+    {
+      "timestamp": 1763038345.5031168,
+      "elapsed_seconds": 13.399815559387207,
+      "ram_mb": 80.6875
+    }
+  ],
+  "disk_samples": [
+    {
+      "timestamp": 1763038332.1035767,
+      "elapsed_seconds": 0.0002753734588623047,
+      "disk_mb": 0.7332735061645508
+    },
+    {
+      "timestamp": 1763038333.1780581,
+      "elapsed_seconds": 1.0747568607330322,
+      "disk_mb": 0.7332735061645508
+    },
+    {
+      "timestamp": 1763038334.1814783,
+      "elapsed_seconds": 2.078176975250244,
+      "disk_mb": 1.1120166778564453
+    },
+    {
+      "timestamp": 1763038335.1892169,
+      "elapsed_seconds": 3.0859155654907227,
+      "disk_mb": 1.1771907806396484
+    },
+    {
+      "timestamp": 1763038336.2002888,
+      "elapsed_seconds": 4.09698748588562,
+      "disk_mb": 1.2901477813720703
+    },
+    {
+      "timestamp": 1763038337.2200496,
+      "elapsed_seconds": 5.116748332977295,
+      "disk_mb": 1.2904462814331055
+    },
+    {
+      "timestamp": 1763038338.2426317,
+      "elapsed_seconds": 6.1393303871154785,
+      "disk_mb": 1.3081741333007812
+    },
+    {
+      "timestamp": 1763038339.2613394,
+      "elapsed_seconds": 7.158038139343262,
+      "disk_mb": 1.3901424407958984
+    },
+    {
+      "timestamp": 1763038340.2937608,
+      "elapsed_seconds": 8.190459489822388,
+      "disk_mb": 1.3901424407958984
+    },
+    {
+      "timestamp": 1763038341.340381,
+      "elapsed_seconds": 9.237079620361328,
+      "disk_mb": 1.3901424407958984
+    },
+    {
+      "timestamp": 1763038342.8639357,
+      "elapsed_seconds": 10.760634422302246,
+      "disk_mb": 4.162232398986816
+    },
+    {
+      "timestamp": 1763038344.268653,
+      "elapsed_seconds": 12.165351629257202,
+      "disk_mb": 11.396613121032715
+    },
+    {
+      "timestamp": 1763038345.5031168,
+      "elapsed_seconds": 13.399815559387207,
+      "disk_mb": 8.755538940429688
+    }
+  ],
+  "summary": {
+    "peak_ram_mb": 80.6875,
+    "average_ram_mb": 62.36989182692308,
+    "peak_disk_mb": 11.396613121032715,
+    "average_disk_mb": 2.779179573059082,
+    "final_disk_mb": 8.755538940429688,
+    "total_monitoring_time_seconds": 13.399815559387207,
+    "sample_count": 13
+  },
+  "metadata": {
+    "data_directory": "./data",
+    "sampling_interval_seconds": 1.0,
+    "start_time": "2025-11-13T19:52:12.103301"
+  }
+}

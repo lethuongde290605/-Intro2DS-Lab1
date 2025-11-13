@@ -8,6 +8,7 @@ import time
 from arxiv_client import get_arxiv_version_dates
 from utils import save_json
 import os
+from shared import config_lock
 
 
 def get_semantic_scholar_data(arxiv_id, api_key=None):
@@ -34,6 +35,7 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
     publication_venue = ""
     refs = {}
     max_attempt = 10
+    all_references_count = 0
     
     for attempt in range(max_attempt):
         try:
@@ -42,7 +44,9 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
                 print(f"⏳ Waiting {wait_time}s before retry (attempt {attempt+1}/{max_attempt})...")
                 time.sleep(wait_time)
                 
-            r = requests.get(url, params=params, headers=headers, timeout=15)
+            with config_lock:
+                r = requests.get(url, params=params, headers=headers, timeout=15)
+                sleep(1)
 
             if r.status_code == 429:
                 print(f"⚠️ Rate limit hit (attempt {attempt+1}/{max_attempt})")
@@ -62,6 +66,7 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
                 if journal and isinstance(journal, dict):
                     publication_venue = journal.get("name", "")
             
+            all_references_count = len(data.get("references", []))
             # Extract references
             for ref in data.get("references", []):
                 arxiv_ref_id = (ref.get("externalIds") or {}).get("ArXiv")
@@ -85,7 +90,7 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
                 print(f"❌ Failed to fetch Semantic Scholar data after {max_attempt} attempts")
                 break
     
-    return publication_venue, refs
+    return publication_venue, refs, all_references_count
 
 
 def get_metadata_and_references_optimized(arxiv_id):
@@ -98,7 +103,8 @@ def get_metadata_and_references_optimized(arxiv_id):
         arxiv_id: ArXiv ID
         
     Returns:
-        tuple: (metadata_dict, references_dict)
+        tuple: (metadata_dict, references_dict, all_references_count)
+        where all_references_count is the total number of references from Semantic Scholar
     """
     print(f"\n{'='*60}")
     print(f"📄 Processing paper: {arxiv_id}")
@@ -114,7 +120,8 @@ def get_metadata_and_references_optimized(arxiv_id):
     
     # Call Semantic Scholar API ONCE
     print("🔍 Fetching venue + references from Semantic Scholar (single call)...")
-    publication_venue, references = get_semantic_scholar_data(arxiv_id)
+    publication_venue, references, all_references_count = get_semantic_scholar_data(arxiv_id)
+    
     
     # Fallback venue from arxiv if SS doesn't have it
     if not publication_venue:
@@ -141,9 +148,10 @@ def get_metadata_and_references_optimized(arxiv_id):
     print(f"  - Authors: {len(authors)} authors")
     print(f"  - Venue: {publication_venue or '(empty)'}")
     print(f"  - Versions: {len(revised_dates)} versions")
-    print(f"  - References: {len(references)} arXiv references")
+    print(f"  - Total references from Semantic Scholar: {all_references_count}")
+    print(f"  - ArXiv references: {len(references)} arXiv references")
     
-    return metadata, references
+    return metadata, references, all_references_count
 
 
 def build_metadata_and_refs_optimized(arxiv_id, output_dir="./data"):
@@ -156,14 +164,14 @@ def build_metadata_and_refs_optimized(arxiv_id, output_dir="./data"):
         output_dir: Output directory for data
         
     Returns:
-        dict: Combined metadata including references
+        dict: Combined metadata including references and reference fetch info
     """
     safe_id = arxiv_id.replace(".", "-")
     paper_dir = os.path.join(output_dir, safe_id)
     os.makedirs(paper_dir, exist_ok=True)
 
     # Get both metadata and references in one go
-    metadata, references = get_metadata_and_references_optimized(arxiv_id)
+    metadata, references, all_references_count = get_metadata_and_references_optimized(arxiv_id)
 
     # Save files
     metadata_path = os.path.join(paper_dir, "metadata.json")
@@ -179,5 +187,6 @@ def build_metadata_and_refs_optimized(arxiv_id, output_dir="./data"):
     # Return combined data for metrics
     return {
         **metadata,
-        'references': references
+        'references': references,
+        'all_references_count': all_references_count,
     }

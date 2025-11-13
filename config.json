@@ -8,6 +8,7 @@
         "delay_between_papers": 1.0,
         "delay_between_versions": 0.5,
         "retry_attempts": 3,
+        "max_workers": 5,
         "keep_extensions": [
             "tex",
             "bib"
@@ -17,7 +18,7 @@
         "prefix": "2412",
         "start": 5271,
         "end": 10270,
-        "current": 5292,
+        "current": 5294,
         "completed_papers": [
             "2412-05271",
             "2412-05272",
@@ -39,7 +40,10 @@
             "2412-05288",
             "2412-05289",
             "2412-05290",
-            "2412-05291"
+            "2412-05291",
+            "2412-05292",
+            "2412-05294",
+            "2412-05293"
         ],
         "failed_papers": []
     }

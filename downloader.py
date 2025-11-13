@@ -168,7 +168,8 @@ def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=
         'size_before': 0,
         'size_after': 0,
         'num_references': 0,
-        'num_versions': 0
+        'num_versions': 0,
+        'reference_fetch_success': False
     }
     
     try:
@@ -207,9 +208,13 @@ def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=
         print(f"📥 Downloading metadata and references for {arxiv_id}...")
         metadata = build_metadata_and_refs_optimized(arxiv_id, output_dir=settings["base_dir"])
         
-        # Count references
+        # Count references and check if fetch was successful
         if metadata and 'references' in metadata:
             metrics['num_references'] = len(metadata['references'])
+        
+        # Check if reference fetch was successful (all_references_count > 0)
+        if metadata and metadata.get('all_references_count', 0) > 0:
+            metrics['reference_fetch_success'] = True
         
         # Mark as completed
         if safe_id not in config["progress"]["completed_papers"]:
