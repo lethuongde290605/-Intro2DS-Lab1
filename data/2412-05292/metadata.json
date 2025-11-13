@@ -1,0 +1,14 @@
+{
+    "paper_title": "TagFog: Textual Anchor Guidance and Fake Outlier Generation for Visual Out-of-Distribution Detection",
+    "authors": [
+        "Jiankang Chen",
+        "Tong Zhang",
+        "Wei-Shi Zheng",
+        "Ruixuan Wang"
+    ],
+    "publication_venue": "AAAI Conference on Artificial Intelligence",
+    "submission_date": "2024-11-22",
+    "revised_dates": [
+        "2024-11-22"
+    ]
+}

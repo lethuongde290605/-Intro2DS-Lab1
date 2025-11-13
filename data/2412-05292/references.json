@@ -1,0 +1,397 @@
+{
+    "2211-13445": {
+        "paper_title": "Delving into Out-of-Distribution Detection with Vision-Language Representations",
+        "authors": [
+            "Yifei Ming",
+            "Ziyan Cai",
+            "Jiuxiang Gu",
+            "Yiyou Sun",
+            "W. Li",
+            "Yixuan Li"
+        ],
+        "submission_date": "2022-11-24",
+        "semantic_scholar_id": "ed0cbe81d615361e29196baec62de899c59463bf"
+    },
+    "2207-03061": {
+        "paper_title": "Back to the Basics: Revisiting Out-of-Distribution Detection Baselines",
+        "authors": [
+            "Jo-Lan Kuan",
+            "Jonas W. Mueller"
+        ],
+        "submission_date": "2022-07-07",
+        "semantic_scholar_id": "6f136ee16da4f01f30b267478d5127699c983e20"
+    },
+    "2206-13687": {
+        "paper_title": "POEM: Out-of-Distribution Detection with Posterior Sampling",
+        "authors": [
+            "Yifei Ming",
+            "Ying Fan",
+            "Yixuan Li"
+        ],
+        "submission_date": "2022-06-28",
+        "semantic_scholar_id": "16ad01309dbfc406e3133bf0d62ea2be826423fe"
+    },
+    "2205-09310": {
+        "paper_title": "Mitigating Neural Network Overconfidence with Logit Normalization",
+        "authors": [
+            "Hongxin Wei",
+            "Renchunzi Xie",
+            "Hao Cheng",
+            "Lei Feng",
+            "Bo An",
+            "Yixuan Li"
+        ],
+        "submission_date": "2022-05-19",
+        "semantic_scholar_id": "c2d29e2b10572d229e83e8c0005f9b48223332eb"
+    },
+    "2204-06507": {
+        "paper_title": "Out-of-distribution Detection with Deep Nearest Neighbors",
+        "authors": [
+            "Yiyou Sun",
+            "Yifei Ming",
+            "Xiaojin Zhu",
+            "Yixuan Li"
+        ],
+        "submission_date": "2022-04-13",
+        "semantic_scholar_id": "8b1233107bff00355d4d1656795ec62d4f85e523"
+    },
+    "2203-10807": {
+        "paper_title": "ViM: Out-Of-Distribution with Virtual-logit Matching",
+        "authors": [
+            "Haoqi Wang",
+            "Zhizhong Li",
+            "Litong Feng",
+            "Wayne Zhang"
+        ],
+        "submission_date": "2022-03-21",
+        "semantic_scholar_id": "3b0284d501e9b1b6c199d8b07c6826a165c4b4f2"
+    },
+    "2202-03299": {
+        "paper_title": "Training OOD Detectors in their Natural Habitats",
+        "authors": [
+            "Julian Katz-Samuels",
+            "Julia B. Nakhleh",
+            "R. Nowak",
+            "Yixuan Li"
+        ],
+        "submission_date": "2022-02-07",
+        "semantic_scholar_id": "a9e49e74e60b26b5eda3d5c59c5d5a4fa1265f18"
+    },
+    "2202-01197": {
+        "paper_title": "VOS: Learning What You Don't Know by Virtual Outlier Synthesis",
+        "authors": [
+            "Xuefeng Du",
+            "Zhaoning Wang",
+            "Mu Cai",
+            "Yixuan Li"
+        ],
+        "submission_date": "2022-02-02",
+        "semantic_scholar_id": "f0e6aed660c541544063c0608326c6f19ba48f6d"
+    },
+    "2111-12797": {
+        "paper_title": "ReAct: Out-of-distribution Detection With Rectified Activations",
+        "authors": [
+            "Yiyou Sun",
+            "Chuan Guo",
+            "Yixuan Li"
+        ],
+        "submission_date": "2021-11-24",
+        "semantic_scholar_id": "7f9760a76e9cf424da0b72d42f75594cefc4a329"
+    },
+    "2110-14051": {
+        "paper_title": "A Unified Survey on Anomaly, Novelty, Open-Set, and Out-of-Distribution Detection: Solutions and Future Challenges",
+        "authors": [
+            "Mohammadreza Salehi",
+            "Hossein Mirzaei",
+            "Dan Hendrycks",
+            "Yixuan Li",
+            "M. H. Rohban",
+            "M. Sabokrou"
+        ],
+        "submission_date": "2021-10-26",
+        "semantic_scholar_id": "8b153cc2c7f5ea9f307f12ea945a5e9196ee5c52"
+    },
+    "2110-00218": {
+        "paper_title": "On the Importance of Gradients for Detecting Distributional Shifts in the Wild",
+        "authors": [
+            "Rui Huang",
+            "Andrew Geng",
+            "Yixuan Li"
+        ],
+        "submission_date": "2021-10-01",
+        "semantic_scholar_id": "3b316377f1d7cbcf3c907c4d8b08c05f4521b541"
+    },
+    "2109-14162": {
+        "paper_title": "Can multi-label classification networks know what they don't know?",
+        "authors": [
+            "Haoran Wang",
+            "Weitang Liu",
+            "Alex Bocchieri",
+            "Yixuan Li"
+        ],
+        "submission_date": "2021-09-29",
+        "semantic_scholar_id": "3d8c1670bdb28847cae6252d687dc3066d94ed3e"
+    },
+    "2109-02748": {
+        "paper_title": "Zero-Shot Out-of-Distribution Detection Based on the Pre-trained Model CLIP",
+        "authors": [
+            "Sepideh Esmaeilpour",
+            "Bing Liu",
+            "Eric Robertson",
+            "Lei Shu"
+        ],
+        "submission_date": "2021-09-06",
+        "semantic_scholar_id": "cdf8ad31cd91fd639db0d99cae30069388a3169a"
+    },
+    "2108-13624": {
+        "paper_title": "Towards Out-Of-Distribution Generalization: A Survey",
+        "authors": [
+            "Zheyan Shen",
+            "Jiashuo Liu",
+            "Yue He",
+            "Xingxuan Zhang",
+            "Renzhe Xu",
+            "Han Yu",
+            "Peng Cui"
+        ],
+        "submission_date": "2021-08-31",
+        "semantic_scholar_id": "e5b2e2a284db5ba7c2c011daba9769d2c56b6586"
+    },
+    "2106-03004": {
+        "paper_title": "Exploring the Limits of Out-of-Distribution Detection",
+        "authors": [
+            "Stanislav Fort",
+            "Jie Jessie Ren",
+            "Balaji Lakshminarayanan"
+        ],
+        "submission_date": "2021-06-06",
+        "semantic_scholar_id": "c3ddd90b53dc797029c4576af01b9c35bb846a44"
+    },
+    "2105-01879": {
+        "paper_title": "MOS: Towards Scaling Out-of-distribution Detection for Large Semantic Space",
+        "authors": [
+            "Rui Huang",
+            "Yixuan Li"
+        ],
+        "submission_date": "2021-05-05",
+        "semantic_scholar_id": "f19092561296244e1dafe7d799e7906e96a63773"
+    },
+    "2104-02939": {
+        "paper_title": "OpenGAN: Open-Set Recognition via Open Data Generation",
+        "authors": [
+            "Shu Kong",
+            "Deva Ramanan"
+        ],
+        "submission_date": "2021-04-07",
+        "semantic_scholar_id": "815fa9febd615530abccc2430ee05804427394ba"
+    },
+    "2103-12051": {
+        "paper_title": "SSD: A Unified Framework for Self-Supervised Outlier Detection",
+        "authors": [
+            "Vikash Sehwag",
+            "M. Chiang",
+            "Prateek Mittal"
+        ],
+        "submission_date": "2021-03-22",
+        "semantic_scholar_id": "0fe615dc0a422100e85cfb7e26c9306c481f6c75"
+    },
+    "2103-00020": {
+        "paper_title": "Learning Transferable Visual Models From Natural Language Supervision",
+        "authors": [
+            "Alec Radford",
+            "Jong Wook Kim",
+            "Chris Hallacy",
+            "A. Ramesh",
+            "Gabriel Goh",
+            "Sandhini Agarwal",
+            "Girish Sastry",
+            "Amanda Askell",
+            "Pamela Mishkin",
+            "Jack Clark",
+            "Gretchen Krueger",
+            "I. Sutskever"
+        ],
+        "submission_date": "2021-02-26",
+        "semantic_scholar_id": "6f870f7f02a8c59c3e23f407f3ef00dd1dcf8fc4"
+    },
+    "2102-05918": {
+        "paper_title": "Scaling Up Visual and Vision-Language Representation Learning With Noisy Text Supervision",
+        "authors": [
+            "Chao Jia",
+            "Yinfei Yang",
+            "Ye Xia",
+            "Yi-Ting Chen",
+            "Zarana Parekh",
+            "Hieu Pham",
+            "Quoc V. Le",
+            "Yun-Hsuan Sung",
+            "Zhen Li",
+            "Tom Duerig"
+        ],
+        "submission_date": "2021-02-11",
+        "semantic_scholar_id": "141a5033d9994242b18bb3b217e79582f1ee9306"
+    },
+    "2010-03759": {
+        "paper_title": "Energy-based Out-of-distribution Detection",
+        "authors": [
+            "Weitang Liu",
+            "Xiaoyun Wang",
+            "John Douglas Owens",
+            "Yixuan Li"
+        ],
+        "submission_date": "2020-10-08",
+        "semantic_scholar_id": "35b966347dae2f0d496ea713edf03a68211838a5"
+    },
+    "2007-08176": {
+        "paper_title": "CSI: Novelty Detection via Contrastive Learning on Distributionally Shifted Instances",
+        "authors": [
+            "Jihoon Tack",
+            "Sangwoo Mo",
+            "Jongheon Jeong",
+            "Jinwoo Shin"
+        ],
+        "submission_date": "2020-07-16",
+        "semantic_scholar_id": "e1bb329621de73d08c47beae9b5439a1c244eb1a"
+    },
+    "2002-11297": {
+        "paper_title": "Generalized ODIN: Detecting Out-of-Distribution Image Without Learning From Out-of-Distribution Data",
+        "authors": [
+            "Yen-Chang Hsu",
+            "Yilin Shen",
+            "Hongxia Jin",
+            "Z. Kira"
+        ],
+        "submission_date": "2020-02-26",
+        "semantic_scholar_id": "ae9bf201f128cabaa4350b54ff6607525c736cd5"
+    },
+    "1908-04951": {
+        "paper_title": "Unsupervised Out-of-Distribution Detection by Maximum Classifier Discrepancy",
+        "authors": [
+            "Qing Yu",
+            "K. Aizawa"
+        ],
+        "submission_date": "2019-08-14",
+        "semantic_scholar_id": "b9bd435b65d8214f1bcab9268ac2fce509cfffe6"
+    },
+    "1906-02845": {
+        "paper_title": "Likelihood Ratios for Out-of-Distribution Detection",
+        "authors": [
+            "Jie Jessie Ren",
+            "Peter J. Liu",
+            "Emily Fertig",
+            "Jasper Snoek",
+            "R. Poplin",
+            "M. DePristo",
+            "Joshua V. Dillon",
+            "Balaji Lakshminarayanan"
+        ],
+        "submission_date": "2019-06-07",
+        "semantic_scholar_id": "925182b91f51f8f2b747f7829e9d25ffc2729e5d"
+    },
+    "1812-05720": {
+        "paper_title": "Why ReLU Networks Yield High-Confidence Predictions Far Away From the Training Data and How to Mitigate the Problem",
+        "authors": [
+            "Matthias Hein",
+            "Maksym Andriushchenko",
+            "Julian Bitterwolf"
+        ],
+        "submission_date": "2018-12-13",
+        "semantic_scholar_id": "a25b63a6a0071d7d88ff4671c1fd40f320a08533"
+    },
+    "1807-03888": {
+        "paper_title": "A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks",
+        "authors": [
+            "Kimin Lee",
+            "Kibok Lee",
+            "Honglak Lee",
+            "Jinwoo Shin"
+        ],
+        "submission_date": "2018-07-10",
+        "semantic_scholar_id": "d03ca175e2b2745126e792fdc31dfadae4c63afa"
+    },
+    "1802-09088": {
+        "paper_title": "Adversarially Learned One-Class Classifier for Novelty Detection",
+        "authors": [
+            "M. Sabokrou",
+            "Mohammad Khalooei",
+            "M. Fathy",
+            "E. Adeli"
+        ],
+        "submission_date": "2018-02-25",
+        "semantic_scholar_id": "8381157eae4fbf8908d0312a9642f8e69e944449"
+    },
+    "1707-07418": {
+        "paper_title": "Generative OpenMax for Multi-Class Open Set Classification",
+        "authors": [
+            "ZongYuan Ge",
+            "S. Demyanov",
+            "Zetao Chen",
+            "R. Garnavi"
+        ],
+        "submission_date": "2017-07-24",
+        "semantic_scholar_id": "1643f48027cd18aeaf713bf7b5b18bb91a765503"
+    },
+    "1706-02690": {
+        "paper_title": "Enhancing The Reliability of Out-of-distribution Image Detection in Neural Networks",
+        "authors": [
+            "Shiyu Liang",
+            "Yixuan Li",
+            "R. Srikant"
+        ],
+        "submission_date": "2017-06-08",
+        "semantic_scholar_id": "547c854985629cfa9404a5ba8ca29367b5f8c25f"
+    },
+    "1610-02136": {
+        "paper_title": "A Baseline for Detecting Misclassified and Out-of-Distribution Examples in Neural Networks",
+        "authors": [
+            "Dan Hendrycks",
+            "Kevin Gimpel"
+        ],
+        "submission_date": "2016-10-07",
+        "semantic_scholar_id": "6ff2a434578ff2746b9283e45abf296887f48a2d"
+    },
+    "1603-09246": {
+        "paper_title": "Unsupervised Learning of Visual Representations by Solving Jigsaw Puzzles",
+        "authors": [
+            "M. Noroozi",
+            "P. Favaro"
+        ],
+        "submission_date": "2016-03-30",
+        "semantic_scholar_id": "2ec8f7e0257a07d3914322b36072d1bbcd58a1e0"
+    },
+    "1512-03385": {
+        "paper_title": "Deep Residual Learning for Image Recognition",
+        "authors": [
+            "Kaiming He",
+            "X. Zhang",
+            "Shaoqing Ren",
+            "Jian Sun"
+        ],
+        "submission_date": "2015-12-10",
+        "semantic_scholar_id": "2c03df8b48bf3fa39054345bafabfeff15bfd11d"
+    },
+    "1506-03365": {
+        "paper_title": "LSUN: Construction of a Large-scale Image Dataset using Deep Learning with Humans in the Loop",
+        "authors": [
+            "F. Yu",
+            "Yinda Zhang",
+            "Shuran Song",
+            "Ari Seff",
+            "Jianxiong Xiao"
+        ],
+        "submission_date": "2015-06-10",
+        "semantic_scholar_id": "4dcdae25a5e33682953f0853ee4cf7ca93be58a9"
+    },
+    "1311-3618": {
+        "paper_title": "Describing Textures in the Wild",
+        "authors": [
+            "Mircea Cimpoi",
+            "Subhransu Maji",
+            "Iasonas Kokkinos",
+            "S. Mohamed",
+            "A. Vedaldi"
+        ],
+        "submission_date": "2013-11-14",
+        "semantic_scholar_id": "18c125ce0f64e85577f7d30132cf0e92ec664bf4"
+    }
+}

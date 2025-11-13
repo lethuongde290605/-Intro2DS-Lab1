@@ -12,29 +12,6 @@ from arxiv_client import format_arxiv_id, get_latest_version
 from metadata_collector import build_metadata_and_refs_optimized
 
 
-def safe_extract_selected(tar, dest_dir, keep_exts=("tex", "bib")):
-    """
-    Extract only files with specified extensions while preserving directory structure
-    
-    Args:
-        tar: Tarfile object
-        dest_dir: Destination directory
-        keep_exts: Tuple of file extensions to keep
-    """
-    for member in tar.getmembers():
-        if not member.isfile():
-            continue
-
-        filename = os.path.basename(member.name)
-        ext = filename.split(".")[-1].lower()
-
-        if ext in keep_exts:
-            target_path = os.path.join(dest_dir, member.name)
-            os.makedirs(os.path.dirname(target_path), exist_ok=True)
-            with tar.extractfile(member) as src, open(target_path, "wb") as dst:
-                dst.write(src.read())
-
-
 def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads", keep_exts=("tex", "bib")):
     """
     Download and extract .tex/.bib files for a specific version
@@ -46,7 +23,7 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
         keep_exts: Tuple of file extensions to keep
         
     Returns:
-        bool: True if successful, False otherwise
+        tuple: (success, size_before, size_after) where sizes are in bytes
     """
     full_id = f"{arxiv_id}v{version}"
     safe_id = format_arxiv_id(arxiv_id)
@@ -54,23 +31,50 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
     full_id_safe = format_arxiv_id(full_id)
     save_dir = os.path.join(base_save_dir, safe_id, "tex", full_id_safe)
     os.makedirs(save_dir, exist_ok=True)
+    
+    size_before = 0
+    size_after = 0
+
+    size_before = 0
+    size_after = 0
 
     try:
         source_url = f"https://arxiv.org/e-print/{full_id}"
         r = requests.get(source_url)
         if r.status_code != 200:
             print(f"⚠️  No source found for {full_id}")
-            return False
+            return False, 0, 0
 
         # Save temporary file
         with open(temp_path, "wb") as f:
             f.write(r.content)
 
         # Determine file type and extract accordingly
+        extracted_files = []
         try:
             # Case 1: Try opening as tar.gz archive (multiple files)
             with tarfile.open(temp_path, "r:gz") as tar:
-                safe_extract_selected(tar, dest_dir=save_dir, keep_exts=keep_exts)
+                # Calculate size_before (all files in archive)
+                for member in tar.getmembers():
+                    if member.isfile():
+                        size_before += member.size
+                
+                # Extract only .tex/.bib files
+                for member in tar.getmembers():
+                    if not member.isfile():
+                        continue
+
+                    filename = os.path.basename(member.name)
+                    ext = filename.split(".")[-1].lower()
+
+                    if ext in keep_exts:
+                        target_path = os.path.join(save_dir, member.name)
+                        os.makedirs(os.path.dirname(target_path), exist_ok=True)
+                        with tar.extractfile(member) as src, open(target_path, "wb") as dst:
+                            dst.write(src.read())
+                        extracted_files.append(target_path)
+                        size_after += member.size
+                
                 print(f"✅ Extracted .tex/.bib from tar.gz for {full_id}")
         except tarfile.ReadError:
             # Case 2: Might be a single gzipped file
@@ -78,6 +82,7 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
                 with gzip.open(temp_path, 'rb') as gz:
                     # Read content
                     content = gz.read()
+                    size_before = len(content)
                     
                     # Try to get filename from gzip header
                     gz.seek(0)
@@ -116,10 +121,12 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
                         output_path = os.path.join(save_dir, filename)
                         with open(output_path, 'wb') as out:
                             out.write(content)
+                        extracted_files.append(output_path)
+                        size_after = len(content)
                         print(f"✅ Extracted single file {filename} for {full_id}")
                     else:
                         print(f"⚠️  Single file with ext .{ext} (not in {keep_exts})")
-                        return False
+                        return False, 0, 0
             except Exception as e2:
                 # Case 3: Might be PDF or other format
                 content_type = r.headers.get('Content-Type', '')
@@ -127,19 +134,19 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
                     print(f"⚠️  Source is PDF (no LaTeX available) for {full_id}")
                 else:
                     print(f"⚠️  Unknown format for {full_id}: {e2}")
-                return False
+                return False, 0, 0
 
         os.remove(temp_path)
-        return True
+        return True, size_before, size_after
 
     except Exception as e:
         print(f"❌ Error {full_id}: {e}")
         if os.path.exists(temp_path):
             os.remove(temp_path)
-        return False
+        return False, 0, 0
 
 
-def download_paper(arxiv_id, config, config_path="config.json"):
+def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=False):
     """
     Download all versions and metadata for a single paper
     
@@ -147,11 +154,22 @@ def download_paper(arxiv_id, config, config_path="config.json"):
         arxiv_id: ArXiv ID without version
         config: Configuration dictionary
         config_path: Path to config file (for progress tracking)
+        collect_metrics: Whether to collect and return metrics
         
     Returns:
-        bool: True if successful, False otherwise
+        tuple: (success, metrics_dict) if collect_metrics=True, else bool
     """
     settings = config["download_settings"]
+    safe_id = format_arxiv_id(arxiv_id)
+    paper_dir = os.path.join(settings["base_dir"], safe_id)
+    
+    # Initialize metrics
+    metrics = {
+        'size_before': 0,
+        'size_after': 0,
+        'num_references': 0,
+        'num_versions': 0
+    }
     
     try:
         # Get latest version
@@ -160,32 +178,80 @@ def download_paper(arxiv_id, config, config_path="config.json"):
             raise ValueError(f"Paper {arxiv_id} not found.")
         print(f"\n🔍 {arxiv_id}: found {latest_v} versions")
         
-        # Download all versions
+        metrics['num_versions'] = latest_v
+        
+        # Download all versions and accumulate sizes
+        total_size_before = 0
+        total_size_after = 0
+        
         for v in range(1, latest_v + 1):
-            success = download_and_extract_tex_bib(
+            success, size_before, size_after = download_and_extract_tex_bib(
                 arxiv_id, 
                 v, 
                 base_save_dir=settings["base_dir"],
                 keep_exts=tuple(settings["keep_extensions"])
             )
-            if not success:
+            if success:
+                total_size_before += size_before
+                total_size_after += size_after
+                print(f"   Version {v}: {size_before} bytes before → {size_after} bytes after")
+            else:
                 print(f"⚠️  Skipping version {v}")
             time.sleep(settings["delay_between_versions"])
         
+        metrics['size_before'] = total_size_before
+        metrics['size_after'] = total_size_after
+        print(f"📊 Total for {arxiv_id}: {total_size_before} bytes before → {total_size_after} bytes after")
+        
         # Download metadata and references
         print(f"📥 Downloading metadata and references for {arxiv_id}...")
-        build_metadata_and_refs_optimized(arxiv_id, output_dir=settings["base_dir"])
+        metadata = build_metadata_and_refs_optimized(arxiv_id, output_dir=settings["base_dir"])
+        
+        # Count references
+        if metadata and 'references' in metadata:
+            metrics['num_references'] = len(metadata['references'])
         
         # Mark as completed
-        safe_id = format_arxiv_id(arxiv_id)
         if safe_id not in config["progress"]["completed_papers"]:
             config["progress"]["completed_papers"].append(safe_id)
         
+        if collect_metrics:
+            return True, metrics
         return True
         
     except Exception as e:
         print(f"❌ Failed to process {arxiv_id}: {e}")
-        safe_id = format_arxiv_id(arxiv_id)
         if safe_id not in config["progress"]["failed_papers"]:
             config["progress"]["failed_papers"].append(safe_id)
+        
+        if collect_metrics:
+            return False, metrics
         return False
+
+
+def _get_directory_size(path):
+    """
+    Calculate total size of directory in bytes
+    
+    Args:
+        path: Directory path
+        
+    Returns:
+        Total size in bytes
+    """
+    total = 0
+    try:
+        if not os.path.exists(path):
+            return 0
+            
+        for dirpath, dirnames, filenames in os.walk(path):
+            for filename in filenames:
+                filepath = os.path.join(dirpath, filename)
+                try:
+                    if os.path.exists(filepath):
+                        total += os.path.getsize(filepath)
+                except (OSError, PermissionError):
+                    pass
+    except Exception:
+        pass
+    return total

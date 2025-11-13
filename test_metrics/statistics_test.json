@@ -1,0 +1,19 @@
+{
+  "total_papers_attempted": 5,
+  "successful_papers": 5,
+  "failed_papers": 0,
+  "success_rate": 1.0,
+  "success_rate_percentage": 100.0,
+  "average_time_per_paper_seconds": 1.2,
+  "total_processing_time_seconds": 6.0,
+  "total_wall_time_seconds": 5.00820517539978,
+  "entry_discovery_time_seconds": 0,
+  "average_size_before_bytes": 0,
+  "average_size_after_bytes": 13000.0,
+  "average_size_before_mb": 0.0,
+  "average_size_after_mb": 0.01239776611328125,
+  "average_references_per_paper": 12.0,
+  "total_references_found": 60,
+  "papers_with_references": 5,
+  "reference_success_rate": 1.0
+}

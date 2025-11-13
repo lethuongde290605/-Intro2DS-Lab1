@@ -1,0 +1,375 @@
+"""
+Metrics Collector Module
+Real-time monitoring of system resources (RAM, disk usage) during scraping
+Uses background thread to collect metrics at regular intervals
+"""
+import psutil
+import os
+import time
+import threading
+from datetime import datetime
+from typing import Dict, List, Optional
+import json
+
+
+class MetricsCollector:
+    """
+    Collects system metrics (RAM, disk usage) in real-time using a background thread
+    """
+    
+    def __init__(self, data_dir: str, interval: float = 1.0):
+        """
+        Initialize metrics collector
+        
+        Args:
+            data_dir: Directory to monitor for disk usage
+            interval: Sampling interval in seconds
+        """
+        self.data_dir = data_dir
+        self.interval = interval
+        self.process = psutil.Process(os.getpid())
+        
+        # Metrics storage
+        self.ram_samples: List[Dict] = []
+        self.disk_samples: List[Dict] = []
+        self.timestamps: List[float] = []
+        
+        # Threading
+        self.monitoring = False
+        self.monitor_thread: Optional[threading.Thread] = None
+        
+        # Peak values
+        self.peak_ram_mb = 0.0
+        self.peak_disk_mb = 0.0
+        
+        # Start time
+        self.start_time: Optional[float] = None
+        
+    def start_monitoring(self):
+        """Start background monitoring thread"""
+        if self.monitoring:
+            return
+            
+        self.monitoring = True
+        self.start_time = time.time()
+        self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
+        self.monitor_thread.start()
+        print("📊 Started system monitoring (RAM & Disk)")
+        
+    def stop_monitoring(self):
+        """Stop background monitoring thread"""
+        if not self.monitoring:
+            return
+            
+        self.monitoring = False
+        if self.monitor_thread:
+            self.monitor_thread.join(timeout=2.0)
+        print("📊 Stopped system monitoring")
+        
+    def _monitor_loop(self):
+        """Background monitoring loop - runs in separate thread"""
+        while self.monitoring:
+            try:
+                current_time = time.time()
+                elapsed = current_time - self.start_time if self.start_time else 0
+                
+                # Get RAM usage
+                memory_info = self.process.memory_info()
+                ram_mb = memory_info.rss / 1024 / 1024  # Convert to MB
+                
+                # Get disk usage of data directory
+                disk_mb = self._get_directory_size(self.data_dir) / 1024 / 1024
+                
+                # Store samples
+                self.ram_samples.append({
+                    'timestamp': current_time,
+                    'elapsed_seconds': elapsed,
+                    'ram_mb': ram_mb
+                })
+                
+                self.disk_samples.append({
+                    'timestamp': current_time,
+                    'elapsed_seconds': elapsed,
+                    'disk_mb': disk_mb
+                })
+                
+                self.timestamps.append(elapsed)
+                
+                # Update peaks
+                self.peak_ram_mb = max(self.peak_ram_mb, ram_mb)
+                self.peak_disk_mb = max(self.peak_disk_mb, disk_mb)
+                
+                time.sleep(self.interval)
+                
+            except Exception as e:
+                print(f"⚠️  Monitoring error: {e}")
+                time.sleep(self.interval)
+    
+    def _get_directory_size(self, path: str) -> int:
+        """
+        Calculate total size of directory in bytes
+        
+        Args:
+            path: Directory path
+            
+        Returns:
+            Total size in bytes
+        """
+        total = 0
+        try:
+            if not os.path.exists(path):
+                return 0
+                
+            for dirpath, dirnames, filenames in os.walk(path):
+                for filename in filenames:
+                    filepath = os.path.join(dirpath, filename)
+                    try:
+                        if os.path.exists(filepath):
+                            total += os.path.getsize(filepath)
+                    except (OSError, PermissionError):
+                        pass
+        except Exception:
+            pass
+        return total
+    
+    def get_current_stats(self) -> Dict:
+        """Get current resource usage statistics"""
+        memory_info = self.process.memory_info()
+        ram_mb = memory_info.rss / 1024 / 1024
+        disk_mb = self._get_directory_size(self.data_dir) / 1024 / 1024
+        
+        return {
+            'current_ram_mb': ram_mb,
+            'current_disk_mb': disk_mb,
+            'peak_ram_mb': self.peak_ram_mb,
+            'peak_disk_mb': self.peak_disk_mb
+        }
+    
+    def get_summary_stats(self) -> Dict:
+        """
+        Get summary statistics for the entire monitoring period
+        
+        Returns:
+            Dictionary with summary statistics
+        """
+        if not self.ram_samples:
+            return {
+                'peak_ram_mb': 0,
+                'average_ram_mb': 0,
+                'peak_disk_mb': 0,
+                'average_disk_mb': 0,
+                'final_disk_mb': 0,
+                'total_monitoring_time_seconds': 0,
+                'sample_count': 0
+            }
+        
+        ram_values = [s['ram_mb'] for s in self.ram_samples]
+        disk_values = [s['disk_mb'] for s in self.disk_samples]
+        
+        total_time = self.timestamps[-1] if self.timestamps else 0
+        
+        return {
+            'peak_ram_mb': max(ram_values),
+            'average_ram_mb': sum(ram_values) / len(ram_values),
+            'peak_disk_mb': max(disk_values),
+            'average_disk_mb': sum(disk_values) / len(disk_values),
+            'final_disk_mb': disk_values[-1] if disk_values else 0,
+            'total_monitoring_time_seconds': total_time,
+            'sample_count': len(self.ram_samples)
+        }
+    
+    def save_time_series(self, output_path: str):
+        """
+        Save time series data for plotting
+        
+        Args:
+            output_path: Path to save JSON file
+        """
+        data = {
+            'ram_samples': self.ram_samples,
+            'disk_samples': self.disk_samples,
+            'summary': self.get_summary_stats(),
+            'metadata': {
+                'data_directory': self.data_dir,
+                'sampling_interval_seconds': self.interval,
+                'start_time': datetime.fromtimestamp(self.start_time).isoformat() if self.start_time else None
+            }
+        }
+        
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+        
+        print(f"💾 Saved time series metrics to {output_path}")
+    
+    def save_csv_for_plotting(self, output_path: str):
+        """
+        Save metrics in CSV format suitable for plotting
+        
+        Args:
+            output_path: Path to save CSV file
+        """
+        import csv
+        
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(['elapsed_seconds', 'ram_mb', 'disk_mb'])
+            
+            for i in range(len(self.timestamps)):
+                writer.writerow([
+                    self.timestamps[i],
+                    self.ram_samples[i]['ram_mb'],
+                    self.disk_samples[i]['disk_mb']
+                ])
+        
+        print(f"💾 Saved CSV metrics to {output_path}")
+
+
+class PaperMetrics:
+    """
+    Tracks per-paper metrics and statistics
+    """
+    
+    def __init__(self):
+        self.papers: List[Dict] = []
+        self.start_time: Optional[float] = None
+        self.entry_discovery_time: float = 0
+        
+    def start_timing(self):
+        """Start overall timing"""
+        self.start_time = time.time()
+        
+    def set_entry_discovery_time(self, duration: float):
+        """Set time taken for entry discovery phase"""
+        self.entry_discovery_time = duration
+        
+    def add_paper(self, paper_id: str, success: bool, process_time: float, 
+                  size_before: int = 0, size_after: int = 0, 
+                  num_references: int = 0, num_versions: int = 0):
+        """
+        Add metrics for a processed paper
+        
+        Args:
+            paper_id: ArXiv paper ID
+            success: Whether processing was successful
+            process_time: Time taken to process (seconds)
+            size_before: Size in bytes before removing figures
+            size_after: Size in bytes after removing figures
+            num_references: Number of references found
+            num_versions: Number of versions processed
+        """
+        self.papers.append({
+            'paper_id': paper_id,
+            'success': success,
+            'process_time_seconds': process_time,
+            'size_before_bytes': size_before,
+            'size_after_bytes': size_after,
+            'num_references': num_references,
+            'num_versions': num_versions,
+            'timestamp': time.time()
+        })
+    
+    def get_statistics(self) -> Dict:
+        """
+        Calculate statistics from collected paper metrics
+        
+        Returns:
+            Dictionary with various statistics
+        """
+        if not self.papers:
+            return {
+                'total_papers': 0,
+                'successful_papers': 0,
+                'failed_papers': 0,
+                'success_rate': 0,
+                'average_process_time_seconds': 0,
+                'total_process_time_seconds': 0,
+                'average_size_before_bytes': 0,
+                'average_size_after_bytes': 0,
+                'average_references_per_paper': 0,
+                'total_references': 0,
+                'entry_discovery_time_seconds': self.entry_discovery_time
+            }
+        
+        successful = [p for p in self.papers if p['success']]
+        failed = [p for p in self.papers if not p['success']]
+        
+        # Calculate statistics
+        total_papers = len(self.papers)
+        num_successful = len(successful)
+        num_failed = len(failed)
+        success_rate = num_successful / total_papers if total_papers > 0 else 0
+        
+        # Time statistics
+        process_times = [p['process_time_seconds'] for p in self.papers]
+        avg_process_time = sum(process_times) / len(process_times)
+        total_process_time = sum(process_times)
+        
+        # Size statistics (only for successful papers)
+        sizes_before = [p['size_before_bytes'] for p in successful if p['size_before_bytes'] > 0]
+        sizes_after = [p['size_after_bytes'] for p in successful if p['size_after_bytes'] > 0]
+        
+        avg_size_before = sum(sizes_before) / len(sizes_before) if sizes_before else 0
+        avg_size_after = sum(sizes_after) / len(sizes_after) if sizes_after else 0
+        
+        # Reference statistics
+        ref_counts = [p['num_references'] for p in successful]
+        avg_references = sum(ref_counts) / len(ref_counts) if ref_counts else 0
+        total_references = sum(ref_counts)
+        
+        # Total wall time
+        total_wall_time = time.time() - self.start_time if self.start_time else 0
+        
+        return {
+            'total_papers_attempted': total_papers,
+            'successful_papers': num_successful,
+            'failed_papers': num_failed,
+            'success_rate': success_rate,
+            'success_rate_percentage': success_rate * 100,
+            
+            # Time statistics
+            'average_time_per_paper_seconds': avg_process_time,
+            'total_processing_time_seconds': total_process_time,
+            'total_wall_time_seconds': total_wall_time,
+            'entry_discovery_time_seconds': self.entry_discovery_time,
+            
+            # Size statistics
+            'average_size_before_bytes': avg_size_before,
+            'average_size_after_bytes': avg_size_after,
+            'average_size_before_mb': avg_size_before / 1024 / 1024,
+            'average_size_after_mb': avg_size_after / 1024 / 1024,
+            
+            # Reference statistics
+            'average_references_per_paper': avg_references,
+            'total_references_found': total_references,
+            
+            # Reference scraping success rate
+            'papers_with_references': len([p for p in successful if p['num_references'] > 0]),
+            'reference_success_rate': len([p for p in successful if p['num_references'] > 0]) / num_successful if num_successful > 0 else 0
+        }
+    
+    def save_per_paper_csv(self, output_path: str):
+        """Save per-paper metrics to CSV file"""
+        import csv
+        
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w', newline='', encoding='utf-8') as f:
+            if not self.papers:
+                return
+                
+            writer = csv.DictWriter(f, fieldnames=self.papers[0].keys())
+            writer.writeheader()
+            writer.writerows(self.papers)
+        
+        print(f"💾 Saved per-paper metrics to {output_path}")
+    
+    def save_statistics_json(self, output_path: str):
+        """Save statistics summary to JSON file"""
+        stats = self.get_statistics()
+        
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        with open(output_path, 'w', encoding='utf-8') as f:
+            json.dump(stats, f, indent=2)
+        
+        print(f"💾 Saved statistics to {output_path}")

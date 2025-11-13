@@ -1,0 +1,2 @@
+arxiv_id,success,download_time,size_before,size_after,num_refs,refs_success,ts
+test.00001,True,0.5,100,80,5,5,1763017338.3329535

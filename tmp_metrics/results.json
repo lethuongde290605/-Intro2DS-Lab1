@@ -1,0 +1,18 @@
+{
+    "total_papers": 1,
+    "succeeded": 1,
+    "success_rate_percent": 100.0,
+    "avg_size_before_bytes": 100.0,
+    "avg_size_after_bytes": 80.0,
+    "avg_num_refs": 5.0,
+    "refs_success_rate_percent": 100.0,
+    "avg_download_time_seconds": 0.5,
+    "discovery_time_seconds": 0.0,
+    "monitor_stats": {
+        "max_mem": 6111703040,
+        "avg_mem": 6111433386.666667,
+        "max_disk": 118299009024,
+        "avg_disk": 118299009024.0,
+        "samples": 6
+    }
+}

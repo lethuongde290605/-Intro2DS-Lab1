@@ -38,7 +38,7 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
     for attempt in range(max_attempt):
         try:
             if attempt > 0:
-                wait_time = 2
+                wait_time = 15
                 print(f"⏳ Waiting {wait_time}s before retry (attempt {attempt+1}/{max_attempt})...")
                 time.sleep(wait_time)
                 
@@ -154,6 +154,9 @@ def build_metadata_and_refs_optimized(arxiv_id, output_dir="./data"):
     Args:
         arxiv_id: ArXiv ID
         output_dir: Output directory for data
+        
+    Returns:
+        dict: Combined metadata including references
     """
     safe_id = arxiv_id.replace(".", "-")
     paper_dir = os.path.join(output_dir, safe_id)
@@ -172,3 +175,9 @@ def build_metadata_and_refs_optimized(arxiv_id, output_dir="./data"):
     print(f"\n✅ Files saved:")
     print(f"  - {metadata_path}")
     print(f"  - {references_path}")
+    
+    # Return combined data for metrics
+    return {
+        **metadata,
+        'references': references
+    }
