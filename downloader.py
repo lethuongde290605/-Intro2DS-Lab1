@@ -25,10 +25,11 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
         keep_exts: Tuple of extensions to keep (default: tex, bib)
         
     Returns:
-        tuple: (success, size_before, size_after)
+        tuple: (success, size_before, size_after, is_pdf)
             - success: True if extraction successful
             - size_before: Total size of all files in archive (bytes)
             - size_after: Total size of kept files (bytes)
+            - is_pdf: True if source is PDF (no LaTeX available)
     """
     safe_id = format_arxiv_id(arxiv_id)
     save_dir = os.path.join(base_save_dir, safe_id, "tex", f"{safe_id}v{version}")
@@ -122,25 +123,27 @@ def download_and_extract_tex_bib(arxiv_id, version, base_save_dir="./downloads",
                     else:
                         print(f"⚠️  Skipping file with extension: .{ext}")
                         os.remove(temp_path)
-                        return False, 0, 0
+                        return False, 0, 0, False
 
             except Exception as e2:
                 content_type = r.headers.get('Content-Type', '')
                 if 'pdf' in content_type.lower():
                     print(f"⚠️  Source is PDF (no LaTeX available)")
+                    os.remove(temp_path)
+                    return False, 0, 0, True  # is_pdf = True
                 else:
                     print(f"⚠️  Unknown format: {e2}")
                 os.remove(temp_path)
-                return False, 0, 0
+                return False, 0, 0, True
 
         os.remove(temp_path)
-        return True, size_before, size_after
+        return True, size_before, size_after, False
 
     except Exception as e:
         print(f"❌ Download failed: {e}")
         if os.path.exists(temp_path):
             os.remove(temp_path)
-        return False, 0, 0
+        return False, 0, 0, False
 
 
 def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=False):
@@ -166,7 +169,8 @@ def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=
         'size_after': 0,
         'num_references': 0,
         'num_versions': 0,
-        'reference_fetch_success': False
+        'reference_fetch_success': False,
+        'no_tex_source': False
     }
     
     try:
@@ -187,9 +191,10 @@ def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=
         # Download all versions and accumulate sizes
         total_size_before = 0
         total_size_after = 0
+        has_pdf_version = False  # Track if any version is PDF-only
         
         for v in range(1, latest_v + 1):
-            success, size_before, size_after = download_and_extract_tex_bib(
+            success, size_before, size_after, is_pdf = download_and_extract_tex_bib(
                 arxiv_id, 
                 v, 
                 base_save_dir=settings["base_dir"],
@@ -200,9 +205,13 @@ def download_paper(arxiv_id, config, config_path="config.json", collect_metrics=
                 total_size_after += size_after
                 print(f"   Version {v}: {size_before} bytes before → {size_after} bytes after")
             else:
+                if is_pdf:
+                    has_pdf_version = True
                 print(f"⚠️  Skipping version {v}")
             time.sleep(settings["delay_between_versions"])
         
+        # Mark as no_tex_source if any version is PDF-only
+        metrics['no_tex_source'] = has_pdf_version
         metrics['size_before'] = total_size_before
         metrics['size_after'] = total_size_after
         print(f"📊 Total for {arxiv_id}: {total_size_before} bytes before → {total_size_after} bytes after")

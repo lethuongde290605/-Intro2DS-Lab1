@@ -412,7 +412,7 @@ class PaperMetrics:
     def add_paper(self, paper_id: str, success: bool, process_time: float, 
                   size_before: int = 0, size_after: int = 0, 
                   num_references: int = 0, num_versions: int = 0,
-                  reference_fetch_success: bool = False):
+                  reference_fetch_success: bool = False, no_tex_source: bool = False):
         """
         Add metrics for a processed paper (thread-safe)
         
@@ -425,6 +425,7 @@ class PaperMetrics:
             num_references: Number of references found
             num_versions: Number of versions processed
             reference_fetch_success: Whether references were successfully fetched from Semantic Scholar
+            no_tex_source: Whether paper has no LaTeX source (PDF-only)
         """
         with self._lock:
             self.papers.append({
@@ -436,6 +437,7 @@ class PaperMetrics:
                 'num_references': num_references,
                 'num_versions': num_versions,
                 'reference_fetch_success': reference_fetch_success,
+                'no_tex_source': no_tex_source,
                 'timestamp': time.time()
             })
     
@@ -488,6 +490,10 @@ class PaperMetrics:
         avg_references = sum(ref_counts) / len(ref_counts) if ref_counts else 0
         total_references = sum(ref_counts)
         
+        # No TeX source statistics
+        no_tex_count = len([p for p in self.papers if p.get('no_tex_source', False)])
+        no_tex_rate = no_tex_count / total_papers if total_papers > 0 else 0
+        
         # Total wall time
         total_wall_time = time.time() - self.start_time if self.start_time else 0
         
@@ -522,7 +528,12 @@ class PaperMetrics:
             # Reference fetch from Semantic Scholar success rate (regardless of arXiv refs)
             'papers_with_reference_fetch_success': len([p for p in successful if p.get('reference_fetch_success', False)]),
             'reference_fetch_success_rate': len([p for p in successful if p.get('reference_fetch_success', False)]) / num_successful if num_successful > 0 else 0,
-            'reference_fetch_success_rate_percentage': (len([p for p in successful if p.get('reference_fetch_success', False)]) / num_successful * 100) if num_successful > 0 else 0
+            'reference_fetch_success_rate_percentage': (len([p for p in successful if p.get('reference_fetch_success', False)]) / num_successful * 100) if num_successful > 0 else 0,
+            
+            # No TeX source statistics (PDF-only papers)
+            'papers_with_no_tex_source': no_tex_count,
+            'no_tex_source_rate': no_tex_rate,
+            'no_tex_source_rate_percentage': no_tex_rate * 100
         }
     
     def save_per_paper_csv(self, output_path: str):

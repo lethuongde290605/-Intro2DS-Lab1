@@ -51,7 +51,8 @@ def process_paper(arxiv_id, config, config_path, paper_metrics, settings):
         size_after=paper_info.get('size_after', 0),
         num_references=paper_info.get('num_references', 0),
         num_versions=paper_info.get('num_versions', 0),
-        reference_fetch_success=paper_info.get('reference_fetch_success', False)
+        reference_fetch_success=paper_info.get('reference_fetch_success', False),
+        no_tex_source=paper_info.get('no_tex_source', False)
     )
     
     # Update config progress (thread-safe)
@@ -246,6 +247,11 @@ def main():
         print(f"  • Average references per paper: {stats['average_references_per_paper']:.2f}")
         print(f"  • Papers with references: {stats['papers_with_references']}")
         print(f"  • Reference success rate: {stats['reference_success_rate']*100:.2f}%")
+        print(f"  • Reference fetch success rate: {stats['reference_fetch_success_rate_percentage']:.2f}%")
+        
+        print(f"\n📄 Source Availability:")
+        print(f"  • Papers with no LaTeX source (PDF-only): {stats['papers_with_no_tex_source']}")
+        print(f"  • No TeX source rate: {stats['no_tex_source_rate_percentage']:.2f}%")
         
         print("\n" + "=" * 80)
         print(f"📁 Reports saved to: {metrics_dir}/")
