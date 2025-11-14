@@ -38,7 +38,6 @@ class MetricsCollector:
         # Threading
         self.monitoring = False
         self.monitor_thread: Optional[threading.Thread] = None
-        self.autosave_thread: Optional[threading.Thread] = None
         
         # Peak values
         self.peak_ram_mb = 0.0
@@ -100,25 +99,13 @@ class MetricsCollector:
         except Exception as e:
             print(f"⚠️  Failed to save checkpoint: {e}")
     
-    def _autosave_loop(self, interval: float = 30.0):
-        """
-        Background thread to auto-save metrics periodically
-        
-        Args:
-            interval: Save interval in seconds (default: 30s)
-        """
-        while self.monitoring:
-            time.sleep(interval)
-            if self.monitoring:  # Check again after sleep
-                self.save_checkpoint()
-                print(f"💾 Auto-saved metrics checkpoint ({len(self.ram_samples)} samples)")
-        
     def start_monitoring(self, autosave_interval: float = 30.0):
         """
-        Start background monitoring thread with auto-save
+        Start background monitoring thread
+        NOTE: autosave_interval is deprecated - checkpoint is saved after each sample
         
         Args:
-            autosave_interval: How often to save checkpoint (seconds, default: 30)
+            autosave_interval: Ignored (kept for backward compatibility)
         """
         if self.monitoring:
             return
@@ -129,19 +116,11 @@ class MetricsCollector:
         if self.start_time is None:
             self.start_time = time.time()
         
-        # Start monitoring thread
+        # Start monitoring thread (saves checkpoint after each sample)
         self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.monitor_thread.start()
         
-        # Start auto-save thread
-        self.autosave_thread = threading.Thread(
-            target=self._autosave_loop, 
-            args=(autosave_interval,),
-            daemon=True
-        )
-        self.autosave_thread.start()
-        
-        print(f"📊 Started system monitoring (RAM & Disk) with {autosave_interval}s auto-save")
+        print(f"📊 Started system monitoring (sampling & saving every {self.interval}s)")
         
     def stop_monitoring(self):
         """Stop background monitoring thread and save final checkpoint"""
@@ -152,8 +131,6 @@ class MetricsCollector:
         
         if self.monitor_thread:
             self.monitor_thread.join(timeout=2.0)
-        if self.autosave_thread:
-            self.autosave_thread.join(timeout=2.0)
         
         # Final save
         self.save_checkpoint()
@@ -184,6 +161,10 @@ class MetricsCollector:
                 # Update peaks
                 self.peak_ram_mb = max(self.peak_ram_mb, ram_mb)
                 self.peak_disk_mb = max(self.peak_disk_mb, disk_mb)
+                
+                # Save checkpoint immediately after collecting sample
+                self.save_checkpoint()
+                print(f"💾 Collected & saved metrics (sample #{len(self.samples)}: RAM={ram_mb:.2f}MB, Disk={disk_mb:.2f}MB)")
                 
                 time.sleep(self.interval)
                 

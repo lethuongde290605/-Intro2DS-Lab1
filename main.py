@@ -90,7 +90,9 @@ def main():
     metrics_dir = "./metrics"
     os.makedirs(metrics_dir, exist_ok=True)
     
-    system_monitor = MetricsCollector(data_dir=settings['base_dir'], interval=1.0, checkpoint_dir=metrics_dir)
+    # Sampling interval = 30s (lấy metrics và save mỗi 30s)
+    sampling_interval = 30.0
+    system_monitor = MetricsCollector(data_dir=settings['base_dir'], interval=sampling_interval, checkpoint_dir=metrics_dir)
     paper_metrics = PaperMetrics(checkpoint_dir=metrics_dir)
     
     # Try to load checkpoints (resume from previous run)
@@ -103,9 +105,9 @@ def main():
     else:
         print("📂 Starting fresh session")
     
-    # Start monitoring with auto-save (every 30 seconds)
-    system_monitor.start_monitoring(autosave_interval=30.0)
-    paper_metrics.start_autosave(interval=30.0)
+    # Start monitoring (auto-save sau mỗi lần lấy sample)
+    system_monitor.start_monitoring(autosave_interval=sampling_interval)
+    paper_metrics.start_autosave(interval=sampling_interval)
     
     if not paper_checkpoint_loaded:
         paper_metrics.start_timing()

@@ -18,10 +18,9 @@
         "prefix": "2412",
         "start": 5271,
         "end": 10270,
-        "current": 5407,
+        "current": 5271,
         "completed_papers": [
         ],
-        "failed_papers": [
-        ]
+        "failed_papers": []
     }
 }
