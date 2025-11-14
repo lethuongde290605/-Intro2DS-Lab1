@@ -15,28 +15,30 @@ import json
 class MetricsCollector:
     """
     Collects system metrics (RAM, disk usage) in real-time using a background thread
+    Includes auto-save functionality for Colab resilience
     """
     
-    def __init__(self, data_dir: str, interval: float = 1.0):
+    def __init__(self, data_dir: str, interval: float = 1.0, checkpoint_dir: str = "./metrics"):
         """
         Initialize metrics collector
         
         Args:
             data_dir: Directory to monitor for disk usage
             interval: Sampling interval in seconds
+            checkpoint_dir: Directory to save checkpoints for resume capability
         """
         self.data_dir = data_dir
         self.interval = interval
+        self.checkpoint_dir = checkpoint_dir
         self.process = psutil.Process(os.getpid())
         
-        # Metrics storage
-        self.ram_samples: List[Dict] = []
-        self.disk_samples: List[Dict] = []
-        self.timestamps: List[float] = []
+        # Metrics storage (combined samples)
+        self.samples: List[Dict] = []  # Each sample has: timestamp, elapsed_seconds, ram_mb, disk_mb
         
         # Threading
         self.monitoring = False
         self.monitor_thread: Optional[threading.Thread] = None
+        self.autosave_thread: Optional[threading.Thread] = None
         
         # Peak values
         self.peak_ram_mb = 0.0
@@ -45,26 +47,117 @@ class MetricsCollector:
         # Start time
         self.start_time: Optional[float] = None
         
-    def start_monitoring(self):
-        """Start background monitoring thread"""
+        # Checkpoint file paths
+        os.makedirs(checkpoint_dir, exist_ok=True)
+        self.checkpoint_path = os.path.join(checkpoint_dir, "system_metrics_checkpoint.json")
+        # Checkpoint file paths
+        os.makedirs(checkpoint_dir, exist_ok=True)
+        self.checkpoint_path = os.path.join(checkpoint_dir, "system_metrics_checkpoint.json")
+        
+    def load_checkpoint(self) -> bool:
+        """
+        Load metrics from checkpoint file (for resume after Colab disconnect)
+        
+        Returns:
+            bool: True if checkpoint was loaded successfully
+        """
+        if not os.path.exists(self.checkpoint_path):
+            print("📂 No checkpoint found - starting fresh")
+            return False
+        
+        try:
+            with open(self.checkpoint_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            self.samples = data.get('samples', [])
+            self.peak_ram_mb = data.get('peak_ram_mb', 0.0)
+            self.peak_disk_mb = data.get('peak_disk_mb', 0.0)
+            self.start_time = data.get('start_time')
+            
+            print(f"✅ Loaded checkpoint with {len(self.samples)} samples")
+            print(f"   Peak RAM: {self.peak_ram_mb:.2f} MB")
+            print(f"   Peak Disk: {self.peak_disk_mb:.2f} MB")
+            return True
+            
+        except Exception as e:
+            print(f"⚠️  Failed to load checkpoint: {e}")
+            return False
+    
+    def save_checkpoint(self):
+        """Save current metrics to checkpoint file"""
+        try:
+            data = {
+                'samples': self.samples,
+                'peak_ram_mb': self.peak_ram_mb,
+                'peak_disk_mb': self.peak_disk_mb,
+                'start_time': self.start_time,
+                'last_saved': time.time()
+            }
+            
+            with open(self.checkpoint_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+                
+        except Exception as e:
+            print(f"⚠️  Failed to save checkpoint: {e}")
+    
+    def _autosave_loop(self, interval: float = 30.0):
+        """
+        Background thread to auto-save metrics periodically
+        
+        Args:
+            interval: Save interval in seconds (default: 30s)
+        """
+        while self.monitoring:
+            time.sleep(interval)
+            if self.monitoring:  # Check again after sleep
+                self.save_checkpoint()
+                print(f"💾 Auto-saved metrics checkpoint ({len(self.ram_samples)} samples)")
+        
+    def start_monitoring(self, autosave_interval: float = 30.0):
+        """
+        Start background monitoring thread with auto-save
+        
+        Args:
+            autosave_interval: How often to save checkpoint (seconds, default: 30)
+        """
         if self.monitoring:
             return
             
         self.monitoring = True
-        self.start_time = time.time()
+        
+        # Set start time if not resuming
+        if self.start_time is None:
+            self.start_time = time.time()
+        
+        # Start monitoring thread
         self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.monitor_thread.start()
-        print("📊 Started system monitoring (RAM & Disk)")
+        
+        # Start auto-save thread
+        self.autosave_thread = threading.Thread(
+            target=self._autosave_loop, 
+            args=(autosave_interval,),
+            daemon=True
+        )
+        self.autosave_thread.start()
+        
+        print(f"📊 Started system monitoring (RAM & Disk) with {autosave_interval}s auto-save")
         
     def stop_monitoring(self):
-        """Stop background monitoring thread"""
+        """Stop background monitoring thread and save final checkpoint"""
         if not self.monitoring:
             return
             
         self.monitoring = False
+        
         if self.monitor_thread:
             self.monitor_thread.join(timeout=2.0)
-        print("📊 Stopped system monitoring")
+        if self.autosave_thread:
+            self.autosave_thread.join(timeout=2.0)
+        
+        # Final save
+        self.save_checkpoint()
+        print("📊 Stopped system monitoring (final checkpoint saved)")
         
     def _monitor_loop(self):
         """Background monitoring loop - runs in separate thread"""
@@ -80,20 +173,13 @@ class MetricsCollector:
                 # Get disk usage of data directory
                 disk_mb = self._get_directory_size(self.data_dir) / 1024 / 1024
                 
-                # Store samples
-                self.ram_samples.append({
+                # Store combined sample
+                self.samples.append({
                     'timestamp': current_time,
                     'elapsed_seconds': elapsed,
-                    'ram_mb': ram_mb
-                })
-                
-                self.disk_samples.append({
-                    'timestamp': current_time,
-                    'elapsed_seconds': elapsed,
+                    'ram_mb': ram_mb,
                     'disk_mb': disk_mb
                 })
-                
-                self.timestamps.append(elapsed)
                 
                 # Update peaks
                 self.peak_ram_mb = max(self.peak_ram_mb, ram_mb)
@@ -152,7 +238,7 @@ class MetricsCollector:
         Returns:
             Dictionary with summary statistics
         """
-        if not self.ram_samples:
+        if not self.samples:
             return {
                 'peak_ram_mb': 0,
                 'average_ram_mb': 0,
@@ -163,10 +249,10 @@ class MetricsCollector:
                 'sample_count': 0
             }
         
-        ram_values = [s['ram_mb'] for s in self.ram_samples]
-        disk_values = [s['disk_mb'] for s in self.disk_samples]
+        ram_values = [s['ram_mb'] for s in self.samples]
+        disk_values = [s['disk_mb'] for s in self.samples]
         
-        total_time = self.timestamps[-1] if self.timestamps else 0
+        total_time = self.samples[-1]['elapsed_seconds'] if self.samples else 0
         
         return {
             'peak_ram_mb': max(ram_values),
@@ -175,7 +261,7 @@ class MetricsCollector:
             'average_disk_mb': sum(disk_values) / len(disk_values),
             'final_disk_mb': disk_values[-1] if disk_values else 0,
             'total_monitoring_time_seconds': total_time,
-            'sample_count': len(self.ram_samples)
+            'sample_count': len(self.samples)
         }
     
     def save_time_series(self, output_path: str):
@@ -186,8 +272,7 @@ class MetricsCollector:
             output_path: Path to save JSON file
         """
         data = {
-            'ram_samples': self.ram_samples,
-            'disk_samples': self.disk_samples,
+            'samples': self.samples,
             'summary': self.get_summary_stats(),
             'metadata': {
                 'data_directory': self.data_dir,
@@ -216,11 +301,11 @@ class MetricsCollector:
             writer = csv.writer(f)
             writer.writerow(['elapsed_seconds', 'ram_mb', 'disk_mb'])
             
-            for i in range(len(self.timestamps)):
+            for sample in self.samples:
                 writer.writerow([
-                    self.timestamps[i],
-                    self.ram_samples[i]['ram_mb'],
-                    self.disk_samples[i]['disk_mb']
+                    sample['elapsed_seconds'],
+                    sample['ram_mb'],
+                    sample['disk_mb']
                 ])
         
         print(f"💾 Saved CSV metrics to {output_path}")
@@ -228,14 +313,112 @@ class MetricsCollector:
 
 class PaperMetrics:
     """
-    Tracks per-paper metrics and statistics (thread-safe)
+    Tracks per-paper metrics and statistics (thread-safe with checkpoint support)
     """
     
-    def __init__(self):
+    def __init__(self, checkpoint_dir: str = "./metrics"):
         self.papers: List[Dict] = []
         self.start_time: Optional[float] = None
         self.entry_discovery_time: float = 0
         self._lock = threading.Lock()  # Thread-safety lock
+        
+        # Checkpoint support
+        self.checkpoint_dir = checkpoint_dir
+        os.makedirs(checkpoint_dir, exist_ok=True)
+        self.checkpoint_path = os.path.join(checkpoint_dir, "paper_metrics_checkpoint.json")
+        self.autosave_thread: Optional[threading.Thread] = None
+        self.autosaving = False
+        
+    def load_checkpoint(self) -> bool:
+        """
+        Load paper metrics from checkpoint file (for resume after Colab disconnect)
+        
+        Returns:
+            bool: True if checkpoint was loaded successfully
+        """
+        if not os.path.exists(self.checkpoint_path):
+            print("📂 No paper metrics checkpoint found - starting fresh")
+            return False
+        
+        try:
+            with open(self.checkpoint_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            
+            with self._lock:
+                self.papers = data.get('papers', [])
+                self.start_time = data.get('start_time')
+                self.entry_discovery_time = data.get('entry_discovery_time', 0)
+            
+            print(f"✅ Loaded paper metrics checkpoint with {len(self.papers)} papers")
+            return True
+            
+        except Exception as e:
+            print(f"⚠️  Failed to load paper metrics checkpoint: {e}")
+            return False
+    
+    def save_checkpoint(self):
+        """Save current paper metrics to checkpoint file (thread-safe)"""
+        try:
+            with self._lock:
+                data = {
+                    'papers': self.papers,
+                    'start_time': self.start_time,
+                    'entry_discovery_time': self.entry_discovery_time,
+                    'last_saved': time.time()
+                }
+            
+            with open(self.checkpoint_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+                
+        except Exception as e:
+            print(f"⚠️  Failed to save paper metrics checkpoint: {e}")
+    
+    def _autosave_loop(self, interval: float = 30.0):
+        """
+        Background thread to auto-save paper metrics periodically
+        
+        Args:
+            interval: Save interval in seconds (default: 30s)
+        """
+        while self.autosaving:
+            time.sleep(interval)
+            if self.autosaving:  # Check again after sleep
+                self.save_checkpoint()
+                with self._lock:
+                    paper_count = len(self.papers)
+                print(f"💾 Auto-saved paper metrics checkpoint ({paper_count} papers)")
+    
+    def start_autosave(self, interval: float = 30.0):
+        """
+        Start auto-save thread for paper metrics
+        
+        Args:
+            interval: Save interval in seconds (default: 30s)
+        """
+        if self.autosaving:
+            return
+        
+        self.autosaving = True
+        self.autosave_thread = threading.Thread(
+            target=self._autosave_loop,
+            args=(interval,),
+            daemon=True
+        )
+        self.autosave_thread.start()
+        print(f"📊 Started paper metrics auto-save ({interval}s interval)")
+    
+    def stop_autosave(self):
+        """Stop auto-save thread and save final checkpoint"""
+        if not self.autosaving:
+            return
+        
+        self.autosaving = False
+        if self.autosave_thread:
+            self.autosave_thread.join(timeout=2.0)
+        
+        # Final save
+        self.save_checkpoint()
+        print("📊 Stopped paper metrics auto-save (final checkpoint saved)")
         
     def start_timing(self):
         """Start overall timing"""

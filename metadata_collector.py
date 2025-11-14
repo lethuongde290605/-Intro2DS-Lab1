@@ -5,10 +5,11 @@ Handles fetching metadata and references from Semantic Scholar and arXiv
 import arxiv
 import requests
 import time
-from arxiv_client import get_arxiv_version_dates
 from utils import save_json
 import os
-from shared import config_lock
+import threading
+
+semantic_scholar_lock = threading.Lock()
 
 
 def get_semantic_scholar_data(arxiv_id, api_key=None):
@@ -34,19 +35,15 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
 
     publication_venue = ""
     refs = {}
-    max_attempt = 10
+    max_attempt = 50
     all_references_count = 0
     
     for attempt in range(max_attempt):
         try:
-            if attempt > 0:
-                wait_time = 15
-                print(f"⏳ Waiting {wait_time}s before retry (attempt {attempt+1}/{max_attempt})...")
-                time.sleep(wait_time)
-                
-            with config_lock:
+
+            with semantic_scholar_lock:
                 r = requests.get(url, params=params, headers=headers, timeout=15)
-                sleep(1)
+                time.sleep(1)
 
             if r.status_code == 429:
                 print(f"⚠️ Rate limit hit (attempt {attempt+1}/{max_attempt})")
@@ -93,92 +90,59 @@ def get_semantic_scholar_data(arxiv_id, api_key=None):
     return publication_venue, refs, all_references_count
 
 
-def get_metadata_and_references_optimized(arxiv_id):
-    """
-    Optimized version: Get metadata and references with only 2 HTTP requests:
-    1. Semantic Scholar API (venue + references together)
-    2. ArXiv webpage (version history)
-    
-    Args:
-        arxiv_id: ArXiv ID
-        
-    Returns:
-        tuple: (metadata_dict, references_dict, all_references_count)
-        where all_references_count is the total number of references from Semantic Scholar
-    """
-    print(f"\n{'='*60}")
-    print(f"📄 Processing paper: {arxiv_id}")
-    print(f"{'='*60}")
-    
-    # Get basic info from arxiv library
-    print("📚 Fetching basic info from arXiv library...")
-    search = arxiv.Search(id_list=[arxiv_id])
-    paper = next(arxiv.Client().results(search))
-
-    paper_title = paper.title.strip()
-    authors = [str(a) for a in paper.authors]
-    
-    # Call Semantic Scholar API ONCE
-    print("🔍 Fetching venue + references from Semantic Scholar (single call)...")
-    publication_venue, references, all_references_count = get_semantic_scholar_data(arxiv_id)
-    
-    
-    # Fallback venue from arxiv if SS doesn't have it
-    if not publication_venue:
-        publication_venue = getattr(paper, "journal_ref", None) or ""
-    
-    # Get version dates from ArXiv webpage
-    print("📅 Fetching version history from arXiv webpage...")
-    revised_dates = get_arxiv_version_dates(arxiv_id)
-    
-    # Submission date = first version
-    submission_date = revised_dates[0] if revised_dates else paper.published.date().isoformat()
-
-    # Create metadata
-    metadata = {
-        "paper_title": paper_title,
-        "authors": authors,
-        "publication_venue": publication_venue,
-        "submission_date": submission_date,
-        "revised_dates": revised_dates,
-    }
-    
-    print(f"\n📊 Results:")
-    print(f"  - Title: {paper_title}")
-    print(f"  - Authors: {len(authors)} authors")
-    print(f"  - Venue: {publication_venue or '(empty)'}")
-    print(f"  - Versions: {len(revised_dates)} versions")
-    print(f"  - Total references from Semantic Scholar: {all_references_count}")
-    print(f"  - ArXiv references: {len(references)} arXiv references")
-    
-    return metadata, references, all_references_count
-
-
-def build_metadata_and_refs_optimized(arxiv_id, output_dir="./data"):
+def build_metadata_and_refs(arxiv_id, arxiv_metadata, output_dir="./data", api_key=None):
     """
     Create metadata.json and references.json for a paper
-    Optimized version: ONLY CALLS SEMANTIC SCHOLAR API ONCE!
+    Optimized version: uses pre-fetched arxiv_metadata
     
     Args:
         arxiv_id: ArXiv ID
+        arxiv_metadata: Pre-fetched metadata from arXiv (from get_arxiv_metadata)
         output_dir: Output directory for data
+        api_key: Semantic Scholar API key (optional)
         
     Returns:
         dict: Combined metadata including references and reference fetch info
     """
+    print(f"\n{'='*60}")
+    print(f"📄 Building metadata for: {arxiv_id}")
+    print(f"{'='*60}")
+    
     safe_id = arxiv_id.replace(".", "-")
     paper_dir = os.path.join(output_dir, safe_id)
     os.makedirs(paper_dir, exist_ok=True)
 
-    # Get both metadata and references in one go
-    metadata, references, all_references_count = get_metadata_and_references_optimized(arxiv_id)
-
+    # Get venue + references from Semantic Scholar
+    print("🔍 Fetching venue + references from Semantic Scholar...")
+    publication_venue, references, all_references_count = get_semantic_scholar_data(arxiv_id, api_key)
+    
+    # Use arxiv_metadata if venue is empty
+    if not publication_venue:
+        publication_venue = ""  # ArXiv doesn't always have venue info
+    
+    # Build metadata using arxiv_metadata
+    metadata = {
+        "paper_title": arxiv_metadata.get("paper_title", ""),
+        "authors": arxiv_metadata.get("authors", []),
+        "publication_venue": publication_venue,
+        "submission_date": arxiv_metadata.get("submission_date", ""),
+        "revised_dates": arxiv_metadata.get("revised_dates", []),
+    }
+    
     # Save files
     metadata_path = os.path.join(paper_dir, "metadata.json")
     references_path = os.path.join(paper_dir, "references.json")
     
     save_json(metadata, metadata_path)
     save_json(references, references_path)
+
+    print(f"\n📊 Results:")
+    print(f"  - Title: {metadata['paper_title']}")
+    print(f"  - Authors: {len(metadata['authors'])} authors")
+    print(f"  - Venue: {publication_venue or '(empty)'}")
+    print(f"  - Versions: {len(metadata['revised_dates'])} versions")
+    print(f"  - Total references from Semantic Scholar: {all_references_count}")
+    print(f"  - ArXiv references: {len(references)} arXiv references")
 
     print(f"\n✅ Files saved:")
     print(f"  - {metadata_path}")

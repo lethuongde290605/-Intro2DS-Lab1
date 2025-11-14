@@ -8,10 +8,12 @@ import os
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from config_manager import load_config, save_config
-from arxiv_client import format_arxiv_id, get_latest_version
+from arxiv_client import format_arxiv_id
 from downloader import download_paper
 from metrics_collector import MetricsCollector, PaperMetrics
-from shared import config_lock
+import threading
+
+progress_lock = threading.Lock()
 
 
 def process_paper(arxiv_id, config, config_path, paper_metrics, settings):
@@ -53,7 +55,7 @@ def process_paper(arxiv_id, config, config_path, paper_metrics, settings):
     )
     
     # Update config progress (thread-safe)
-    with config_lock:
+    with progress_lock:
         if success:
             if safe_id not in config["progress"]["completed_papers"]:
                 config["progress"]["completed_papers"].append(safe_id)
@@ -88,12 +90,25 @@ def main():
     metrics_dir = "./metrics"
     os.makedirs(metrics_dir, exist_ok=True)
     
-    system_monitor = MetricsCollector(data_dir=settings['base_dir'], interval=1.0)
-    paper_metrics = PaperMetrics()
+    system_monitor = MetricsCollector(data_dir=settings['base_dir'], interval=1.0, checkpoint_dir=metrics_dir)
+    paper_metrics = PaperMetrics(checkpoint_dir=metrics_dir)
     
-    # Start monitoring
-    system_monitor.start_monitoring()
-    paper_metrics.start_timing()
+    # Try to load checkpoints (resume from previous run)
+    print("\n🔄 Checking for previous session...")
+    system_checkpoint_loaded = system_monitor.load_checkpoint()
+    paper_checkpoint_loaded = paper_metrics.load_checkpoint()
+    
+    if system_checkpoint_loaded or paper_checkpoint_loaded:
+        print("✅ Resuming from previous session")
+    else:
+        print("📂 Starting fresh session")
+    
+    # Start monitoring with auto-save (every 30 seconds)
+    system_monitor.start_monitoring(autosave_interval=30.0)
+    paper_metrics.start_autosave(interval=30.0)
+    
+    if not paper_checkpoint_loaded:
+        paper_metrics.start_timing()
     
     print("=" * 80)
     print("🚀 ArXiv Batch Downloader with Progress Tracking (Multithreaded)")
@@ -144,7 +159,7 @@ def main():
                     result_id, success, paper_info = future.result()
                     
                     # Update current position
-                    with config_lock:
+                    with progress_lock:
                         progress["current"] = max(progress["current"], idx)
                     
                     status = "✅" if success else "❌"
@@ -152,7 +167,7 @@ def main():
                     
                 except Exception as e:
                     print(f"\n❌ Exception processing {arxiv_id}: {e}")
-                    with config_lock:
+                    with progress_lock:
                         safe_id = format_arxiv_id(arxiv_id)
                         if safe_id not in config["progress"]["failed_papers"]:
                             config["progress"]["failed_papers"].append(safe_id)
@@ -183,6 +198,7 @@ def main():
         print("=" * 80)
         
         system_monitor.stop_monitoring()
+        paper_metrics.stop_autosave()
         
         # Generate timestamp for reports
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
